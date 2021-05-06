@@ -1,6 +1,5 @@
 package com.example.projectpyramid;
 
-import com.example.projectpyramid.DataAccess.DBManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

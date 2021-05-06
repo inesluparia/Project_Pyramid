@@ -1,4 +1,4 @@
-package com.example.projectpyramid.DataAccess;
+package com.example.projectpyramid;
 
 import org.springframework.core.io.ClassPathResource;
 
