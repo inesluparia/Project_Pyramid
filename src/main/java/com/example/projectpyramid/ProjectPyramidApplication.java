@@ -1,5 +1,6 @@
 package com.example.projectpyramid;
 
+import com.example.projectpyramid.DataAccess.DBManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,7 +9,6 @@ public class ProjectPyramidApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ProjectPyramidApplication.class, args);
-        DBManager.getConnection();
 
     }
 
