@@ -13,5 +13,4 @@ public class MainPyramidController {
         return "main.html";
 
     }
-
 }

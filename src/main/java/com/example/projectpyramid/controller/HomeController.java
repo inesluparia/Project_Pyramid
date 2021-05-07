@@ -17,8 +17,43 @@ public class HomeController {
 
     @GetMapping("/logintest")
     @ResponseBody
-    public String login() throws Exception {
+    public String loginTest() throws Exception {
         User user = userMapper.login("Andersand","1234");
         return user.getUserName();
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login method";
+    }
+
+    @GetMapping("/createuser")
+    public String createUser(){
+        return "createuser.html";
+    }
+
+    @GetMapping("/createproject")
+    public String createProject(){
+        return "createproject.html";
+    }
+
+    @GetMapping("/userpage")
+    public String userPage(){
+        return "userpage.html";
+    }
+
+    @GetMapping("/project")
+    public String projectPage(){
+        return "project.html";
+    }
+
+    @GetMapping("/myprojects")
+    public String myProjects(){
+        return "myprojects.html";
+    }
+
+    @GetMapping("/projectlist")
+    public String allProjects(){
+        return "allprojects.html";
     }
 }
