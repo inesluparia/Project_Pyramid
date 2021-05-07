@@ -23,6 +23,10 @@ public class UserMapper {
             }
         }
 */
+/*
+    public User findByName(String name) {
+
+    }*/
 
     public User login(String userName, String password) throws Exception {
         try {
