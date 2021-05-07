@@ -1,4 +1,4 @@
-package com.example.projectpyramid.domain;
+package com.example.projectpyramid.domain.entities;
 
 public class Project {
 

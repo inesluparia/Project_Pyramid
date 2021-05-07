@@ -1,5 +1,5 @@
 package com.example.projectpyramid.data_access;
-import com.example.projectpyramid.domain.User;
+import com.example.projectpyramid.domain.entities.User;
 
 import java.sql.*;
 
