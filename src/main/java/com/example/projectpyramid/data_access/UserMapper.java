@@ -5,6 +5,17 @@ import java.sql.*;
 
 public class UserMapper {
 
+    public void insert(User user) {
+
+    }
+
+    public void update(User user) {
+
+    }
+
+    public void delete(User user) {
+        String query = "DELETE FROM users WHERE id = user.getId()";
+    }
 
 /*
         public String getUserName(String userId) throws Exception {
