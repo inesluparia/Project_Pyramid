@@ -5,6 +5,7 @@ public class User {
     private String fullName;
     private String userName;
 
+
     public User() { }
 
     public User(String fullName, String userName, int id) {

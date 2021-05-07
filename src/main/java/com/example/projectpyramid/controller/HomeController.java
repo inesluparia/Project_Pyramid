@@ -53,7 +53,14 @@ public class HomeController {
     }
 
     @GetMapping("/userpage")
-    public String userPage(){
+    public String userPage(WebRequest request, Model model) {
+        ProjectServices projectServices = new ProjectServices();
+        int userId = Integer.parseInt((request.getParameter("userId")));
+        String name = request.getParameter("name");
+        ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
+        model.addAttribute("projects", projects);
+        model.addAttribute("name", name);
+
         return "userpage.html";
     }
 /*
