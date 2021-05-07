@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
+    <link rel="stylesheet" href="stylesheet.css">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-DER SKAL STÅ BRUGERENS NAVN PÅ TOPHØJRE SIDEN
+
+<H2 th:text=" 'hej' + ${session.}"></H2>
+
+DER SKAL STÅ BRUGERENS NAVN PÅ TOPHØJRE SIDEN <br><br>
 
 1. SE MY PROJECTS
 2. START NEW PROJECT
 (EVT. 3.SEE ALL PROJECTS)
 
-)</body>
+</body>
 </html>

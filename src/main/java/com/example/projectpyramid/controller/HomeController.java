@@ -63,7 +63,10 @@ public class HomeController {
 
         return "userpage.html";
     }
-/*
+
+
+
+
     @GetMapping("/project")
     public String projectPage(){
         return "project.html";
@@ -78,5 +81,5 @@ public class HomeController {
     public String allProjects(){
         return "allprojects.html";
     }
- */
+
 }
