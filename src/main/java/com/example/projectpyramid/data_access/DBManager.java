@@ -1,6 +1,4 @@
-package com.example.projectpyramid.DataAccess;
-
-import org.springframework.core.io.ClassPathResource;
+package com.example.projectpyramid.data_access;
 
 import java.io.FileInputStream;
 import java.io.IOException;
