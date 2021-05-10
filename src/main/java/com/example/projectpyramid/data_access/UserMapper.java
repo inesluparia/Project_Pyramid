@@ -5,6 +5,10 @@ import java.sql.*;
 
 public class UserMapper {
 
+    public static String getUserName(int authorId) {
+        return null;
+    }
+
     public void insert(User user) {
 
     }

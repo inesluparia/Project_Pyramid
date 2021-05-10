@@ -38,7 +38,6 @@ public class HomeController {
         User user = userMapper.login(username, password);
         request.setAttribute("userId", user.getId(), WebRequest.SCOPE_SESSION);
         request.setAttribute("name", user.getFullName(), WebRequest.SCOPE_SESSION);
-
         return "redirect:userpage";
     }
 
@@ -53,19 +52,15 @@ public class HomeController {
     }
 
     @GetMapping("/userpage")
-    public String userPage(WebRequest request, Model model) {
+    public String userPage(WebRequest request, Model model) throws Exception {
         ProjectServices projectServices = new ProjectServices();
         int userId = Integer.parseInt((request.getParameter("userId")));
         String name = request.getParameter("name");
         ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
         model.addAttribute("projects", projects);
         model.addAttribute("name", name);
-
         return "userpage.html";
     }
-
-
-
 
     @GetMapping("/project")
     public String projectPage(){

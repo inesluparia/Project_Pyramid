@@ -2,25 +2,25 @@ package com.example.projectpyramid.domain.entities;
 
 public class Project {
 
-    private int projectId;
-    private String author, client, projectName, description;
+    private int projectId, authorId, clientId;
+    private String projectName, description;
+    private boolean isActive;
 
     public Project(){
-
+    isActive = false;
     }
 
     public Project( int projectId,
-                    String author,
-                    String client,
+                    int authorId,
+                    int clientId,
                     String projectName,
                     String description){
 
         this.projectId = projectId;
-        this.author = author;
-        this.client = client;
+        this.authorId = authorId;
+        this.clientId = clientId;
         this.projectName = projectName;
         this.description =  description;
-
     }
 
     //Getters
@@ -29,30 +29,19 @@ public class Project {
         return projectId;
     }
 
-    public String getAuthor(){
-
-        return this.author;
-    }
-
-    public String getClient(){
-
-        return this.client;
-    }
-
     public String getDescription(){
 
         return this.description;
     }
 
-    public String getProjectname(){
+    public String getProjectName(){
 
         return this.projectName;
     }
 
     //Setters
-    public void setAuthor(String newAuthor){
-
-        this.author = newAuthor;
+    public void setActive(){
+        isActive = true;
     }
 
     public void setDescription(String editDescription){
@@ -60,7 +49,7 @@ public class Project {
         this.description = editDescription;
     }
 
-    public void setProjectname(String newProjectName){
+    public void setProjectName(String newProjectName){
 
         this.projectName = newProjectName;
     }
