@@ -3,6 +3,7 @@ package com.example.projectpyramid.domain.entities;
 public class Project {
 
     private int projectId, authorId, clientId;
+    //private Client client;
     private String projectName, description;
     private boolean isActive;
 

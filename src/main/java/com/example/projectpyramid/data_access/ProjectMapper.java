@@ -26,6 +26,7 @@ public class ProjectMapper {
                 int projId = rs.getInt("id");
                 String name = rs.getString("name");
                 int clientId = rs.getInt("client_id");
+                //Client client  = new Client();
                 int is_active = rs.getInt("is_active");
                 String desc = rs.getString("description");
                 Project project = new Project(projId, id, clientId, name, desc);
