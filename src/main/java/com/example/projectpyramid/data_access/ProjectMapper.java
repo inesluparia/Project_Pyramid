@@ -18,6 +18,9 @@ public class ProjectMapper {
 
     public void getProject(int projectId){}
 
+
+
+
     public ArrayList<Project> getProjectsFromUserId(int id) throws Exception {
         try {
             Connection con = DBManager.getConnection();
@@ -30,13 +33,11 @@ public class ProjectMapper {
                 int projectId = resultSet.getInt("id");
                 User author = userMapper.getUser(id);
                 // TODO: Get author's User object from its service or mapper.
-
                 int clientId = resultSet.getInt("client_id");
                 Client client = clientMapper.getClient(clientId);
                 String projectName = resultSet.getString("name");
                 boolean isActive = resultSet.getInt("is_active") != 0;
                 String description = resultSet.getString("description");
-
                 // TODO: Once all mappers and services has been implemented, set author and client appropriately.
                 Project project = new Project(projectId, author, client, projectName, description);
                 project.setIsActive(isActive);
