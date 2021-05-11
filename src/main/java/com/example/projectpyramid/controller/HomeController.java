@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
@@ -17,6 +18,8 @@ import java.util.Objects;
 @Controller
 public class HomeController {
     UserMapper userMapper = new UserMapper();
+    ProjectServices projectServices = new ProjectServices();
+
 
     @GetMapping("/")
     public String renderIndex() {
@@ -53,9 +56,9 @@ public class HomeController {
 
     @GetMapping("/userpage")
     public String userPage(WebRequest request, Model model) throws Exception {
-        ProjectServices projectServices = new ProjectServices();
-        int userId = Integer.parseInt((request.getParameter("userId")));
-        String name = request.getParameter("name");
+        String userId = (String) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
+        String name = (String) request.getAttribute("name", WebRequest.SCOPE_SESSION);
+        //evt lave en metode updateProjects() som kalder på de nedestående linjer
         ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
         model.addAttribute("projects", projects);
         model.addAttribute("name", name);

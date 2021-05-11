@@ -8,7 +8,15 @@
 </head>
 <body>
 
-<H2 th:text=" 'hej' + ${session.}"></H2>
+<h2 th:text="${'Hej ' + name}"></h2>
+
+
+<ul>
+    <li th:each="project:${projects}">
+        <a th:href="${'/project?id=' + project.projectId}" th:text="${project.projectName}"></a>
+    </li>
+</ul>
+
 
 DER SKAL STÅ BRUGERENS NAVN PÅ TOPHØJRE SIDEN <br><br>
 
@@ -17,7 +25,7 @@ for each project in projects
 list item project.getName()
 -de skal væere et link to /project!
 
-
+<
 Your current projects:
 1.
 1.
