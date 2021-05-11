@@ -8,10 +8,6 @@ public class Project {
     private String projectName, description;
     private boolean isActive;
 
-    public Project() {
-        isActive = false;
-    }
-
     public Project(int id,
                    User author,
                    Client client,
