@@ -1,8 +1,5 @@
 package com.example.projectpyramid.data_access;
-import com.example.projectpyramid.domain.entities.Client;
-import com.example.projectpyramid.domain.entities.Phase;
-import com.example.projectpyramid.domain.entities.Project;
-import com.example.projectpyramid.domain.entities.Task;
+import com.example.projectpyramid.domain.entities.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,7 +28,7 @@ public class ProjectMapper {
             ArrayList<Project> projects = new ArrayList<>();
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("id");
-
+                User author = userMapper.getUser(id);
                 // TODO: Get author's User object from its service or mapper.
 
                 int clientId = resultSet.getInt("client_id");
@@ -41,7 +38,7 @@ public class ProjectMapper {
                 String description = resultSet.getString("description");
 
                 // TODO: Once all mappers and services has been implemented, set author and client appropriately.
-                Project project = new Project(projectId, null, client, projectName, description);
+                Project project = new Project(projectId, author, client, projectName, description);
                 project.setIsActive(isActive);
                 projects.add(project);
             }

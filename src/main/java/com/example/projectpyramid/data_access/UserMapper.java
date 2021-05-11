@@ -64,5 +64,26 @@ public class UserMapper {
             throw new Exception(ex.getMessage());
         }
     }
+
+    public User getUser(int userId) throws Exception {
+        try {
+            Connection con = DBManager.getConnection();
+            String SQL = "SELECT username, fullname FROM users "
+                    + "WHERE id=?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String fullName = rs.getString("fullname");
+                String userName = rs.getString("username");
+                User user = new User(fullName, userName, userId);
+                return user;
+            } else {
+                throw new Exception("Could not find user");
+            }
+        } catch (SQLException ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
 }
 
