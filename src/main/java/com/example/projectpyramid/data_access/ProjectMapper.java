@@ -18,24 +18,31 @@ public class ProjectMapper {
         try {
             Connection con = DBManager.getConnection();
             String SQL = "SELECT id, name, client_id, is_active, description FROM project WHERE author_id =?";
-            PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement preparedStatement = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<Project> projects = new ArrayList<>();
-            while (rs.next()) {
-                int projId = rs.getInt("id");
-                String name = rs.getString("name");
-                int clientId = rs.getInt("client_id");
-                //Client client  = new Client();
-                int is_active = rs.getInt("is_active");
-                String desc = rs.getString("description");
-                Project project = new Project(projId, id, clientId, name, desc);
-                if (is_active == 1) {
-                    project.setActive();
-                }
+            while (resultSet.next()) {
+                int projectId = resultSet.getInt("id");
+
+                // TODO: Get author's User object from its service or mapper.
+
+                int clientId = resultSet.getInt("client_id");
+                // TODO: Get Client object from its service or mapper.
+
+                String projectName = resultSet.getString("name");
+                boolean isActive = resultSet.getInt("is_active") != 0;
+                String description = resultSet.getString("description");
+
+                // TODO: Once all mappers and services has been implemented, set author and client appropriately.
+                Project project = new Project(projectId, null, null, projectName, description);
+                project.setIsActive(isActive);
+
                 projects.add(project);
             }
+
             return projects;
+
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }
