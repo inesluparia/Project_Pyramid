@@ -11,8 +11,9 @@ public class ProjectServices {
     ProjectMapper projectMapper = new ProjectMapper();
     //UserMapper userMapper = new UserMapper();
 
-    public ArrayList<Project> getProjectsFromUserId(int userId) throws Exception {
-    return projectMapper.getProjectsFromUserId(userId);
+    public ArrayList<Project> getProjectsFromUserId(String userId) throws Exception {
+       int intUserId = Integer.parseInt(userId);
+    return projectMapper.getProjectsFromUserId(intUserId);
     }
 
 /*
