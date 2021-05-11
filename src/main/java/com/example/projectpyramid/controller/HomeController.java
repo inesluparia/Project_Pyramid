@@ -39,7 +39,8 @@ public class HomeController {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         User user = userMapper.login(username, password);
-        request.setAttribute("userId", user.getId(), WebRequest.SCOPE_SESSION);
+        String user_Id = String.valueOf(user.getId());
+        request.setAttribute("userId", user_Id, WebRequest.SCOPE_SESSION);
         request.setAttribute("name", user.getFullName(), WebRequest.SCOPE_SESSION);
         return "redirect:userpage";
     }
