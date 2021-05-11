@@ -23,7 +23,7 @@ public class User {
     }
 
     public String getUserName() {
-        return fullName;
+        return this.userName;
     }
 
     public void setUserName(String userName) {
@@ -31,7 +31,7 @@ public class User {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
