@@ -1,5 +1,7 @@
 package com.example.projectpyramid.domain.entities;
 
+import java.util.ArrayList;
+
 public class Project {
 
     private int id;
@@ -7,12 +9,14 @@ public class Project {
     private Client client;
     private String projectName, description;
     private boolean isActive;
+    private ArrayList<Phase> phases;
 
     public Project(int id,
                    User author,
                    Client client,
                    String projectName,
                    String description) {
+        phases = new ArrayList<>();
         this.id = id;
         this.author = author;
         this.client = client;
@@ -22,6 +26,9 @@ public class Project {
 
     //Getters
 
+    public ArrayList<Phase> getPhases() {
+        return phases;
+    }
     public int getId() {
         return this.id;
     }
@@ -47,6 +54,10 @@ public class Project {
     }
 
     //Setters
+
+    public void setPhases(ArrayList<Phase> fases) {
+        this.phases = fases;
+    }
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;

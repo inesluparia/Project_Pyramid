@@ -9,17 +9,38 @@ public class ProjectMapper {
     ClientMapper clientMapper = new ClientMapper();
     UserMapper userMapper = new UserMapper();
 
-
     public void createProject(Project project){}
 
     public void addPhase(Phase phase){}
 
     public void addTask(Task task){}
 
-    public void getProject(int projectId){}
 
+    public Project getProject(int projectId) throws Exception {
+        try {
+            Connection con = DBManager.getConnection();
+            String SQL = "SELECT name, client_id, is_active, description, author_id FROM projects WHERE id=?";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, projectId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()){
+            int authorId = resultSet.getInt("author_id");
+            User author = userMapper.getUser(authorId);
+            int clientId = resultSet.getInt("client_id");
+            Client client = clientMapper.getClient(clientId);
+            String projectName = resultSet.getString("name");
+            boolean isActive = resultSet.getInt("is_active") != 0;
+            String description = resultSet.getString("description");
+            Project project = new Project(projectId, author, client, projectName, description);
+            project.setIsActive(isActive);
+            return project;
+        }
+        } catch (SQLException ex) {
+            throw new Exception(ex.getMessage());
+        }
 
-
+        return null;
+    }
 
     public ArrayList<Project> getProjectsFromUserId(int id) throws Exception {
         try {
@@ -32,7 +53,7 @@ public class ProjectMapper {
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("id");
                 User author = userMapper.getUser(id);
-                // TODO: Get author's User object from its service or mapper.
+                // TODO: Get projects phases and tasks and save them in phases list through a getProject() call.
                 int clientId = resultSet.getInt("client_id");
                 Client client = clientMapper.getClient(clientId);
                 String projectName = resultSet.getString("name");
@@ -43,12 +64,9 @@ public class ProjectMapper {
                 project.setIsActive(isActive);
                 projects.add(project);
             }
-
             return projects;
-
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }
-
     }
 }
