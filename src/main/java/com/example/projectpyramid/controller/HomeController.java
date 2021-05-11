@@ -67,7 +67,10 @@ public class HomeController {
     }
 
     @GetMapping("/project")
-    public String projectPage(){
+    public String projectPage(@RequestParam("id") String projectId, WebRequest request) throws Exception {
+    Project project = projectServices.getProject(Integer.parseInt(projectId));
+
+
         return "project.html";
     }
 
