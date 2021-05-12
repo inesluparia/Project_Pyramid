@@ -26,7 +26,7 @@ public class ProjectMapper {
                 int authorId = resultSet.getInt("author_id");
                 User author = userMapper.getUser(authorId);
                 int clientId = resultSet.getInt("client_id");
-                Client client = clientMapper.getClient(clientId);
+                Client client = clientMapper.getClientFromId(clientId);
                 String projectName = resultSet.getString("name");
                 boolean isActive = resultSet.getInt("is_active") != 0;
                 String description = resultSet.getString("description");
