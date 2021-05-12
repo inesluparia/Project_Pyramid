@@ -2,13 +2,13 @@ package com.example.projectpyramid.domain.entities;
 
 public class Client {
 
-    private int clientId;
+    private int id;
     private String name;
     private int cvr;
 
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
+    public void setId(int clientId) {
+        this.id = clientId;
     }
 
     public void setName(String name) {
@@ -19,8 +19,8 @@ public class Client {
         this.cvr = cvr;
     }
 
-    public int getClientId() {
-        return clientId;
+    public int getId() {
+        return id;
     }
 
     public String getName() {

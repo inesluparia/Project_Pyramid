@@ -7,36 +7,35 @@
 </head>
 <body>
 
-            project name            project client<br><br>
 
+<form name="create-project" action="create-project" method="POST">
+    Project name: <br>
+    <input type="text" name="project-name">
+    <br>
+    <br>
+    Description:
+    <br>
+    <textarea type="text" name="description" rows="4" cols="50"></textarea>
+    <br>
+    <label for="client-name">Client</label>
+    <br>
+    <select id="client-name" th:field="${clients}">
+        <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
+        </option>
+    </select>
 
-            <form name="create-project" action="create-project" method="POST">
-                Project name: <br>
-                <input type="text" name="projectName">
-                <br>
-                <br>
-                Description:
-                <br>
-                <textarea type="text" name="description" rows="4" cols="50"></textarea>
-                <br>
-                <label for="client-name">Client</label>
-                <br>
-                <select id = "client-name" th:field="${clients.getName}">
-                    <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
-                    </option>
-                </select>
+</form>
+<br>
+<b>add phase</b><br>
+<b>name</b>_____ <br> <b>description</b>______<br>
 
-            </form>
-            <br>
-            <b>add phase</b><br>
-            <b>name</b>_____ <br>  <b>description</b>______<br>
+<b>dependency phase</b>_____<br>
+<i>if this phase is dependent on another phase or task add it <br></i>
 
-            <b>dependency phase</b>_____<br>
-            <i>if this phase is dependent on another phase or task add it <br></i>
-
-            write phases nr here if a certain phase or task needs to be CONCLUDED before this starts<br>
+write phases nr here if a certain phase or task needs to be CONCLUDED before this starts<br>
 
 <b>add task</b>
+
 
 </body>
 </html>
