@@ -95,9 +95,9 @@ public class UserMapper {
             ps.setString(2, userName);
             ps.setString(3, password);
             ps.executeUpdate();
-            ResultSet ids = ps.getGeneratedKeys();
-            ids.next();
-            int id = ids.getInt(1);
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
             User user = new User(name, userName, id);
             return user;
         } catch (SQLException ex) {

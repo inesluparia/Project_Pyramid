@@ -1,8 +1,6 @@
 package com.example.projectpyramid.data_access;
-
 import com.example.projectpyramid.domain.entities.Client;
 import com.example.projectpyramid.domain.entities.Project;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -28,7 +26,7 @@ public class ClientMapper {
         } return client;
     }
 
-    public String getClientName(int id){
+    public ArrayList<Client> getClients(){
         return null;
     }
 
