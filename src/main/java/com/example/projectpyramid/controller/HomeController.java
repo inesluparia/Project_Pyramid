@@ -1,8 +1,10 @@
 package com.example.projectpyramid.controller;
 
 import com.example.projectpyramid.data_access.UserMapper;
+import com.example.projectpyramid.domain.entities.Client;
 import com.example.projectpyramid.domain.entities.Project;
 import com.example.projectpyramid.domain.entities.User;
+import com.example.projectpyramid.domain.services.ClientServices;
 import com.example.projectpyramid.domain.services.ProjectServices;
 import com.example.projectpyramid.domain.services.UserServices;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 public class HomeController {
     UserServices userServices = new UserServices();
     ProjectServices projectServices = new ProjectServices();
+    ClientServices clientServices = new ClientServices();
 
 
     @GetMapping("/")
@@ -56,7 +59,18 @@ public class HomeController {
     }
 
     @GetMapping("/createproject")
-    public String createProject() {
+    public String createProject(WebRequest request, Model model) {
+        //liggende på web requested
+        String userId = request.getParameter("userId");
+        String projectName = request.getParameter("projectName");
+        String description = request.getParameter("description");
+
+        //String client = request.getParameter("client");
+
+        ArrayList<Client> clients = clientServices.getClients();
+        model.addAttribute("clients", clients);
+
+
         return "createproject.html";
     }
 
@@ -73,8 +87,8 @@ public class HomeController {
 
     @GetMapping("/project")
     public String projectPage(@RequestParam("id") String projectId, WebRequest request, Model model) throws Exception {
-    Project project = projectServices.getProject(Integer.parseInt(projectId));
-    model.addAttribute("project", project);
+        Project project = projectServices.getProjectFromId(Integer.parseInt(projectId));
+        model.addAttribute("project", project);
         return "project.html";
     }
 

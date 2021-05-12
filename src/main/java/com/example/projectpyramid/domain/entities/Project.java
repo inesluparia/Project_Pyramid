@@ -16,19 +16,16 @@ public class Project {
                    Client client,
                    String projectName,
                    String description) {
-        phases = new ArrayList<>();
         this.id = id;
         this.author = author;
         this.client = client;
         this.projectName = projectName;
-        this.description =  description;
+        this.description = description;
+        this.phases = new ArrayList<>();
     }
 
     //Getters
 
-    public ArrayList<Phase> getPhases() {
-        return phases;
-    }
     public int getId() {
         return this.id;
     }
@@ -53,11 +50,11 @@ public class Project {
         return this.isActive;
     }
 
-    //Setters
-
-    public void setPhases(ArrayList<Phase> fases) {
-        this.phases = fases;
+    public ArrayList<Phase> getPhases() {
+        return phases;
     }
+
+    //Setters
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
@@ -69,5 +66,9 @@ public class Project {
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public void setPhases(ArrayList<Phase> phases) {
+        this.phases = phases;
     }
 }

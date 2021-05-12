@@ -26,7 +26,7 @@ public class ProjectMapper {
                 int authorId = resultSet.getInt("author_id");
                 User author = userMapper.getUser(authorId);
                 int clientId = resultSet.getInt("client_id");
-                Client client = clientMapper.getClient(clientId);
+                Client client = clientMapper.getClientFromId(clientId);
                 String projectName = resultSet.getString("name");
                 boolean isActive = resultSet.getInt("is_active") != 0;
                 String description = resultSet.getString("description");
@@ -35,6 +35,7 @@ public class ProjectMapper {
                 return project;
             }
         } catch (SQLException ex) {
+            // FIXME either handle exception or smth else, bc this cascades throughout lots of other code.
             throw new Exception(ex.getMessage());
         }
 
@@ -54,7 +55,7 @@ public class ProjectMapper {
                 User author = userMapper.getUser(id);
                 // TODO: Get projects phases and tasks and save them in phases list through a getProject() call.
                 int clientId = resultSet.getInt("client_id");
-                Client client = clientMapper.getClient(clientId);
+                Client client = clientMapper.getClientFromId(clientId);
                 String projectName = resultSet.getString("name");
                 boolean isActive = resultSet.getInt("is_active") != 0;
                 String description = resultSet.getString("description");
@@ -66,32 +67,6 @@ public class ProjectMapper {
             return projects;
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
-        }
-    }
-
-    public ArrayList<Task> getTasks(int phaseId){
-        String query = "SELECT id, name, description FROM tasks WHERE phase_id = ?";
-        Connection connection = DBManager.getConnection();
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, phaseId);
-            ResultSet results = preparedStatement.executeQuery();
-
-            ArrayList<Task> tasks = new ArrayList<>();
-            while (results.next()) {
-                int id = results.getInt("id");
-                String name = results.getString("name");
-                int duration = results.getInt("duration");
-                String description = results.getString("description");
-
-                tasks.add(new Task(phaseId, id, duration, name, description));
-            }
-
-            return tasks;
-
-        } catch (SQLException ex) {
-            return null;
         }
     }
 
