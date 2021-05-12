@@ -69,4 +69,54 @@ public class ProjectMapper {
         }
     }
 
+    public ArrayList<Task> getTasks(int phaseId){
+        String query = "SELECT id, name, description FROM tasks WHERE phase_id = ?";
+        Connection connection = DBManager.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, phaseId);
+            ResultSet results = preparedStatement.executeQuery();
+
+            ArrayList<Task> tasks = new ArrayList<>();
+            while (results.next()) {
+                int id = results.getInt("id");
+                String name = results.getString("name");
+                int duration = results.getInt("duration");
+                String description = results.getString("description");
+
+                tasks.add(new Task(phaseId, id, duration, name, description));
+            }
+
+            return tasks;
+
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+
+    public ArrayList<Phase> getPhases(int projectId) {
+        String query = "SELECT id, name, description FROM phases WHERE project_id = ?";
+        Connection connection = DBManager.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, projectId);
+            ResultSet results = preparedStatement.executeQuery();
+
+            ArrayList<Phase> phases = new ArrayList<>();
+            while (results.next()) {
+                int id = results.getInt("id");
+                String name = results.getString("name");
+                String description = results.getString("description");
+
+                phases.add(new Phase(name, description, id, projectId));
+            }
+
+            return phases;
+
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
 }
