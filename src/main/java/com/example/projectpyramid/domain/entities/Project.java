@@ -21,7 +21,7 @@ public class Project {
         this.author = author;
         this.client = client;
         this.projectName = projectName;
-        this.description =  description;
+        this.description = description;
     }
 
     //Getters
