@@ -17,9 +17,7 @@ public class UserMapper {
 
     }
 
-    public void delete(User user) {
-        String query = "DELETE FROM users WHERE id = user.getId()";
-    }
+    public void delete(User user) { String query = "DELETE FROM users WHERE id =" + user.getId() +";"; }
 
 /*
         public String getUserName(String userId) throws Exception {
