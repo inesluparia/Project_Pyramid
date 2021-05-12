@@ -35,6 +35,7 @@ public class ProjectMapper {
                 return project;
             }
         } catch (SQLException ex) {
+            // FIXME either handle exception or smth else, bc this cascades throughout lots of other code.
             throw new Exception(ex.getMessage());
         }
 
