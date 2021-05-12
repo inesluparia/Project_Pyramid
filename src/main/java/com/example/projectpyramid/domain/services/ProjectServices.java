@@ -34,7 +34,7 @@ public class ProjectServices {
         project.setPhases(phases);
     }
 
-    public Project getProject(int projectId) throws Exception {
+    public Project getProjectFromId(int projectId) throws Exception {
       Project project = projectMapper.getProject(projectId);
       populateProject(project);
       return project;
@@ -46,9 +46,9 @@ public class ProjectServices {
     }
 */
 
-    public int getTotalDuration(int projectId) throws Exception {
+    public int getTotalDurationInHours(int projectId) throws Exception {
         int totalDuration = 0;
-        Project project = getProject(projectId);
+        Project project = getProjectFromId(projectId);
         ArrayList<Phase> phases = project.getPhases();
         for (Phase phase : phases) {
             ArrayList<Task> tasks = phase.getTasks();
@@ -61,8 +61,8 @@ public class ProjectServices {
     }
 
     public int getTotalCost(int projectId) throws Exception {
-        int totalDuration = getTotalDuration(projectId);
-        int costFactor = 2;
-        return totalDuration * costFactor;
+        int totalDuration = getTotalDurationInHours(projectId);
+        int costPerHour = 2;
+        return totalDuration * costPerHour;
     }
 }
