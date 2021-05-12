@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="stylesheet.css">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -8,6 +9,21 @@
 
             project name            project client<br><br>
 
+
+            <form name="create-project" action="create-project" method="POST">
+                Project name: <br>
+                <input type="text" name="projectName">
+                <br>
+                Description: <br>
+                <textarea type="text" name="description" rows="4" cols="50"></textarea>
+
+                <select th:field="*{percentage}">
+                    <option th:each="i : ${#numbers.sequence(0, 100)}" th:value="${i}" th:text="${i}">
+                    </option>
+                </select>
+
+            </form>
+er
             <b>add phase</b><br>
             <b>name</b>_____ <br>  <b>description</b>______<br>
 

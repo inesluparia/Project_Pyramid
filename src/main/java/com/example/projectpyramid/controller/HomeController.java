@@ -56,7 +56,15 @@ public class HomeController {
     }
 
     @GetMapping("/createproject")
-    public String createProject() {
+    public String createProject(WebRequest request) {
+        //liggende på web requested
+        String userId = request.getParameter("userId");
+        String projectName = request.getParameter("projectName");
+        String description = request.getParameter("description");
+        String client = request.getParameter("client");
+
+
+
         return "createproject.html";
     }
 
