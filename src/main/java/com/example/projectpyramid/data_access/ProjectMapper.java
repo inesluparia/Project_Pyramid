@@ -9,12 +9,11 @@ public class ProjectMapper {
     ClientMapper clientMapper = new ClientMapper();
     UserMapper userMapper = new UserMapper();
 
-    public void createProject(Project project){}
+    public void createProject(Project project) { }
 
-    public void addPhase(Phase phase){}
+    public void addPhase(Phase phase) { }
 
-    public void addTask(Task task){}
-
+    public void addTask(Task task) { }
 
     public Project getProject(int projectId) throws Exception {
         try {
@@ -97,7 +96,6 @@ public class ProjectMapper {
     }
 
     public ArrayList<Phase> getPhases(int projectId) {
-
         String query = "SELECT id, name, description FROM phases WHERE project_id = ?";
         Connection connection = DBManager.getConnection();
 
