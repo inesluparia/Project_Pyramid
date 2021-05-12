@@ -4,6 +4,7 @@ import com.example.projectpyramid.data_access.UserMapper;
 import com.example.projectpyramid.domain.entities.Project;
 import com.example.projectpyramid.domain.entities.User;
 import com.example.projectpyramid.domain.services.ProjectServices;
+import com.example.projectpyramid.domain.services.UserServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 @Controller
 public class HomeController {
-    UserMapper userMapper = new UserMapper();
+    UserServices userServices = new UserServices();
     ProjectServices projectServices = new ProjectServices();
 
 
@@ -25,11 +26,10 @@ public class HomeController {
         return "index.html";
     }
 
-
     @GetMapping("/logintest")
     @ResponseBody
     public String loginTest() throws Exception {
-        User user = userMapper.login("Andersand", "1234");
+        User user = userServices.login("Andersand", "1234");
         return user.getUserName();
     }
 
@@ -37,16 +37,22 @@ public class HomeController {
     public String login(WebRequest request) throws Exception {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User user = userMapper.login(username, password);
+        User user = userServices.login(username, password);
         String user_Id = String.valueOf(user.getId());
         request.setAttribute("userId", user_Id, WebRequest.SCOPE_SESSION);
         request.setAttribute("name", user.getFullName(), WebRequest.SCOPE_SESSION);
         return "redirect:userpage";
     }
 
-    @GetMapping("/createuser")
-    public String createUser() {
-        return "createuser.html";
+    @PostMapping("/createuser")
+    public String createUser(WebRequest request, Model model) throws Exception {
+        String username = request.getParameter("username");
+        String name = request.getParameter("name");
+        String password1 = request.getParameter("password1");
+        String password2 = request.getParameter("password2");
+        User user = userServices.createUser(name, username, password1, password2);
+        model.addAttribute("name", user.getFullName());
+        return "success.html";
     }
 
     @GetMapping("/createproject")

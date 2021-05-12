@@ -14,6 +14,10 @@ public class User {
         this.id = id;
     }
 
+    public User(String fullName, String userName){
+        this.fullName = fullName;
+        this.userName = userName;
+    }
     public String getFullName() {
         return this.fullName;
     }
