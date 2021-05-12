@@ -12,8 +12,4 @@ public class ClientServices {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
-    public String getClientName(int clientId){
-        return clientMapper.getClientName(clientId);
-    }
-
 }

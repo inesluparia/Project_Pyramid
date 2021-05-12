@@ -14,16 +14,20 @@
                 Project name: <br>
                 <input type="text" name="projectName">
                 <br>
-                Description: <br>
+                <br>
+                Description:
+                <br>
                 <textarea type="text" name="description" rows="4" cols="50"></textarea>
-
-                <select th:field="*{percentage}">
-                    <option th:each="i : ${#numbers.sequence(0, 100)}" th:value="${i}" th:text="${i}">
+                <br>
+                <label for="client-name">Client</label>
+                <br>
+                <select id = "client-name" th:field="${clients.getName}">
+                    <option th:each="client: ${clients}" th:value="${i}" th:text="${i}">
                     </option>
                 </select>
 
             </form>
-er
+            <br>
             <b>add phase</b><br>
             <b>name</b>_____ <br>  <b>description</b>______<br>
 

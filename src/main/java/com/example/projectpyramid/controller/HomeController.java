@@ -1,6 +1,7 @@
 package com.example.projectpyramid.controller;
 
 import com.example.projectpyramid.data_access.UserMapper;
+import com.example.projectpyramid.domain.entities.Client;
 import com.example.projectpyramid.domain.entities.Project;
 import com.example.projectpyramid.domain.entities.User;
 import com.example.projectpyramid.domain.services.ProjectServices;
@@ -56,13 +57,16 @@ public class HomeController {
     }
 
     @GetMapping("/createproject")
-    public String createProject(WebRequest request) {
+    public String createProject(WebRequest request, Model model) {
         //liggende på web requested
         String userId = request.getParameter("userId");
         String projectName = request.getParameter("projectName");
         String description = request.getParameter("description");
-        String client = request.getParameter("client");
 
+        //String client = request.getParameter("client");
+
+        ArrayList<Client> clients = new ArrayList<Client>();
+        model.addAttribute("clients", clients);
 
 
         return "createproject.html";
