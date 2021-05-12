@@ -19,7 +19,6 @@ public class Client {
         this.cvr = cvr;
     }
 
-
     public int getClientId() {
         return clientId;
     }
@@ -31,5 +30,4 @@ public class Client {
     public int getCvr() {
         return cvr;
     }
-
 }

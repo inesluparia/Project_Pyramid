@@ -35,6 +35,7 @@ public class ProjectMapper {
                 return project;
             }
         } catch (SQLException ex) {
+            // FIXME either handle exception or smth else, bc this cascades throughout lots of other code.
             throw new Exception(ex.getMessage());
         }
 
@@ -68,8 +69,6 @@ public class ProjectMapper {
             throw new Exception(ex.getMessage());
         }
     }
-
-
 
     public ArrayList<Phase> getPhases(int projectId) {
         String query = "SELECT id, name, description FROM phases WHERE project_id = ?";

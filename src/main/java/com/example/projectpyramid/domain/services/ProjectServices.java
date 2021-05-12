@@ -47,17 +47,23 @@ public class ProjectServices {
     }
 */
 
-    public int getTotalProjectDuration(int projectId) throws Exception {
-        int totalProjectDuration = 0;
+    public int getTotalDuration(int projectId) throws Exception {
+        int totalDuration = 0;
         Project project = getProject(projectId);
         ArrayList<Phase> phases = project.getPhases();
         for (Phase phase : phases) {
             ArrayList<Task> tasks = phase.getTasks();
             for (Task task : tasks) {
-                totalProjectDuration += task.getDurationInHours();
+                totalDuration += task.getDurationInHours();
             }
         }
 
-        return totalProjectDuration;
+        return totalDuration;
+    }
+
+    public int getTotalCost(int projectId) throws Exception {
+        int totalDuration = getTotalDuration(projectId);
+        int costFactor = 2;
+        return totalDuration * costFactor;
     }
 }
