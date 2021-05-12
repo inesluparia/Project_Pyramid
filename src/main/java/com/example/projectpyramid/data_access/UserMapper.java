@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public class UserMapper {
 
+    @Deprecated
     public static String getUserName(int authorId) throws Exception{
 
-        String query = "SELECT author FROM users WHERE id = ?;";
+        String query = "SELECT username FROM users WHERE id = ?;";
         Connection connection = DBManager.getConnection();
         String username = "";
         ResultSet resultSet = null;
@@ -30,51 +31,55 @@ public class UserMapper {
         return username;
     }
 
-
-    public boolean insert(User user) throws Exception{
-
-        String query = "INSERT INTO users(fullname, username, password) VALUES(?,?,?) " +
-                "WHERE username = ?;";
+    // TODO insert password as well.
+    public boolean insert(User user) throws Exception {
+        String query = "INSERT INTO users (fullname, username) VALUES (?, ?, ?)";
         Connection connection = DBManager.getConnection();
-        boolean queryComplete = false;
+        boolean wasSuccessful = false;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement.setInt(1, user.getId());
-            queryComplete = preparedStatement.executeUpdate() > 0;
+            preparedStatement.setString(1, user.getFullName());
+            preparedStatement.setString(2, user.getUserName());
+            preparedStatement.setInt(3, user.getId());
+
+            wasSuccessful = preparedStatement.executeUpdate() > 0;
+
         } catch (SQLException ex) {
             System.out.println("An Exception occured:");
             ex.printStackTrace();
-        }finally{
+        } finally {
             connection.clearWarnings();
             connection.close();
         }
 
-        return queryComplete;
-
+        return wasSuccessful;
     }
 
-    public boolean update(User user) throws Exception{
-
-        String query = "UPDATE usr FROM users WHERE id = ?;";
+    // TODO update password as well.
+    public boolean update(User user) throws Exception {
+        String query = "UPDATE users SET fullname = ?, username = ? WHERE id = ?";
         Connection connection = DBManager.getConnection();
-        boolean queryComplete = false;
+        boolean wasSuccessful = false;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement.setInt(1, user.getId());
-            queryComplete = preparedStatement.executeUpdate() > 0;
+            preparedStatement.setString(1, user.getFullName());
+            preparedStatement.setString(2, user.getUserName());
+            preparedStatement.setInt(3, user.getId());
+
+            wasSuccessful = preparedStatement.executeUpdate() > 0;
+
         } catch (SQLException ex) {
             System.out.println("An Exception occured:");
             ex.printStackTrace();
-        }finally {
+        } finally {
             connection.clearWarnings();
             connection.close();
         }
 
-        return queryComplete;
+        return wasSuccessful;
     }
-
 
     public boolean delete(User user) {
         String query = "DELETE FROM users WHERE id = ?;";
