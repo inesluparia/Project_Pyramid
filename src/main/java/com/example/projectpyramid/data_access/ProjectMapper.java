@@ -23,18 +23,18 @@ public class ProjectMapper {
             PreparedStatement preparedStatement = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, projectId);
             ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()){
-            int authorId = resultSet.getInt("author_id");
-            User author = userMapper.getUser(authorId);
-            int clientId = resultSet.getInt("client_id");
-            Client client = clientMapper.getClient(clientId);
-            String projectName = resultSet.getString("name");
-            boolean isActive = resultSet.getInt("is_active") != 0;
-            String description = resultSet.getString("description");
-            Project project = new Project(projectId, author, client, projectName, description);
-            project.setIsActive(isActive);
-            return project;
-        }
+            if (resultSet.next()) {
+                int authorId = resultSet.getInt("author_id");
+                User author = userMapper.getUser(authorId);
+                int clientId = resultSet.getInt("client_id");
+                Client client = clientMapper.getClient(clientId);
+                String projectName = resultSet.getString("name");
+                boolean isActive = resultSet.getInt("is_active") != 0;
+                String description = resultSet.getString("description");
+                Project project = new Project(projectId, author, client, projectName, description);
+                project.setIsActive(isActive);
+                return project;
+            }
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }

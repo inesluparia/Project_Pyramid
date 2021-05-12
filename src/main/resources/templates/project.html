@@ -5,8 +5,28 @@
     <title>Title</title>
 </head>
 <body>
-EN LISTE/TABLE AF EN BESTEMT PROJECT
+EN LISTE/TABLE AF ET BESTEMT PROJECT
 
+<table>
+<tr>
+
+    <tr>
+        <th>Project name</th>
+        <th>Author</th>
+        <th>Beskrivelse</th>
+        <th>Pris</th>
+        <th>Er reservered?</th>
+    </tr>
+    <tr>
+    <td th:text="${project.name}"></td>
+    <td th:text="${project.author}"></td>
+    <td th:text="${project.client}"></td>
+    <td th:text="${project.description}"></td>
+    <td th:text="${project.price}"></td>
+    <td th:if="${project.isActive == false}">Nej</td>
+    <td th:if="${project.isActive == true}">Ja</td>
+</tr>
+</table>
 
 
 </body>
