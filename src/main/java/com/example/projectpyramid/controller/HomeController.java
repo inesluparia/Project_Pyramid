@@ -87,8 +87,8 @@ public class HomeController {
 
     @GetMapping("/project")
     public String projectPage(@RequestParam("id") String projectId, WebRequest request, Model model) throws Exception {
-    Project project = projectServices.getProject(Integer.parseInt(projectId));
-    model.addAttribute("project", project);
+        Project project = projectServices.getProjectFromId(Integer.parseInt(projectId));
+        model.addAttribute("project", project);
         return "project.html";
     }
 
