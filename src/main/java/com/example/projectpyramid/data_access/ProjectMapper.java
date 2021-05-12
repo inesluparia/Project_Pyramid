@@ -55,7 +55,7 @@ public class ProjectMapper {
                 User author = userMapper.getUser(id);
                 // TODO: Get projects phases and tasks and save them in phases list through a getProject() call.
                 int clientId = resultSet.getInt("client_id");
-                Client client = clientMapper.getClient(clientId);
+                Client client = clientMapper.getClientFromId(clientId);
                 String projectName = resultSet.getString("name");
                 boolean isActive = resultSet.getInt("is_active") != 0;
                 String description = resultSet.getString("description");
