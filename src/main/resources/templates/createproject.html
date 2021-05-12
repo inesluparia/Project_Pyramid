@@ -22,7 +22,7 @@
                 <label for="client-name">Client</label>
                 <br>
                 <select id = "client-name" th:field="${clients.getName}">
-                    <option th:each="client: ${clients}" th:value="${i}" th:text="${i}">
+                    <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
                     </option>
                 </select>
 
