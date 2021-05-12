@@ -6,11 +6,9 @@
 </head>
 <body>
 
-
-
 <h1>PROJECT PYRAMID</h1>
 
-<h3>LOG IN</h3>
+<h2>Log in</h2>
     <form name="login" action="login" method="POST">
         Username:<br>
         <input type="text" name="username">
@@ -20,6 +18,27 @@
         <br>
         <br>
         <input type="submit" value="Log in">
+</form>
+<br>
+<br>
+//someone should not be able to openly create a user and right away be able to see active project on the firm...
+//should we add an admin password??? what are other options???
+<h2>Or create a new user</h2>
+<form name="create-user" action="/createuser" method="POST">
+    Name:<br>
+    <input type="text" name="name">
+    <br>
+    Username:<br>
+    <input type="text" name="username">
+    <br>
+    Password:<br>
+    <input type="password" name="password1">
+    <br>
+    Retype password:<br>
+    <input type="password" name="password2">
+    <br>
+    <br>
+    <input type="submit" value="Create user">
 </form>
 
 </body>

@@ -9,6 +9,7 @@ public class UserMapper {
         return null;
     }
 
+
     public void insert(User user) {
 
     }
@@ -18,6 +19,7 @@ public class UserMapper {
     }
 
     public void delete(User user) { String query = "DELETE FROM users WHERE id =" + user.getId() +";"; }
+
 
 /*
         public String getUserName(String userId) throws Exception {
@@ -83,5 +85,25 @@ public class UserMapper {
             throw new Exception(ex.getMessage());
         }
     }
+
+    public User createUser(String name, String userName, String password) throws Exception {
+        try {
+            Connection con = DBManager.getConnection();
+            String SQL = "INSERT INTO users (fullname, username, password) VALUES (?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, name);
+            ps.setString(2, userName);
+            ps.setString(3, password);
+            ps.executeUpdate();
+            ResultSet ids = ps.getGeneratedKeys();
+            ids.next();
+            int id = ids.getInt(1);
+            User user = new User(name, userName, id);
+            return user;
+        } catch (SQLException ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+
 }
 

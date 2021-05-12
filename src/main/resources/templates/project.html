@@ -7,8 +7,24 @@
 <body>
 EN LISTE/TABLE AF ET BESTEMT PROJECT
 
+<table>
+<tr>
 
-
+    <tr>
+        <th>Project name</th>
+        <th>Author</th>
+        <th>Beskrivelse</th>
+        <th>Er reservered?</th>
+    </tr>
+    <tr>
+    <td th:text="${project.projectName}"></td>
+    <td th:text="${project.author.fullName}"></td>
+<!--    <td th:text="${project.client.name}"></td>-->
+    <td th:text="${project.description}"></td>
+    <td th:if="${project.isActive == false}">Nej</td>
+    <td th:if="${project.isActive == true}">Ja</td>
+</tr>
+</table>
 
 
 </body>
