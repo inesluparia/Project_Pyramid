@@ -42,7 +42,19 @@ public class ProjectServices {
     public String getAuthorNameFromProj(int authorId){
         return UserMapper.getUserName(authorId);
     }
-
-
 */
+
+    public int getTotalProjectDuration(int projectId) throws Exception {
+        int totalProjectDuration = 0;
+        Project project = getProject(projectId);
+        ArrayList<Phase> phases = project.getPhases();
+        for (Phase phase : phases) {
+            ArrayList<Task> tasks = phase.getTasks();
+            for (Task task : tasks) {
+                totalProjectDuration += task.getDurationInHours();
+            }
+        }
+
+        return totalProjectDuration;
+    }
 }
