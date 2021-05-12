@@ -1,7 +1,9 @@
 package com.example.projectpyramid.data_access;
+import com.example.projectpyramid.domain.entities.Phase;
 import com.example.projectpyramid.domain.entities.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UserMapper {
 
@@ -18,7 +20,18 @@ public class UserMapper {
 
     }
 
-    public void delete(User user) { String query = "DELETE FROM users WHERE id =" + user.getId() +";"; }
+    public boolean delete(User user) {
+        String query = "DELETE FROM users WHERE id = ?";
+        Connection connection = DBManager.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement.setInt(1, user.getId());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 
 
 /*
