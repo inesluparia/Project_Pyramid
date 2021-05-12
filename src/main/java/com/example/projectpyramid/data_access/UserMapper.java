@@ -7,21 +7,77 @@ import java.util.ArrayList;
 
 public class UserMapper {
 
-    public static String getUserName(int authorId) {
-        return null;
+    public static String getUserName(int authorId) throws Exception{
+
+        String query = "SELECT author FROM users WHERE id = ?;";
+        Connection connection = DBManager.getConnection();
+        String username = "";
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement.setInt(1, authorId);
+            resultSet = preparedStatement.getResultSet();
+            username = resultSet.getString("username");
+        } catch (SQLException ex) {
+            System.out.println("An Exception occured:");
+            ex.printStackTrace();
+        }finally{
+            connection.clearWarnings();
+            connection.close();
+        }
+
+        return username;
     }
 
 
-    public void insert(User user) {
+    public boolean insert(User user) throws Exception{
+
+        String query = "INSERT INTO users(fullname, username, password) VALUES(?,?,?) " +
+                "WHERE username = ?;";
+        Connection connection = DBManager.getConnection();
+        boolean queryComplete = false;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement.setInt(1, user.getId());
+            queryComplete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println("An Exception occured:");
+            ex.printStackTrace();
+        }finally{
+            connection.clearWarnings();
+            connection.close();
+        }
+
+        return queryComplete;
 
     }
 
-    public void update(User user) {
+    public boolean update(User user) throws Exception{
 
+        String query = "UPDATE usr FROM users WHERE id = ?;";
+        Connection connection = DBManager.getConnection();
+        boolean queryComplete = false;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement.setInt(1, user.getId());
+            queryComplete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println("An Exception occured:");
+            ex.printStackTrace();
+        }finally {
+            connection.clearWarnings();
+            connection.close();
+        }
+
+        return queryComplete;
     }
+
 
     public boolean delete(User user) {
-        String query = "DELETE FROM users WHERE id = ?";
+        String query = "DELETE FROM users WHERE id = ?;";
         Connection connection = DBManager.getConnection();
 
         try {
@@ -60,7 +116,7 @@ public class UserMapper {
         try {
             Connection con = DBManager.getConnection();
             String SQL = "SELECT id, fullname FROM users "
-                    + "WHERE username=? AND password=?";
+                    + "WHERE username=? AND password=?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, userName);
             ps.setString(2, password);
@@ -82,7 +138,7 @@ public class UserMapper {
         try {
             Connection con = DBManager.getConnection();
             String SQL = "SELECT username, fullname FROM users "
-                    + "WHERE id=?";
+                    + "WHERE id=?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
