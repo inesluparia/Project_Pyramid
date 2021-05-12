@@ -11,13 +11,13 @@ public class Project {
     private boolean isActive;
     private ArrayList<Phase> phases;
 
-    public Project(int id,
+    public Project(int projectId,
                    User author,
                    Client client,
                    String projectName,
                    String description) {
         phases = new ArrayList<>();
-        this.id = id;
+        this.id = projectId;
         this.author = author;
         this.client = client;
         this.projectName = projectName;

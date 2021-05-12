@@ -1,7 +1,6 @@
 package com.example.projectpyramid.data_access;
 
 import com.example.projectpyramid.domain.entities.Client;
-import com.example.projectpyramid.domain.entities.Project;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class ClientMapper {
                 client.setName(clientName);
                 int cvr = resultSet.getInt("cvr");
                 client.setCvr(cvr);
-                client.setClientId(clientId);
+                client.setId(clientId);
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -42,7 +41,7 @@ public class ClientMapper {
                 int cvr = resultSet.getInt("cvr");
                 client.setCvr(cvr);
                 int id = resultSet.getInt("id");
-                client.setClientId(id);
+                client.setId(id);
                 clients.add(client);
             }
             return clients;

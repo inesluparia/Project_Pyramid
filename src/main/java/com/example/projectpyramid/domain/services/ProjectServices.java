@@ -3,7 +3,6 @@ package com.example.projectpyramid.domain.services;
 import com.example.projectpyramid.data_access.PhaseMapper;
 import com.example.projectpyramid.data_access.ProjectMapper;
 import com.example.projectpyramid.data_access.TaskMapper;
-import com.example.projectpyramid.data_access.UserMapper;
 import com.example.projectpyramid.domain.entities.Phase;
 import com.example.projectpyramid.domain.entities.Project;
 import com.example.projectpyramid.domain.entities.Task;
@@ -29,7 +28,7 @@ public class ProjectServices {
     private void populateProject(Project project) {
         ArrayList<Phase> phases =  phaseMapper.getPhases(project.getId());
         for (Phase phase : phases) {
-            ArrayList<Task> tasks = taskMapper.getTasks(phase.getPhaseId());
+            ArrayList<Task> tasks = taskMapper.getTasks(phase.getId());
             phase.setTasks(tasks);
         }
         project.setPhases(phases);

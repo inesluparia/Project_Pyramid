@@ -6,7 +6,7 @@ public class Phase {
 
     private String name;
     private String description;
-    private int phaseId;
+    private int id;
     private int projectId;
     private ArrayList<Task> tasks;
 
@@ -14,7 +14,7 @@ public class Phase {
     public Phase(String name, String description, int phaseId, int projectId) {
         this.name = name;
         this.description = description;
-        this.phaseId = phaseId;
+        this.id = phaseId;
         this.projectId = projectId;
         tasks = new ArrayList<>();
     }
@@ -35,12 +35,12 @@ public class Phase {
         this.description = description;
     }
 
-    public int getPhaseId() {
-        return phaseId;
+    public int getId() {
+        return id;
     }
 
-    public void setPhaseId(int phaseId) {
-        this.phaseId = phaseId;
+    public void setId(int phaseId) {
+        this.id = phaseId;
     }
 
     public int getProjectId() {
