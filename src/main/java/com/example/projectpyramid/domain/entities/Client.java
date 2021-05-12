@@ -18,4 +18,16 @@ public class Client {
     public void setCvr(int cvr) {
         this.cvr = cvr;
     }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getCvr() {
+        return cvr;
+    }
 }
