@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 @Controller
 public class HomeController {
@@ -69,6 +68,7 @@ public class HomeController {
     @GetMapping("/project")
     public String projectPage(@RequestParam("id") String projectId, WebRequest request) throws Exception {
     Project project = projectServices.getProject(Integer.parseInt(projectId));
+
 
 
         return "project.html";
