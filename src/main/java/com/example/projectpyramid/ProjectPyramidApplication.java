@@ -11,5 +11,4 @@ public class ProjectPyramidApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProjectPyramidApplication.class, args);
     }
-
 }

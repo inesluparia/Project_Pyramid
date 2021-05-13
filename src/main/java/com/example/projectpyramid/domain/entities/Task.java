@@ -8,10 +8,10 @@ public class Task {
     private String name;
     private String description;
 
-    public Task(int taskId, int phaseId, int durationInHours, String name, String description) {
-        this.id = taskId;
+    public Task(int id, int phaseId, int durationInManHours, String name, String description) {
+        this.id = id;
         this.phaseId = phaseId;
-        this.durationInManHours = durationInHours;
+        this.durationInManHours = durationInManHours;
         this.name = name;
         this.description = description;
     }
@@ -19,23 +19,23 @@ public class Task {
     // Getters
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public int getPhaseId() {
-        return this.phaseId;
+        return phaseId;
     }
 
     public int getDurationInManHours() {
-        return this.durationInManHours;
+        return durationInManHours;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     // Setters
@@ -48,8 +48,8 @@ public class Task {
         this.phaseId = phaseId;
     }
 
-    public void setDurationInHours(int durationInHours) {
-        this.durationInManHours = durationInHours;
+    public void setDurationInManHours(int durationInManHours) {
+        this.durationInManHours = durationInManHours;
     }
 
     public void setName(String name) {

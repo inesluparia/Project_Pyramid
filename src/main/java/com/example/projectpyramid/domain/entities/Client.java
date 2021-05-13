@@ -6,18 +6,7 @@ public class Client {
     private String name;
     private int cvr;
 
-
-    public void setId(int clientId) {
-        this.id = clientId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCvr(int cvr) {
-        this.cvr = cvr;
-    }
+    // Getters
 
     public int getId() {
         return id;
@@ -29,5 +18,19 @@ public class Client {
 
     public int getCvr() {
         return cvr;
+    }
+
+    // Setters
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCvr(int cvr) {
+        this.cvr = cvr;
     }
 }

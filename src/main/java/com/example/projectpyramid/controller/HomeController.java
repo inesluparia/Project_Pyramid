@@ -18,14 +18,14 @@ import java.util.ArrayList;
 
 @Controller
 public class HomeController {
+
     UserServices userServices = new UserServices();
     ProjectServices projectServices = new ProjectServices();
     ClientServices clientServices = new ClientServices();
 
-
     @GetMapping("/")
     public String renderIndex() {
-        return "index.html";
+        return "index";
     }
 
     @GetMapping("/logintest")
@@ -50,11 +50,11 @@ public class HomeController {
     public String createUser(WebRequest request, Model model) throws Exception {
         String username = request.getParameter("username");
         String name = request.getParameter("name");
-        String password1 = request.getParameter("password1");
-        String password2 = request.getParameter("password2");
-        User user = userServices.createUser(name, username, password1, password2);
+        String password = request.getParameter("password1");
+        String confirmPassword = request.getParameter("password2");
+        User user = userServices.createUser(name, username, password, confirmPassword);
         model.addAttribute("name", user.getFullName());
-        return "success.html";
+        return "success";
     }
 
     @GetMapping("/createproject")
@@ -69,8 +69,7 @@ public class HomeController {
         ArrayList<Client> clients = clientServices.getClients();
         model.addAttribute("clients", clients);
 
-
-        return "createproject.html";
+        return "createproject";
     }
 
     @GetMapping("/userpage")
@@ -81,28 +80,27 @@ public class HomeController {
         ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
         model.addAttribute("projects", projects);
         model.addAttribute("name", name);
-        return "userpage.html";
+        return "userpage";
     }
 
     @GetMapping("/project")
-    public String projectPage(@RequestParam("id") String projectId, WebRequest request, Model model) throws Exception {
+    public String projectPage(@RequestParam("id") String projectId, Model model) throws Exception {
         int intProjectId = Integer.parseInt(projectId);
         Project project = projectServices.getProjectFromId(intProjectId);
-    model.addAttribute("project", project);
-    model.addAttribute("totalCost", projectServices.getTotalCost(intProjectId));
-    model.addAttribute("totalManHours", projectServices.getTotalManHours(intProjectId));
-    model.addAttribute("calenderTime", projectServices.getTotalCalenderTime(intProjectId));
-        return "project.html";
+        model.addAttribute("project", project);
+        model.addAttribute("totalCost", projectServices.getTotalCost(intProjectId));
+        model.addAttribute("totalManHours", projectServices.getTotalManHours(intProjectId));
+        model.addAttribute("calenderTime", projectServices.getTotalCalenderTime(intProjectId));
+        return "project";
     }
 
     @GetMapping("/myprojects")
     public String myProjects(){
-        return "myprojects.html";
+        return "myprojects";
     }
 
     @GetMapping("/projectlist")
     public String allProjects(){
-        return "allprojects.html";
+        return "allprojects";
     }
-
 }

@@ -9,16 +9,12 @@ public class ClientServices {
 
     ClientMapper clientMapper = new ClientMapper();
 
-    // TODO: Implement getClientFromId();
+    // TODO implement getClientFromId();
     public Client getClientFromId(int clientId) {
        return clientMapper.getClientFromId(clientId);
     }
 
-
     public ArrayList<Client> getClients(){
         return clientMapper.getClients();
     }
-
-
-
 }

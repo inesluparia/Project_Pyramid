@@ -27,27 +27,27 @@ public class Project {
     //Getters
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public User getAuthor() {
-        return this.author;
+        return author;
     }
 
     public Client getClient() {
-        return this.client;
+        return client;
     }
 
     public String getProjectName() {
-        return this.projectName;
+        return projectName;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public boolean getIsActive() {
-        return this.isActive;
+        return isActive;
     }
 
     public ArrayList<Phase> getPhases() {

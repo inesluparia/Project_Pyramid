@@ -85,7 +85,7 @@ public class ProjectMapper {
                 String name = results.getString("name");
                 String description = results.getString("description");
 
-                phases.add(new Phase(name, description, id, projectId));
+                phases.add(new Phase(id, projectId, name, description));
             }
 
             return phases;

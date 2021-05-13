@@ -42,12 +42,6 @@ public class ProjectServices {
         return project;
     }
 
-/*
-    public String getAuthorNameFromProj(int authorId){
-        return UserMapper.getUserName(authorId);
-    }
-*/
-
     public int getTotalManHours(int projectId) throws Exception {
         int totalDuration = 0;
         Project project = getProjectFromId(projectId);
@@ -66,7 +60,7 @@ public class ProjectServices {
         return totalDuration * costPerHour;
     }
 
-//TODO unit test for this method
+    // TODO unit test for this method.
     public String getTotalCalenderTime(int projectId) throws Exception {
         //a month has in average 4.35 weeks and therefore 152.25 working hours
         //a week has 35 working hours

@@ -7,7 +7,7 @@ public class UserServices {
 
     UserMapper userMapper = new UserMapper();
 
-    public User login(String userName, String password) throws Exception{
+    public User login(String userName, String password) throws Exception {
         User user = userMapper.login(userName, password);
         return user;
     }
