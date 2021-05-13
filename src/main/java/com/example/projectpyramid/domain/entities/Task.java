@@ -4,14 +4,14 @@ public class Task {
 
     private int id;
     private int phaseId;
-    private int durationInHours;
+    private int durationInManHours;
     private String name;
     private String description;
 
     public Task(int taskId, int phaseId, int durationInHours, String name, String description) {
         this.id = taskId;
         this.phaseId = phaseId;
-        this.durationInHours = durationInHours;
+        this.durationInManHours = durationInHours;
         this.name = name;
         this.description = description;
     }
@@ -26,8 +26,8 @@ public class Task {
         return this.phaseId;
     }
 
-    public int getDurationInHours() {
-        return this.durationInHours;
+    public int getDurationInManHours() {
+        return this.durationInManHours;
     }
 
     public String getName() {
@@ -49,7 +49,7 @@ public class Task {
     }
 
     public void setDurationInHours(int durationInHours) {
-        this.durationInHours = durationInHours;
+        this.durationInManHours = durationInHours;
     }
 
     public void setName(String name) {

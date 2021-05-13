@@ -25,7 +25,10 @@ EN LISTE/TABLE AF ET BESTEMT PROJECT
     <td th:if="${project.isActive == true}">Ja</td>
 </tr>
 </table>
-
+<h2>Project estimations</h2>
+<p th:text="${'Estimated cost for this project in DKK: ' + totalCost}"> Estimated cost for this project in DKK: </p>
+<p th:text="${'Estimated cost for this project in man-hours: ' + totalManHours}"> Estimated cost for this project in man-hours: </p>
+<p th:text="${calenderTime}"></p>
 
 </body>
 </html>

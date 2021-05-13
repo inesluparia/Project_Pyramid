@@ -1,6 +1,5 @@
 package com.example.projectpyramid.controller;
 
-import com.example.projectpyramid.data_access.UserMapper;
 import com.example.projectpyramid.domain.entities.Client;
 import com.example.projectpyramid.domain.entities.Project;
 import com.example.projectpyramid.domain.entities.User;
@@ -87,8 +86,12 @@ public class HomeController {
 
     @GetMapping("/project")
     public String projectPage(@RequestParam("id") String projectId, WebRequest request, Model model) throws Exception {
-        Project project = projectServices.getProjectFromId(Integer.parseInt(projectId));
-        model.addAttribute("project", project);
+        int intProjectId = Integer.parseInt(projectId);
+        Project project = projectServices.getProjectFromId(intProjectId);
+    model.addAttribute("project", project);
+    model.addAttribute("totalCost", projectServices.getTotalCost(intProjectId));
+    model.addAttribute("totalManHours", projectServices.getTotalManHours(intProjectId));
+    model.addAttribute("calenderTime", projectServices.getTotalCalenderTime(intProjectId));
         return "project.html";
     }
 
