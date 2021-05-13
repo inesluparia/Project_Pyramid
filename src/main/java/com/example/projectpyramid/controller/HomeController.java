@@ -84,13 +84,13 @@ public class HomeController {
     }
 
     @GetMapping("/project")
-    public String projectPage(@RequestParam("id") String projectId, Model model) throws Exception {
-        int intProjectId = Integer.parseInt(projectId);
-        Project project = projectServices.getProjectFromId(intProjectId);
+    public String projectPage(@RequestParam("id") int projectId, Model model) throws Exception {
+        Project project = projectServices.getProjectFromId(projectId);
         model.addAttribute("project", project);
-        model.addAttribute("totalCost", projectServices.getTotalCost(intProjectId));
-        model.addAttribute("totalManHours", projectServices.getTotalManHours(intProjectId));
-        model.addAttribute("calenderTime", projectServices.getTotalCalenderTime(intProjectId));
+        model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
+        model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
+        model.addAttribute("calenderTime", projectServices.getTotalCalenderTime(projectId));
+
         return "project";
     }
 
