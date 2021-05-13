@@ -33,7 +33,7 @@ public class UserMapper {
 
     // TODO insert password as well.
     public boolean insert(User user) throws Exception {
-        String query = "INSERT INTO users (fullname, username) VALUES (?, ?, ?)";
+        String query = "INSERT INTO users (fullname, username) VALUES (?, ?)";
         Connection connection = DBManager.getConnection();
         boolean wasSuccessful = false;
 
@@ -41,7 +41,6 @@ public class UserMapper {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setString(1, user.getFullName());
             preparedStatement.setString(2, user.getUserName());
-            preparedStatement.setInt(3, user.getId());
 
             wasSuccessful = preparedStatement.executeUpdate() > 0;
 
