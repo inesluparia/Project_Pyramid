@@ -1,6 +1,5 @@
 package com.example.projectpyramid.controller;
 
-import com.example.projectpyramid.data_access.UserMapper;
 import com.example.projectpyramid.domain.entities.Client;
 import com.example.projectpyramid.domain.entities.Project;
 import com.example.projectpyramid.domain.entities.User;
@@ -19,14 +18,14 @@ import java.util.ArrayList;
 
 @Controller
 public class HomeController {
+
     UserServices userServices = new UserServices();
     ProjectServices projectServices = new ProjectServices();
     ClientServices clientServices = new ClientServices();
 
-
     @GetMapping("/")
     public String renderIndex() {
-        return "index.html";
+        return "index";
     }
 
     @GetMapping("/logintest")
@@ -44,7 +43,6 @@ public class HomeController {
         String user_Id = String.valueOf(user.getId());
         request.setAttribute("userId", user_Id, WebRequest.SCOPE_SESSION);
         request.setAttribute("name", user.getFullName(), WebRequest.SCOPE_SESSION);
-
         return "redirect:userpage";
     }
 
@@ -52,11 +50,11 @@ public class HomeController {
     public String createUser(WebRequest request, Model model) throws Exception {
         String username = request.getParameter("username");
         String name = request.getParameter("name");
-        String password1 = request.getParameter("password1");
-        String password2 = request.getParameter("password2");
-        User user = userServices.createUser(name, username, password1, password2);
+        String password = request.getParameter("password1");
+        String confirmPassword = request.getParameter("password2");
+        User user = userServices.createUser(name, username, password, confirmPassword);
         model.addAttribute("name", user.getFullName());
-        return "success.html";
+        return "success";
     }
 
     @GetMapping("/createproject")
@@ -87,14 +85,14 @@ public class HomeController {
 
         return "createphase.html";
     }
-
+    
     @PostMapping("/add-phase")
-    public String createPhase(WebRequest request){
-    String name = request.getParameter("name");
-    String description = request.getParameter("description");
+    public String createPhase(WebRequest request) {
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
 
-    // TODO get project id
-    //Project project = projectServices.addPhase(name, description, );
+        // TODO get project id
+        //Project project = projectServices.addPhase(name, description, );
         return "createtask.html";
     }
 
@@ -112,24 +110,28 @@ public class HomeController {
         ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
         model.addAttribute("projects", projects);
         model.addAttribute("name", name);
-        return "userpage.html";
+        return "userpage";
     }
 
     @GetMapping("/project")
-    public String projectPage(@RequestParam("id") String projectId, WebRequest request, Model model) throws Exception {
-    Project project = projectServices.getProjectFromId(Integer.parseInt(projectId));
-    model.addAttribute("project", project);
-        return "project.html";
+    public String projectPage(@RequestParam("id") int projectId, Model model) throws Exception {
+        Project project = projectServices.getProjectFromId(projectId);
+        model.addAttribute("project", project);
+        model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
+        model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
+        model.addAttribute("calenderTime", projectServices.getTotalCalenderTime(projectId));
+
+        return "project";
     }
 
     @GetMapping("/myprojects")
     public String myProjects(){
-        return "myprojects.html";
+        return "myprojects";
     }
 
     @GetMapping("/projectlist")
     public String allProjects(){
-        return "allprojects.html";
+        return "allprojects";
     }
-
 }
+
