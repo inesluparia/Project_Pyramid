@@ -44,6 +44,7 @@ public class HomeController {
         String user_Id = String.valueOf(user.getId());
         request.setAttribute("userId", user_Id, WebRequest.SCOPE_SESSION);
         request.setAttribute("name", user.getFullName(), WebRequest.SCOPE_SESSION);
+
         return "redirect:userpage";
     }
 
@@ -59,20 +60,49 @@ public class HomeController {
     }
 
     @GetMapping("/createproject")
-    public String createProject(WebRequest request, Model model) {
-        //liggende på web requested
-        String userId = request.getParameter("userId");
-        String projectName = request.getParameter("projectName");
-        String description = request.getParameter("description");
-
-        //String client = request.getParameter("client");
-
+    public String projectCreation(Model model){
         ArrayList<Client> clients = clientServices.getClients();
         model.addAttribute("clients", clients);
 
-
         return "createproject.html";
     }
+
+            
+    @PostMapping("/map-project")
+    public String createProject(WebRequest request, Model model) {
+        //liggende på web requested
+        ArrayList<Client> clients = clientServices.getClients();
+        model.addAttribute("clients", clients);
+        model.getAttribute("clients");
+
+        //TODO get userid from the session
+        String userId = request.getParameter("userId");
+        String projectName = request.getParameter("project-name");
+        String description = request.getParameter("description");
+        String phase = request.getParameter("phase");
+        String clientId = request.getParameter("client");
+
+       // Project project = projectServices.createProject(null, userId, clientId, projectName, description );
+
+
+        return "createphase.html";
+    }
+
+    @PostMapping("/add-phase")
+    public String createPhase(WebRequest request){
+    String name = request.getParameter("name");
+    String description = request.getParameter("description");
+
+    // TODO get project id
+    //Project project = projectServices.addPhase(name, description, );
+        return "createtask.html";
+    }
+
+    @PostMapping("/createtask")
+    public String createTask() {
+        return "success.html";
+    }
+
 
     @GetMapping("/userpage")
     public String userPage(WebRequest request, Model model) throws Exception {
@@ -87,7 +117,7 @@ public class HomeController {
 
     @GetMapping("/project")
     public String projectPage(@RequestParam("id") String projectId, WebRequest request, Model model) throws Exception {
-    Project project = projectServices.getProject(Integer.parseInt(projectId));
+    Project project = projectServices.getProjectFromId(Integer.parseInt(projectId));
     model.addAttribute("project", project);
         return "project.html";
     }

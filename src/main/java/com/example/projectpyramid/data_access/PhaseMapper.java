@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 public class PhaseMapper {
 
+    public void addPhase(Phase phase){
+
+    }
+
     public ArrayList<Phase> getPhases(int projectId) {
         String query = "SELECT id, name, description FROM phases WHERE project_id = ?";
         Connection connection = DBManager.getConnection();

@@ -8,24 +8,24 @@
 <body>
 
 
-<form name="create-project" action="create-project" method="POST">
-    Project name: <br>
+<form name="create-project" action="map-project" method="POST">
+
+    Project name:<br>
     <input type="text" name="project-name">
-    <br>
-    <br>
-    Description:
-    <br>
-    <textarea type="text" name="description" rows="4" cols="50"></textarea>
-    <br>
+    <br><br>
+    Description:<br>
+    <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
     <label for="client-name">Client</label>
-    <br>
+    <br><br>
     <select id="client-name" th:field="${clients}">
         <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
         </option>
     </select>
+    <br><br>
+    <input type="submit" value="Create project">
 
 </form>
-<br>
+<br><br><br><br>
 <b>add phase</b><br>
 <b>name</b>_____ <br> <b>description</b>______<br>
 

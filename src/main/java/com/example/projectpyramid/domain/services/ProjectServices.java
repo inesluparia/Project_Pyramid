@@ -15,6 +15,14 @@ public class ProjectServices {
     PhaseMapper phaseMapper = new PhaseMapper();
     TaskMapper taskMapper = new TaskMapper();
 
+    public void createProject(Project project) throws Exception {
+        //projectMapper.createProject(project);
+    }
+
+    public void addPhase(Phase phase) {
+        phaseMapper.addPhase(phase);
+    }
+
     public ArrayList<Project> getProjectsFromUserId(String userId) throws Exception {
        int intUserId = Integer.parseInt(userId);
         ArrayList<Project> projects = projectMapper.getProjectsFromUserId(intUserId);

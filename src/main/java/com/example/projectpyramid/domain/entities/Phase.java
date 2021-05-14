@@ -19,6 +19,12 @@ public class Phase {
         tasks = new ArrayList<>();
     }
 
+    public Phase(String name, String description, int projectId) {
+        this.name = name;
+        this.description = description;
+        this.projectId = projectId;
+    }
+
     public String getName() {
         return name;
     }
