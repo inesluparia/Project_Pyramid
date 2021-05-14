@@ -24,6 +24,16 @@ public class Project {
         this.phases = new ArrayList<>();
     }
 
+    public Project(User author,
+                   Client client,
+                   String projectName,
+                   String description) {
+        this.author = author;
+        this.client = client;
+        this.projectName = projectName;
+        this.description = description;
+    }
+
     //Getters
 
     public int getId() {

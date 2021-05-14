@@ -9,58 +9,23 @@ public class ProjectMapper {
     ClientMapper clientMapper = new ClientMapper();
     UserMapper userMapper = new UserMapper();
 
-    /*public void createProject(Project project) throws Exception {
-
+    public void createProject(String name, int userId, int clientId, String description) throws Exception {
         try {
             Connection con = DBManager.getConnection();
             String SQL = "INSERT INTO projects (name, author_id, client_id, description) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, project.getProjectName());
-            ps.setInt(2, project.getAuthor());
-            ps.setInt(3, project.getClient());
-            ps.setString(4, project.getDescription());
+            ps.setString(1, name);
+            ps.setInt(2, userId);
+            ps.setInt(3, clientId);
+            ps.setString(4, description);
             ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-        } catch (SQLException ex) {
-            throw new Exception(ex.getMessage());
-        }
-
-
-
-    }*/
-
-    public void addPhase(Phase phase) throws Exception {
-        try {
-            Connection con = DBManager.getConnection();
-            String SQL = "INSERT INTO phases (name, project_id, description) VALUES (?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, phase.getName());
-            ps.setInt(2, phase.getProjectId());
-            ps.setString(3, phase.getDescription());
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-        } catch (SQLException ex) {
-            throw new Exception(ex.getMessage());
-        }
-
-    }
-
-    public void addTask(Task task) throws Exception {
-        try {
-            Connection con = DBManager.getConnection();
-            String SQL = "INSERT INTO phases (name, project_id, description) VALUES (?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, task.getName());
-            ps.setInt(2, task.getPhaseId());
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }
     }
+
+
+
 
     public Project getProject(int projectId) throws Exception {
         try {

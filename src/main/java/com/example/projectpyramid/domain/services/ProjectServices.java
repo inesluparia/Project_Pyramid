@@ -17,13 +17,33 @@ public class ProjectServices {
     PhaseMapper phaseMapper = new PhaseMapper();
     TaskMapper taskMapper = new TaskMapper();
 
-    public void createProject(Project project) throws Exception {
-        //projectMapper.createProject(project);
+
+    public void createProject(String userId, String name, String description, String clientId) throws Exception {
+        int userIdInt = Integer.parseInt(userId);
+        int clientIdInt = Integer.parseInt(clientId);
+
+
+        // TODO er det nødvendigt at lave et objekt af projekt til metoden?
+        projectMapper.createProject(name, userIdInt, clientIdInt, description);
+
     }
 
-    public void addPhase(Phase phase) {
+
+    public Phase addPhase(String name, String description, int projectId) throws Exception {
+        Phase phase = new Phase(name, description, projectId);
         phaseMapper.addPhase(phase);
+        return phase;
     }
+/*
+
+    public Task addTask(String name, String phaseId, String durationInManHours, String description) {
+        int PhaseIdint = Integer.parseInt(phaseId);
+
+        Task task = new Task();
+
+        return tas;
+    }
+*/
 
     public ArrayList<Project> getProjectsFromUserId(String userId) throws Exception {
         int intUserId = Integer.parseInt(userId);
@@ -32,6 +52,12 @@ public class ProjectServices {
             populateProject(p);
         }
         return projects;
+    }
+
+    public ArrayList<Phase> getPhases(int projectId) {
+        ArrayList<Phase> phases = phaseMapper.getPhases(projectId);
+
+        return phases;
     }
 
     //Adds lists of phases and tasks to the returned project before forwarding it to controller

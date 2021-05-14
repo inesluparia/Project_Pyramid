@@ -1,8 +1,6 @@
 package com.example.projectpyramid.controller;
 
-import com.example.projectpyramid.domain.entities.Client;
-import com.example.projectpyramid.domain.entities.Project;
-import com.example.projectpyramid.domain.entities.User;
+import com.example.projectpyramid.domain.entities.*;
 import com.example.projectpyramid.domain.services.ClientServices;
 import com.example.projectpyramid.domain.services.ProjectServices;
 import com.example.projectpyramid.domain.services.UserServices;
@@ -67,38 +65,56 @@ public class HomeController {
 
             
     @PostMapping("/map-project")
-    public String createProject(WebRequest request, Model model) {
+    public String createProject(WebRequest request, Model model) throws Exception {
         //liggende på web requested
         ArrayList<Client> clients = clientServices.getClients();
         model.addAttribute("clients", clients);
         model.getAttribute("clients");
 
-        //TODO get userid from the session
-        String userId = request.getParameter("userId");
+        //FIXME set projectId in session after createProject has been executed
+        //FIXME get clientId from the thymeleaf SELECT OPTION
+     //   String project_id = String.valueOf(project);
+     //  request.setAttribute("project_id", project_id, WebRequest.SCOPE_SESSION);
+
+        String userId = (String) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
+
         String projectName = request.getParameter("project-name");
         String description = request.getParameter("description");
-        String phase = request.getParameter("phase");
         String clientId = request.getParameter("client");
 
-       // Project project = projectServices.createProject(null, userId, clientId, projectName, description );
-
+        projectServices.createProject(userId, projectName, description, clientId);
 
         return "createphase.html";
     }
     
     @PostMapping("/add-phase")
-    public String createPhase(WebRequest request) {
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
+    public String createPhase(WebRequest request) throws Exception {
+        String phaseName = request.getParameter("phase-name");
+        String phaseDescription = request.getParameter("phase-description");
 
-        // TODO get project id
+        
+
+        // FIXME get project id from the session
         //Project project = projectServices.addPhase(name, description, );
-        return "createtask.html";
+
+        Phase phase = projectServices.addPhase(phaseName, phaseDescription, 1);;
+        return "createphase.html";
     }
 
-    @PostMapping("/createtask")
-    public String createTask() {
-        return "success.html";
+    @PostMapping("/add-task")
+    public String createTask(WebRequest request, Model model) {
+        ArrayList<Phase> phases = projectServices.getPhases(1);
+        model.addAttribute("phases", phases);
+
+        // TODO get phase list with thymeleaf
+
+        String name = request.getParameter("name");
+        String phaseId = request.getParameter("phase");
+        String description = request.getParameter("description");
+        String durationInManHours = request.getParameter("duration");
+
+
+        return "createphase.html";
     }
 
 

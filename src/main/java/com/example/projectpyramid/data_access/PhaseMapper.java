@@ -1,15 +1,28 @@
 package com.example.projectpyramid.data_access;
 
 import com.example.projectpyramid.domain.entities.Phase;
+import com.example.projectpyramid.domain.entities.Task;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class PhaseMapper {
 
-    public void addPhase(Phase phase){
-
+    public void addPhase(Phase phase) throws Exception {
+        try {
+            Connection con = DBManager.getConnection();
+            String SQL = "INSERT INTO phases (name, project_id, description) VALUES (?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, phase.getName());
+            ps.setInt(2, phase.getProjectId());
+            ps.setString(3, phase.getDescription());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw new Exception(ex.getMessage());
+        }
     }
+
+
 
     public ArrayList<Phase> getPhases(int projectId) {
         String query = "SELECT id, name, description FROM phases WHERE project_id = ?";

@@ -13,7 +13,9 @@ public class Phase {
     public Phase(int id, int projectId, String name, String description) {
         this.id = id;
         this.projectId = projectId;
-        tasks = new ArrayList<>();
+        this.name = name;
+        this.description = description;
+        this.tasks = new ArrayList<>();
     }
 
     public Phase(String name, String description, int projectId) {
@@ -22,15 +24,14 @@ public class Phase {
         this.projectId = projectId;
     }
 
-    public String getName() {
-        return name;
-    }
+/*
 
     public void setName(String name) {
         this.name = name;
         this.description = description;
         this.tasks = new ArrayList<>();
     }
+*/
 
     // Getters
 
