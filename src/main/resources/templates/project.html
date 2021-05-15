@@ -8,7 +8,7 @@
 EN LISTE/TABLE AF ET BESTEMT PROJECT
 
 <table>
-<tr>
+    <tr>
     <tr>
         <th>Project name</th>
         <th>Author</th>
@@ -16,18 +16,49 @@ EN LISTE/TABLE AF ET BESTEMT PROJECT
         <th>Er aktiv?</th>
     </tr>
     <tr>
-    <td th:text="${project.projectName}"></td>
-    <td th:text="${project.author.fullName}"></td>
-<!--    <td th:text="${project.client.name}"></td>-->
-    <td th:text="${project.description}"></td>
-    <td th:if="${project.isActive == false}">Nej</td>
-    <td th:if="${project.isActive == true}">Ja</td>
-</tr>
+        <td th:text="${project.projectName}"></td>
+        <td th:text="${project.author.fullName}"></td>
+        <!--    <td th:text="${project.client.name}"></td>-->
+        <td th:text="${project.description}"></td>
+        <td th:if="${project.isActive == false}">Nej</td>
+        <td th:if="${project.isActive == true}">Ja</td>
+    </tr>
 </table>
+<!--<table>having problems with the nested loop and table, will try lists-->
+<!--    <tr>-->
+<!--        <th>Phase ID</th>-->
+<!--        <th>Task</th>-->
+<!--        <th>Description</th>-->
+<!--        <th>Man-hours</th>-->
+<!--    </tr>-->
+<!--    <tr th:each="phase:${project.phases}">-->
+<!--        <td th:text="${phase.name}"></td>-->
+<!--    </tr>-->
+<!--    <tr th:each="task:${phase.tasks}">-->
+<!--        <td th:text="${task.phaseId}">Phase</td>-->
+<!--        <td th:text="${task.name}">Task name</td>-->
+<!--        <td th:text="${task.description}">Description</td>-->
+<!--        <td th:text="${task.durationInManHours}">Task name</td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<section th:each="phase : ${project.phases}">
+    <p th:text="${'Phase: ' + phase.name}"></p>
+    <ul th:each="task: ${phase.tasks}">
+        <li th:text="${'Task: ' + task.name}"></li>
+        <li th:text="${'Description: ' + task.description}"></li>
+        <li th:text="${'Approximate man-hours: ' + task.durationInManHours}"></li>
+    </ul>
+</section>
+
+
+
 <h2>Project estimations</h2>
+<br>
 <p th:text="${'Estimated cost for this project in DKK: ' + totalCost}"> Estimated cost for this project in DKK: </p>
-<p th:text="${'Estimated cost for this project in man-hours: ' + totalManHours}"> Estimated cost for this project in man-hours: </p>
-<p th:text="${calenderTime}"></p>
+<p th:text="${'Estimated cost for this project in man-hours: ' + totalManHours}"> Estimated cost for this project in
+    man-hours: </p>
+<p th:text="${'Estimated date for completion: ' + completionDate}">Estimated completion date is: </p>
 
 </body>
 </html>

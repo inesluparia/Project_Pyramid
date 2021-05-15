@@ -135,7 +135,7 @@ public class HomeController {
         model.addAttribute("project", project);
         model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
         model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
-        model.addAttribute("calenderTime", projectServices.getTotalCalenderTime(projectId));
+        model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
 
         return "project";
     }
