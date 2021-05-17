@@ -7,27 +7,27 @@
 </head>
 <body>
 
+<div>
+    <form name="create-project" action="map-project" method="POST">
 
-<form name="create-project" action="map-project" method="POST">
+        Project name:<br>
+        <input type="text" name="project-name">
+        <br><br>
+        Description:<br>
+        <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
+        <!--<label for="select-client">Client</label>
+        name="client" id="select-client"-->
+        <br><br>
 
-    Project name:<br>
-    <input type="text" name="project-name">
-    <br><br>
-    Description:<br>
-    <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
-    <!--<label for="select-client">Client</label>
-    name="client" id="select-client"-->
-    <br><br>
+        <select th:field="*{clients}">
+            <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
+            </option>
+        </select>
+        <br><br>
+        <input type="submit" value="Create project">
 
-    <select th:field="*{clients}">
-        <option th:each="client: ${clients}" th:value="${client.id}"  th:text="${client.name}">
-        </option>
-    </select>
-    <br><br>
-    <input type="submit" value="Create project">
-
-</form>
-
+    </form>
+</div>
 
 
 <br><br><br><br>

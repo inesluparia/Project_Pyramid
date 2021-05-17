@@ -6,8 +6,10 @@
     <title>Title</title>
 </head>
 <body>
+
+
 <div>
-    <form name="addphase" action="add-phase" method="POST">
+    <form name="add-phase" action="add-phase" method="POST" id="add-phase">
         <h3>Add phase</h3>
         Phase name: <br>
         <input type="text" name="name">
@@ -15,15 +17,15 @@
         Description: <br>
         <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
         <br><br><br><br>
-        <input type="submit" value="add phase">
+        <input type="submit" value="add phase" form="add-phase">
     </form>
 </div>
 
-<!--
+
 <section>
     <h3>Add task</h3>
 
-    <form action="addtask" action="add-task" method="POST">
+    <form action="add-task" method="POST" id="add-task">
         Task name: <br>
         <input type="text" name="name">
         <br><br>
@@ -38,12 +40,12 @@
         <br><br>
         Duration in man hours: <br>
         <input type="number" name="duration">
-        <input type="submit" value="Add task">
+        <br><br>
+        <input type="submit" value="Add task" form="add-task">
     </form>
 
 
 </section>
--->
 
 <!--
 <select id="client-name" th:field="${clients}">
