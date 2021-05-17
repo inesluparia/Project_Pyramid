@@ -22,8 +22,6 @@ public class PhaseMapper {
         }
     }
 
-
-
     public ArrayList<Phase> getPhases(int projectId) {
         String query = "SELECT id, name, description FROM phases WHERE project_id = ?";
         Connection connection = DBManager.getConnection();
@@ -41,9 +39,7 @@ public class PhaseMapper {
 
                 phases.add(new Phase(id, projectId, name, description));
             }
-
             return phases;
-
         } catch (SQLException ex) {
             return null;
         }

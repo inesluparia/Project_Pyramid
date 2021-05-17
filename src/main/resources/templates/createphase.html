@@ -6,6 +6,10 @@
     <title>Title</title>
 </head>
 <body>
+<h1 th:text="${project.projectName}"></h1>
+<p th:text="${project.client.name}"></p>
+<p th:if="${project.isActive == false}">Project state: Active</p>
+<p th:if="${project.isActive == true}">Project state: Not active</p>
 
 <section th:each="phase : ${project.phases}">
     <p th:text="${'Phase: ' + phase.name}"></p>
@@ -55,13 +59,6 @@
     </form>
 
 </section>
-
-<!--
-<select id="client-name" th:field="${clients}">
-    <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
-    </option>
-</select>
--->
 
 </body>
 </html>

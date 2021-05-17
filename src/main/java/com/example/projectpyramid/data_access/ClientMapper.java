@@ -1,7 +1,5 @@
 package com.example.projectpyramid.data_access;
-
 import com.example.projectpyramid.domain.entities.Client;
-
 import java.sql.*;
 import java.util.ArrayList;
 
