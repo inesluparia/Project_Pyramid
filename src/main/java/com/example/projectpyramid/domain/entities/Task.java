@@ -16,7 +16,12 @@ public class Task {
         this.description = description;
     }
 
-
+    public Task(String name, int phaseId, int durationInManHours, String description) {
+        this.name = name;
+        this.phaseId = phaseId;
+        this.durationInManHours = durationInManHours;
+        this.description = description;
+    }
 
 
     // Getters

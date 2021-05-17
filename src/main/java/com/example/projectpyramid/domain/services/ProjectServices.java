@@ -35,14 +35,17 @@ public class ProjectServices {
         phaseMapper.addPhase(phase);
         return phase;
     }
-/*
 
-    public Task addTask(String name, String phaseId, String durationInManHours, String description) {
-        int PhaseIdint = Integer.parseInt(phaseId);
-        Task task = new Task();
-        return tas;
-    }
-*/
+
+   public Task addTask(String name, String phaseId, String durationInManHours, String description) throws Exception {
+       int intPhaseId = Integer.parseInt(phaseId);
+       int intDurationInManHours = Integer.parseInt(durationInManHours);
+
+       Task task = new Task(name, intPhaseId, intDurationInManHours, description);
+       taskMapper.addTask(task);
+       return task;
+   }
+
 
     public ArrayList<Project> getProjectsFromUserId(String userId) throws Exception {
         int intUserId = Integer.parseInt(userId);

@@ -67,21 +67,27 @@ public class HomeController {
     public String createProject(WebRequest request, Model model) throws Exception {
         // Requests data from html inputs to use in createProject() method
         String userId = (String) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
-
+        String clientId = request.getParameter("client");
         String projectName = request.getParameter("project-name");
         String description = request.getParameter("description");
-        String clientId = request.getParameter("client");
 
-        projectServices.createProject(userId, projectName, description, "1");
-
+        int projectId = projectServices.createProject(userId, projectName, description, clientId);
+        String projId = String.valueOf(projectId);
+        //Save project in model
+        Project project = projectServices.getProjectFromId(projectId);
+        model.addAttribute("project", project);
+        //Save projectID in session
+        request.setAttribute("projectId", projId, WebRequest.SCOPE_SESSION);
         return "createphase.html";
     }
     
     @PostMapping("/add-phase")
     public String createPhase(WebRequest request, Model model) throws Exception {
+        // Requests data from html inputs to use in addPhase() method
         String phaseName = request.getParameter("name");
         String phaseDescription = request.getParameter("description");
         String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        // Converts datatype to match the parameter requirement
         int intProjId = Integer.parseInt(projId);
         projectServices.addPhase(phaseName, phaseDescription, intProjId);
         // Get project information to show created phases that are designated to the new project
@@ -98,8 +104,12 @@ public class HomeController {
         model.addAttribute("phases", phases);
         String name = request.getParameter("name");
         String phaseId = request.getParameter("phase");
-        String description = request.getParameter("description");
         String durationInManHours = request.getParameter("duration");
+        String description = request.getParameter("description");
+        projectServices.addTask(name, phaseId, durationInManHours, description);
+
+        Project project = projectServices.getProjectFromId(intProjId);
+        model.addAttribute("project", project);
         return "createphase.html";
     }
 
