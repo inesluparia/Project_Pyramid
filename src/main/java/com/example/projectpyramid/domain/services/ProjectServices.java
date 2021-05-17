@@ -67,7 +67,7 @@ public class ProjectServices {
         ArrayList<Phase> phases = phaseMapper.getPhases(project.getId());
         for (Phase phase : phases) {
             ArrayList<SubTask> subTasks = subTaskMapper.getSubTasks(phase.getId());
-            phase.setTasks(subTasks);
+            phase.setSubTasks(subTasks);
         }
         project.setPhases(phases);
     }
@@ -83,8 +83,10 @@ public class ProjectServices {
         int total= 0;
         Project project = getProjectFromId(projectId);
         ArrayList<Phase> phases = project.getPhases();
+
+        //FIXME: en dobbelt for-løkke? fy-ha
         for (Phase phase : phases) {
-            ArrayList<SubTask> subTasks = phase.getTasks();
+            ArrayList<SubTask> subTasks = phase.getSubTasks();
             for (SubTask subTask : subTasks) {
                 total += subTask.getDurationInManHours();
             }

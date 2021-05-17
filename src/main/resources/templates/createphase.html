@@ -9,10 +9,10 @@
 
 <section th:each="phase : ${project.phases}">
     <p th:text="${'Phase: ' + phase.name}"></p>
-    <ul th:each="task: ${phase.tasks}">
-        <li th:text="${'Task: ' + task.name}"></li>
-        <li th:text="${'Description: ' + task.description}"></li>
-        <li th:text="${'Approximate man-hours: ' + task.durationInManHours}"></li>
+    <ul th:each="subTask: ${phase.subTasks}">
+        <li th:text="${'Sub-task: ' + subTask.name}"></li>
+        <li th:text="${'Description: ' + subTask.description}"></li>
+        <li th:text="${'Approximate man-hours: ' + subTask.durationInManHours}"></li>
     </ul>
 </section>
 

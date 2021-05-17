@@ -51,7 +51,7 @@ public class Phase {
         return description;
     }
 
-    public ArrayList<SubTask> getTasks() {
+    public ArrayList<SubTask> getSubTasks() {
         return subTasks;
     }
 
@@ -73,7 +73,7 @@ public class Phase {
         this.description = description;
     }
 
-    public void setTasks(ArrayList<SubTask> subTasks) {
+    public void setSubTasks(ArrayList<SubTask> subTasks) {
         this.subTasks = subTasks;
     }
 }
