@@ -23,7 +23,7 @@ public class UserServices {
         // If passwords match and username is not empty...
 
         // TODO evt. check with database if userName is unique.
-        return userMapper.createUser(fullName, userName, password);
+        return userMapper.insertUser(fullName, userName, password);
     }
 
     // TODO implement changePassword() method.

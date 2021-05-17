@@ -9,7 +9,7 @@ public class ProjectMapper {
     ClientMapper clientMapper = new ClientMapper();
     UserMapper userMapper = new UserMapper();
 
-    public int createProject(String name, int userId, int clientId, String description) throws Exception {
+    public int insertProject(String name, int userId, int clientId, String description) throws Exception {
         try {
             Connection con = DBManager.getConnection();
             String SQL = "INSERT INTO projects (name, author_id, client_id, description) VALUES (?, ?, ?, ?)";
@@ -68,7 +68,6 @@ public class ProjectMapper {
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("id");
                 User author = userMapper.getUser(id);
-                // TODO: Get projects phases and tasks and save them in phases list through a getProject() call.
                 int clientId = resultSet.getInt("client_id");
                 Client client = clientMapper.getClientFromId(clientId);
                 String projectName = resultSet.getString("name");
@@ -86,7 +85,7 @@ public class ProjectMapper {
     }
 
     public ArrayList<Task> getTasks(int projectId) {
-        String query = "SELECT id, name, description FROM phases WHERE project_id = ?";
+        String query = "SELECT id, name, description FROM tasks WHERE project_id = ?";
         Connection connection = DBManager.getConnection();
 
         try {

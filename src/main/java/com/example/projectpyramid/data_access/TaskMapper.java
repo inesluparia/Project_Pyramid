@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class TaskMapper {
 
-    public void addTask(Task task) throws Exception {
+    public void insertTask(Task task) throws Exception {
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "INSERT INTO phases (name, project_id, description) VALUES (?, ?, ?)";
+            String SQL = "INSERT INTO tasks (name, project_id, description) VALUES (?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, task.getName());
             ps.setInt(2, task.getProjectId());
@@ -22,16 +22,14 @@ public class TaskMapper {
     }
 
 
-
     public ArrayList<Task> getTasks(int projectId) {
-        String query = "SELECT id, name, description FROM phases WHERE project_id = ?";
-        Connection connection = DBManager.getConnection();
 
         try {
+            String query = "SELECT id, name, description FROM tasks WHERE project_id = ?";
+            Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, projectId);
             ResultSet results = preparedStatement.executeQuery();
-
             ArrayList<Task> tasks = new ArrayList<>();
             while (results.next()) {
                 int id = results.getInt("id");

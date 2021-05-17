@@ -42,11 +42,11 @@
 <!--</table>-->
 
 <section th:each="task : ${project.tasks}">
-    <p th:text="${'Phase: ' + task.name}"></p>
-    <ul th:each="subTask: ${task.subTasks}">
-        <li th:text="${'Task: ' + subTask.name}"></li>
-        <li th:text="${'Description: ' + subTask.description}"></li>
-        <li th:text="${'Approximate man-hours: ' + subTask.durationInManHours}"></li>
+    <p th:text="${'Task: ' + task.name}"></p>
+    <ul th:each="subtask : ${task.subTasks}">
+        <li th:text="${'Subtask: ' + subtask.name}"></li>
+        <li th:text="${'Description: ' + subtask.description}"></li>
+        <li th:text="${'Approximate man-hours: ' + subtask.durationInManHours}"></li>
     </ul>
 </section>
 

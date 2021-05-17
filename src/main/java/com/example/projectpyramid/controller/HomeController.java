@@ -32,7 +32,6 @@ public class HomeController {
 //        return user.getUserName();
 //    }
 
-
     @PostMapping("/login")
     public String login(WebRequest request) throws Exception {
         String username = request.getParameter("username");
@@ -45,7 +44,7 @@ public class HomeController {
     }
 
     @GetMapping("/log-ud")
-    public String logud(WebRequest request) {
+    public String logUd(WebRequest request) {
         request.setAttribute("userId", null, WebRequest.SCOPE_SESSION);
         return "index.html";
     }

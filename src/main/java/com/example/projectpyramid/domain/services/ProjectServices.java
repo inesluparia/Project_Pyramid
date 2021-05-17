@@ -25,14 +25,14 @@ public class ProjectServices {
 
 
         // TODO er det nødvendigt at lave et objekt af projekt til metoden?
-       return  projectMapper.createProject(name, userIdInt, clientIdInt, description);
+       return  projectMapper.insertProject(name, userIdInt, clientIdInt, description);
 
     }
 
 
     public Task addTask(String name, String description, int projectId) throws Exception {
         Task task = new Task(name, description, projectId);
-        taskMapper.addTask(task);
+        taskMapper.insertTask(task);
         return task;
     }
 
@@ -42,7 +42,7 @@ public class ProjectServices {
        int intDurationInManHours = Integer.parseInt(durationInManHours);
 
        SubTask subTask = new SubTask(name, intPhaseId, intDurationInManHours, description);
-       subTaskMapper.addSubTask(subTask);
+       subTaskMapper.insertSubTask(subTask);
        return subTask;
    }
 
@@ -84,7 +84,7 @@ public class ProjectServices {
         Project project = getProjectFromId(projectId);
         ArrayList<Task> tasks = project.getTasks();
         for (Task task : tasks) {
-            ArrayList<SubTask> subTasks = task.getTasks();
+            ArrayList<SubTask> subTasks = task.getSubTasks();
             for (SubTask subTask : subTasks) {
                 total += subTask.getDurationInManHours();
             }

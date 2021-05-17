@@ -105,7 +105,7 @@ public class UserMapper {
     }
 
     // TODO handle username not being unique.
-    public User createUser(String name, String userName, String password) throws Exception {
+    public User insertUser(String name, String userName, String password) throws Exception {
         try {
             Connection con = DBManager.getConnection();
             String SQL = "INSERT INTO users (fullname, username, password) VALUES (?, ?, ?)";

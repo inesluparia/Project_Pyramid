@@ -51,7 +51,7 @@ public class Task {
         return description;
     }
 
-    public ArrayList<SubTask> getTasks() {
+    public ArrayList<SubTask> getSubTasks() {
         return subTasks;
     }
 

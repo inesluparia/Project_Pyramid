@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class SubTaskMapper {
 
-    public void addSubTask(SubTask subTask) throws Exception {
+    public void insertSubTask(SubTask subTask) throws Exception {
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "INSERT INTO tasks (name, phase_id, description, duration) VALUES (?, ?, ?, ?)";
+            String SQL = "INSERT INTO subtasks (name, task_id, description, duration) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, subTask.getName());
             ps.setInt(2, subTask.getSubTaskId());
@@ -24,7 +24,7 @@ public class SubTaskMapper {
 
 
     public ArrayList<SubTask> getSubTasks(int phaseId){
-        String query = "SELECT id, name, description, duration FROM tasks WHERE phase_id = ?";
+        String query = "SELECT id, name, description, duration FROM subtasks WHERE task_id = ?";
         Connection connection = DBManager.getConnection();
         ArrayList<SubTask> subTasks = new ArrayList<>();
         try {
