@@ -2,10 +2,10 @@ package com.example.projectpyramid.domain.services;
 
 import com.example.projectpyramid.data_access.PhaseMapper;
 import com.example.projectpyramid.data_access.ProjectMapper;
-import com.example.projectpyramid.data_access.TaskMapper;
+import com.example.projectpyramid.data_access.SubTaskMapper;
 import com.example.projectpyramid.domain.entities.Phase;
 import com.example.projectpyramid.domain.entities.Project;
-import com.example.projectpyramid.domain.entities.Task;
+import com.example.projectpyramid.domain.entities.SubTask;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class ProjectServices {
     private int programmers = 4;
     ProjectMapper projectMapper = new ProjectMapper();
     PhaseMapper phaseMapper = new PhaseMapper();
-    TaskMapper taskMapper = new TaskMapper();
+    SubTaskMapper subTaskMapper = new SubTaskMapper();
 
 
     public int createProject(String userId, String name, String description, String clientId) throws Exception {
@@ -37,13 +37,13 @@ public class ProjectServices {
     }
 
 
-   public Task addTask(String name, String phaseId, String durationInManHours, String description) throws Exception {
+   public SubTask addSubTask(String name, String phaseId, String durationInManHours, String description) throws Exception {
        int intPhaseId = Integer.parseInt(phaseId);
        int intDurationInManHours = Integer.parseInt(durationInManHours);
 
-       Task task = new Task(name, intPhaseId, intDurationInManHours, description);
-       taskMapper.addTask(task);
-       return task;
+       SubTask subTask = new SubTask(name, intPhaseId, intDurationInManHours, description);
+       subTaskMapper.addSubTask(subTask);
+       return subTask;
    }
 
 
@@ -66,8 +66,8 @@ public class ProjectServices {
     private void populateProject(Project project) {
         ArrayList<Phase> phases = phaseMapper.getPhases(project.getId());
         for (Phase phase : phases) {
-            ArrayList<Task> tasks = taskMapper.getTasks(phase.getId());
-            phase.setTasks(tasks);
+            ArrayList<SubTask> subTasks = subTaskMapper.getSubTasks(phase.getId());
+            phase.setTasks(subTasks);
         }
         project.setPhases(phases);
     }
@@ -84,9 +84,9 @@ public class ProjectServices {
         Project project = getProjectFromId(projectId);
         ArrayList<Phase> phases = project.getPhases();
         for (Phase phase : phases) {
-            ArrayList<Task> tasks = phase.getTasks();
-            for (Task task : tasks) {
-                total += task.getDurationInManHours();
+            ArrayList<SubTask> subTasks = phase.getTasks();
+            for (SubTask subTask : subTasks) {
+                total += subTask.getDurationInManHours();
             }
         }
         return total;

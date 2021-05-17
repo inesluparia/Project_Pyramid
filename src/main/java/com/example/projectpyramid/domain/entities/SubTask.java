@@ -1,6 +1,6 @@
 package com.example.projectpyramid.domain.entities;
 
-public class Task {
+public class SubTask {
 
     private int id;
     private int phaseId;
@@ -8,7 +8,7 @@ public class Task {
     private String name;
     private String description;
 
-    public Task(int id, int phaseId, int durationInManHours, String name, String description) {
+    public SubTask(int id, int phaseId, int durationInManHours, String name, String description) {
         this.id = id;
         this.phaseId = phaseId;
         this.durationInManHours = durationInManHours;
@@ -16,7 +16,7 @@ public class Task {
         this.description = description;
     }
 
-    public Task(String name, int phaseId, int durationInManHours, String description) {
+    public SubTask(String name, int phaseId, int durationInManHours, String description) {
         this.name = name;
         this.phaseId = phaseId;
         this.durationInManHours = durationInManHours;

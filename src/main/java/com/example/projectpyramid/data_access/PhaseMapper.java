@@ -1,7 +1,6 @@
 package com.example.projectpyramid.data_access;
 
 import com.example.projectpyramid.domain.entities.Phase;
-import com.example.projectpyramid.domain.entities.Task;
 
 import java.sql.*;
 import java.util.ArrayList;

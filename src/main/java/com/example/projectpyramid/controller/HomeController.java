@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
@@ -106,7 +105,7 @@ public class HomeController {
         String phaseId = request.getParameter("phase");
         String durationInManHours = request.getParameter("duration");
         String description = request.getParameter("description");
-        projectServices.addTask(name, phaseId, durationInManHours, description);
+        projectServices.addSubTask(name, phaseId, durationInManHours, description);
 
         Project project = projectServices.getProjectFromId(intProjId);
         model.addAttribute("project", project);
