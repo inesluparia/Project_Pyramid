@@ -2,23 +2,23 @@ package com.example.projectpyramid.domain.entities;
 
 import java.util.ArrayList;
 
-public class Phase {
+public class Task {
 
     private int id;
     private int projectId;
     private String name;
     private String description;
-    private ArrayList<Task> tasks;
+    private ArrayList<SubTask> subTasks;
 
-    public Phase(int id, int projectId, String name, String description) {
+    public Task(int id, int projectId, String name, String description) {
         this.id = id;
         this.projectId = projectId;
         this.name = name;
         this.description = description;
-        this.tasks = new ArrayList<>();
+        this.subTasks = new ArrayList<>();
     }
 
-    public Phase(String name, String description, int projectId) {
+    public Task(String name, String description, int projectId) {
         this.name = name;
         this.description = description;
         this.projectId = projectId;
@@ -51,8 +51,8 @@ public class Phase {
         return description;
     }
 
-    public ArrayList<Task> getTasks() {
-        return tasks;
+    public ArrayList<SubTask> getTasks() {
+        return subTasks;
     }
 
     // Setters
@@ -73,7 +73,7 @@ public class Phase {
         this.description = description;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
-        this.tasks = tasks;
+    public void setSubTasks(ArrayList<SubTask> subTasks) {
+        this.subTasks = subTasks;
     }
 }

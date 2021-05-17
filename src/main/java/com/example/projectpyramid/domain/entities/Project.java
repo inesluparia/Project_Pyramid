@@ -9,7 +9,7 @@ public class Project {
     private Client client;
     private String projectName, description;
     private boolean isActive;
-    private ArrayList<Phase> phases;
+    private ArrayList<Task> tasks;
 
     public Project(int id,
                    User author,
@@ -21,7 +21,7 @@ public class Project {
         this.client = client;
         this.projectName = projectName;
         this.description = description;
-        this.phases = new ArrayList<>();
+        this.tasks = new ArrayList<>();
     }
 
     public Project(User author,
@@ -60,8 +60,8 @@ public class Project {
         return isActive;
     }
 
-    public ArrayList<Phase> getPhases() {
-        return phases;
+    public ArrayList<Task> getTasks() {
+        return tasks;
     }
 
     //Setters
@@ -78,7 +78,7 @@ public class Project {
         this.isActive = isActive;
     }
 
-    public void setPhases(ArrayList<Phase> phases) {
-        this.phases = phases;
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
     }
 }

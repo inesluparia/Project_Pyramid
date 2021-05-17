@@ -1,21 +1,21 @@
 package com.example.projectpyramid.data_access;
 
-import com.example.projectpyramid.domain.entities.Task;
+import com.example.projectpyramid.domain.entities.SubTask;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class TaskMapper {
+public class SubTaskMapper {
 
-    public void addTask(Task task) throws Exception {
+    public void addSubTask(SubTask subTask) throws Exception {
         try {
             Connection con = DBManager.getConnection();
             String SQL = "INSERT INTO tasks (name, phase_id, description, duration) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, task.getName());
-            ps.setInt(2, task.getPhaseId());
-            ps.setString(3, task.getDescription());
-            ps.setInt(4, task.getDurationInManHours());
+            ps.setString(1, subTask.getName());
+            ps.setInt(2, subTask.getSubTaskId());
+            ps.setString(3, subTask.getDescription());
+            ps.setInt(4, subTask.getDurationInManHours());
             ps.executeUpdate();
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
@@ -23,10 +23,10 @@ public class TaskMapper {
     }
 
 
-    public ArrayList<Task> getTasks(int phaseId){
+    public ArrayList<SubTask> getSubTasks(int phaseId){
         String query = "SELECT id, name, description, duration FROM tasks WHERE phase_id = ?";
         Connection connection = DBManager.getConnection();
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<SubTask> subTasks = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, phaseId);
@@ -38,10 +38,10 @@ public class TaskMapper {
                 int duration = results.getInt("duration");
                 String description = results.getString("description");
 
-                tasks.add(new Task(id, phaseId, duration, name, description));
+                subTasks.add(new SubTask(id, phaseId, duration, name, description));
             }
 
-            return tasks;
+            return subTasks;
 
         } catch (SQLException ex) {
             return null;

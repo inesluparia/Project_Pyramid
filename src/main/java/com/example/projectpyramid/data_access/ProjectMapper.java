@@ -85,7 +85,7 @@ public class ProjectMapper {
         }
     }
 
-    public ArrayList<Phase> getPhases(int projectId) {
+    public ArrayList<Task> getTasks(int projectId) {
         String query = "SELECT id, name, description FROM phases WHERE project_id = ?";
         Connection connection = DBManager.getConnection();
 
@@ -94,16 +94,16 @@ public class ProjectMapper {
             preparedStatement.setInt(1, projectId);
             ResultSet results = preparedStatement.executeQuery();
 
-            ArrayList<Phase> phases = new ArrayList<>();
+            ArrayList<Task> tasks = new ArrayList<>();
             while (results.next()) {
                 int id = results.getInt("id");
                 String name = results.getString("name");
                 String description = results.getString("description");
 
-                phases.add(new Phase(id, projectId, name, description));
+                tasks.add(new Task(id, projectId, name, description));
             }
 
-            return phases;
+            return tasks;
 
         } catch (SQLException ex) {
             return null;

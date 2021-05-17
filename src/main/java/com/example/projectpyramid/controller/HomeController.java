@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
@@ -78,39 +77,39 @@ public class HomeController {
         model.addAttribute("project", project);
         //Save projectID in session
         request.setAttribute("projectId", projId, WebRequest.SCOPE_SESSION);
-        return "createphase.html";
+        return "createtask.html";
     }
     
-    @PostMapping("/add-phase")
-    public String createPhase(WebRequest request, Model model) throws Exception {
+    @PostMapping("/add-task")
+    public String createTask(WebRequest request, Model model) throws Exception {
         // Requests data from html inputs to use in addPhase() method
-        String phaseName = request.getParameter("name");
-        String phaseDescription = request.getParameter("description");
+        String taskName = request.getParameter("name");
+        String taskDescription = request.getParameter("description");
         String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
         // Converts datatype to match the parameter requirement
         int intProjId = Integer.parseInt(projId);
-        projectServices.addPhase(phaseName, phaseDescription, intProjId);
+        projectServices.addTask(taskName, taskDescription, intProjId);
         // Get project information to show created phases that are designated to the new project
         Project project = projectServices.getProjectFromId(intProjId);
         model.addAttribute("project", project);
-        return "createphase.html";
+        return "createtask.html";
     }
 
-    @PostMapping("/add-task")
-    public String createTask(WebRequest request, Model model) throws Exception {
+    @PostMapping("/add-sub-task")
+    public String createSubTask(WebRequest request, Model model) throws Exception {
         String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
         int intProjId = Integer.parseInt(projId);
-        ArrayList<Phase> phases = projectServices.getPhases(intProjId);
-        model.addAttribute("phases", phases);
+        ArrayList<Task> tasks = projectServices.getTask(intProjId);
+        model.addAttribute("tasks", tasks);
         String name = request.getParameter("name");
-        String phaseId = request.getParameter("phase");
+        String taskId = request.getParameter("task");
         String durationInManHours = request.getParameter("duration");
         String description = request.getParameter("description");
-        projectServices.addTask(name, phaseId, durationInManHours, description);
+        projectServices.addSubTask(name, taskId, durationInManHours, description);
 
         Project project = projectServices.getProjectFromId(intProjId);
         model.addAttribute("project", project);
-        return "createphase.html";
+        return "createtask.html";
     }
 
 

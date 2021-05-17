@@ -1,24 +1,24 @@
 package com.example.projectpyramid.domain.entities;
 
-public class Task {
+public class SubTask {
 
     private int id;
-    private int phaseId;
+    private int subTaskId;
     private int durationInManHours;
     private String name;
     private String description;
 
-    public Task(int id, int phaseId, int durationInManHours, String name, String description) {
+    public SubTask(int id, int subTaskId, int durationInManHours, String name, String description) {
         this.id = id;
-        this.phaseId = phaseId;
+        this.subTaskId = subTaskId;
         this.durationInManHours = durationInManHours;
         this.name = name;
         this.description = description;
     }
 
-    public Task(String name, int phaseId, int durationInManHours, String description) {
+    public SubTask(String name, int subTaskId, int durationInManHours, String description) {
         this.name = name;
-        this.phaseId = phaseId;
+        this.subTaskId = subTaskId;
         this.durationInManHours = durationInManHours;
         this.description = description;
     }
@@ -30,8 +30,8 @@ public class Task {
         return id;
     }
 
-    public int getPhaseId() {
-        return phaseId;
+    public int getSubTaskId() {
+        return subTaskId;
     }
 
     public int getDurationInManHours() {
@@ -52,8 +52,8 @@ public class Task {
         this.id = id;
     }
 
-    public void setPhaseId(int phaseId) {
-        this.phaseId = phaseId;
+    public void setSubTaskId(int phaseId) {
+        this.subTaskId = phaseId;
     }
 
     public void setDurationInManHours(int durationInManHours) {
