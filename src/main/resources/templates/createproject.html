@@ -19,7 +19,8 @@
         name="client" id="select-client"-->
         <br><br>
 
-        <select th:field="*{clients}">
+        <select name="client" id="client" th:object="${clients}">
+
             <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
             </option>
         </select>

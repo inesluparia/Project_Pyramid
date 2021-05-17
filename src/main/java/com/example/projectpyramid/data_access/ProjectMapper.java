@@ -9,7 +9,7 @@ public class ProjectMapper {
     ClientMapper clientMapper = new ClientMapper();
     UserMapper userMapper = new UserMapper();
 
-    public void createProject(String name, int userId, int clientId, String description) throws Exception {
+    public int createProject(String name, int userId, int clientId, String description) throws Exception {
         try {
             Connection con = DBManager.getConnection();
             String SQL = "INSERT INTO projects (name, author_id, client_id, description) VALUES (?, ?, ?, ?)";
@@ -19,6 +19,10 @@ public class ProjectMapper {
             ps.setInt(3, clientId);
             ps.setString(4, description);
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            int projectId = rs.getInt(1);
+            return projectId;
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }

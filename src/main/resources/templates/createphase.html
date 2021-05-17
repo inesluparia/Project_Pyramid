@@ -7,6 +7,14 @@
 </head>
 <body>
 
+<section th:each="phase : ${project.phases}">
+    <p th:text="${'Phase: ' + phase.name}"></p>
+    <ul th:each="task: ${phase.tasks}">
+        <li th:text="${'Task: ' + task.name}"></li>
+        <li th:text="${'Description: ' + task.description}"></li>
+        <li th:text="${'Approximate man-hours: ' + task.durationInManHours}"></li>
+    </ul>
+</section>
 
 <div>
     <form name="add-phase" action="add-phase" method="POST" id="add-phase">
@@ -43,7 +51,6 @@
         <br><br>
         <input type="submit" value="Add task" form="add-task">
     </form>
-
 
 </section>
 

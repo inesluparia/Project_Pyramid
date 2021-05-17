@@ -59,7 +59,6 @@ public class HomeController {
     public String projectCreation(Model model){
         ArrayList<Client> clients = clientServices.getClients();
         model.addAttribute("clients", clients);
-
         return "createproject.html";
     }
 
@@ -88,10 +87,13 @@ public class HomeController {
     }
     
     @PostMapping("/add-phase")
-    public String createPhase(WebRequest request) throws Exception {
+    public String createPhase(WebRequest request, Model model) throws Exception {
         String phaseName = request.getParameter("name");
         String phaseDescription = request.getParameter("description");
-
+        String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        int intProjId = Integer.parseInt(projId);
+        Project project = projectServices.getProjectFromId(intProjId);
+        model.addAttribute("project", project);
         // FIXME get project id from the session
         //Project project = projectServices.addPhase(name, description, );
 
@@ -111,8 +113,6 @@ public class HomeController {
         String phaseId = request.getParameter("phase");
         String description = request.getParameter("description");
         String durationInManHours = request.getParameter("duration");
-
-
         return "createphase.html";
     }
 
@@ -136,7 +136,6 @@ public class HomeController {
         model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
         model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
         model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
-
         return "project";
     }
 

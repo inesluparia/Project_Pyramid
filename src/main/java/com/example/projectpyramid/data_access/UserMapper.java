@@ -10,14 +10,11 @@ public class UserMapper {
         String query = "INSERT INTO users (fullname, username, password) VALUES (?, ?, 1234)";
         Connection connection = DBManager.getConnection();
         boolean wasSuccessful = false;
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setString(1, user.getFullName());
             preparedStatement.setString(2, user.getUserName());
-
             wasSuccessful = preparedStatement.executeUpdate() > 0;
-
         } catch (SQLException ex) {
             System.out.println("An Exception occured:");
             ex.printStackTrace();
@@ -25,7 +22,6 @@ public class UserMapper {
             connection.clearWarnings();
             connection.close();
         }
-
         return wasSuccessful;
     }
 

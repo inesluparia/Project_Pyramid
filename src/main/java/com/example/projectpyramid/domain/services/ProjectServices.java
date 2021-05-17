@@ -19,13 +19,13 @@ public class ProjectServices {
     TaskMapper taskMapper = new TaskMapper();
 
 
-    public void createProject(String userId, String name, String description, String clientId) throws Exception {
-        int clientIdInt = Integer.parseInt(clientId);
+    public int createProject(String userId, String name, String description, String clientId) throws Exception {
         int userIdInt = Integer.parseInt(userId);
+        int clientIdInt = Integer.parseInt(clientId);
 
 
         // TODO er det nødvendigt at lave et objekt af projekt til metoden?
-        projectMapper.createProject(name, userIdInt, clientIdInt, description);
+       return  projectMapper.createProject(name, userIdInt, clientIdInt, description);
 
     }
 
