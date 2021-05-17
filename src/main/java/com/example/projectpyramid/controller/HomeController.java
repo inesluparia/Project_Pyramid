@@ -73,7 +73,7 @@ public class HomeController {
 
         //FIXME set projectId in session after createProject has been executed
         //FIXME get clientId from the thymeleaf SELECT OPTION
-     //   String project_id = String.valueOf(project);
+     //  String project_id = String.valueOf(project);
      //  request.setAttribute("project_id", project_id, WebRequest.SCOPE_SESSION);
 
         String userId = (String) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
@@ -82,22 +82,21 @@ public class HomeController {
         String description = request.getParameter("description");
         String clientId = request.getParameter("client");
 
-        projectServices.createProject(userId, projectName, description, clientId);
+        projectServices.createProject(userId, projectName, description, "1");
 
         return "createphase.html";
     }
     
     @PostMapping("/add-phase")
     public String createPhase(WebRequest request) throws Exception {
-        String phaseName = request.getParameter("phase-name");
-        String phaseDescription = request.getParameter("phase-description");
-
-        
+        String phaseName = request.getParameter("name");
+        String phaseDescription = request.getParameter("description");
 
         // FIXME get project id from the session
         //Project project = projectServices.addPhase(name, description, );
 
-        Phase phase = projectServices.addPhase(phaseName, phaseDescription, 1);;
+        projectServices.addPhase(phaseName, phaseDescription, 1);;
+
         return "createphase.html";
     }
 

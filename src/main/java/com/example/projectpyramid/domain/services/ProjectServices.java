@@ -19,8 +19,8 @@ public class ProjectServices {
 
 
     public void createProject(String userId, String name, String description, String clientId) throws Exception {
-        int userIdInt = Integer.parseInt(userId);
         int clientIdInt = Integer.parseInt(clientId);
+        int userIdInt = Integer.parseInt(userId);
 
 
         // TODO er det nødvendigt at lave et objekt af projekt til metoden?

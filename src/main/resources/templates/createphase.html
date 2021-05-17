@@ -6,48 +6,51 @@
     <title>Title</title>
 </head>
 <body>
+<div>
+    <form name="addphase" action="add-phase" method="POST">
+        <h3>Add phase</h3>
+        Phase name: <br>
+        <input type="text" name="name">
+        <br><br>
+        Description: <br>
+        <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
+        <br><br><br><br>
+        <input type="submit" value="add phase">
+    </form>
+</div>
 
-<form name="add-phase" action="add-phase" method="POST">
+<!--
+<section>
+    <h3>Add task</h3>
 
-    Phase name: <br>
-    <input type="text" name="name">
-    <br><br>
-    Description: <br>
-    <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
-
-    <br><br><br><br>
-
-
-</form>
-
-<form action="add-task" action="/add-task" method="POST">
-
-    Task name: <br>
-    <input type="text" name="name">
-    <br><br>
-
-    <label for="phase">Select belonging phase:</label><br>
-
-
-    <select name="phase" id="phase">
-        <option value="phase-1">Inception</option>
-        <option value="phase-2">Construction</option>
-    </select>
+    <form action="addtask" action="add-task" method="POST">
+        Task name: <br>
+        <input type="text" name="name">
+        <br><br>
+        <label for="phase">Select belonging phase:</label><br>
+        <select name="phase" id="phase">
+            <option value="phase-1">Inception</option>
+            <option value="phase-2">Construction</option>
+        </select>
+        <br><br>
+        Description: <br>
+        <textarea type="text" name="description" rows="4" cols="50"></textarea>
+        <br><br>
+        Duration in man hours: <br>
+        <input type="number" name="duration">
+        <input type="submit" value="Add task">
+    </form>
 
 
-    <br><br>
-    Description: <br>
-    <textarea type="text" name="description" rows="4" cols="50"></textarea>
-    <br><br>
-    Duration in man hours: <br>
-    <input type="number" name="duration">
+</section>
+-->
 
-</form>
-
+<!--
 <select id="client-name" th:field="${clients}">
     <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
     </option>
 </select>
+-->
 
 </body>
 </html>
