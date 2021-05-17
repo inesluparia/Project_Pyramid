@@ -38,10 +38,12 @@
         <input type="text" name="name">
         <br><br>
         <label for="phase">Select belonging phase:</label><br>
-        <select name="phase" id="phase">
-            <option value="phase-1">Inception</option>
-            <option value="phase-2">Construction</option>
+        <select name="phase" id="phase" th:object="${project.phases}">
+            <option th:each="phase: ${project.phases}" th:value="${phase.id}" th:text="${phase.name}">
+            </option>
         </select>
+
+
         <br><br>
         Description: <br>
         <textarea type="text" name="description" rows="4" cols="50"></textarea>

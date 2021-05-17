@@ -83,7 +83,6 @@ public class HomeController {
         String phaseDescription = request.getParameter("description");
         String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
         int intProjId = Integer.parseInt(projId);
-
         projectServices.addPhase(phaseName, phaseDescription, intProjId);
         // Get project information to show created phases that are designated to the new project
         Project project = projectServices.getProjectFromId(intProjId);
@@ -92,12 +91,11 @@ public class HomeController {
     }
 
     @PostMapping("/add-task")
-    public String createTask(WebRequest request, Model model) {
-        ArrayList<Phase> phases = projectServices.getPhases(1);
+    public String createTask(WebRequest request, Model model) throws Exception {
+        String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        int intProjId = Integer.parseInt(projId);
+        ArrayList<Phase> phases = projectServices.getPhases(intProjId);
         model.addAttribute("phases", phases);
-
-        // TODO get phase list with thymeleaf
-
         String name = request.getParameter("name");
         String phaseId = request.getParameter("phase");
         String description = request.getParameter("description");

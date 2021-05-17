@@ -38,7 +38,7 @@ public class TaskMapper {
                 int duration = results.getInt("duration");
                 String description = results.getString("description");
 
-                tasks.add(new Task(phaseId, id, duration, name, description));
+                tasks.add(new Task(id, phaseId, duration, name, description));
             }
 
             return tasks;
