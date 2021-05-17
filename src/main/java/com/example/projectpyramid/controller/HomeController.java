@@ -26,12 +26,12 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/logintest")
-    @ResponseBody
-    public String loginTest() throws Exception {
-        User user = userServices.login("Andersand", "1234");
-        return user.getUserName();
-    }
+//    @GetMapping("/logintest")
+//    @ResponseBody
+//    public String loginTest() throws Exception {
+//        User user = userServices.login("Andersand", "1234");
+//        return user.getUserName();
+//    }
 
     @PostMapping("/login")
     public String login(WebRequest request) throws Exception {
@@ -65,16 +65,7 @@ public class HomeController {
             
     @PostMapping("/map-project")
     public String createProject(WebRequest request, Model model) throws Exception {
-        //liggende på web requested
-        ArrayList<Client> clients = clientServices.getClients();
-        model.addAttribute("clients", clients);
-        model.getAttribute("clients");
-
-        //FIXME set projectId in session after createProject has been executed
-        //FIXME get clientId from the thymeleaf SELECT OPTION
-     //  String project_id = String.valueOf(project);
-     //  request.setAttribute("project_id", project_id, WebRequest.SCOPE_SESSION);
-
+        // Requests data from html inputs to use in createProject() method
         String userId = (String) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
 
         String projectName = request.getParameter("project-name");
@@ -92,13 +83,11 @@ public class HomeController {
         String phaseDescription = request.getParameter("description");
         String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
         int intProjId = Integer.parseInt(projId);
+
+        projectServices.addPhase(phaseName, phaseDescription, intProjId);
+        // Get project information to show created phases that are designated to the new project
         Project project = projectServices.getProjectFromId(intProjId);
         model.addAttribute("project", project);
-        // FIXME get project id from the session
-        //Project project = projectServices.addPhase(name, description, );
-
-        projectServices.addPhase(phaseName, phaseDescription, 1);;
-
         return "createphase.html";
     }
 
