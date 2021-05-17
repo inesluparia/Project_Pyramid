@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ProjectServices {
 
     private final int costPerHour = 250;
-    private final int totalEmployees = 4;
+    private int programmers = 4;
     ProjectMapper projectMapper = new ProjectMapper();
     PhaseMapper phaseMapper = new PhaseMapper();
     TaskMapper taskMapper = new TaskMapper();

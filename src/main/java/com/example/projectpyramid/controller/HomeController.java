@@ -133,6 +133,7 @@ public class HomeController {
     public String projectPage(@RequestParam("id") int projectId, Model model) throws Exception {
         Project project = projectServices.getProjectFromId(projectId);
         model.addAttribute("project", project);
+        model.addAttribute("programmers", 4);
         model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
         model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
         model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
