@@ -1,28 +1,37 @@
 package com.example.projectpyramid.domain.entities;
 
+import java.util.ArrayList;
+
 public class Task {
 
     private int id;
-    private int phaseId;
-    private int durationInManHours;
+    private int projectId;
     private String name;
     private String description;
+    private ArrayList<SubTask> subTasks;
 
-    public Task(int id, int phaseId, int durationInManHours, String name, String description) {
+    public Task(int id, int projectId, String name, String description) {
         this.id = id;
-        this.phaseId = phaseId;
-        this.durationInManHours = durationInManHours;
+        this.projectId = projectId;
         this.name = name;
         this.description = description;
+        this.subTasks = new ArrayList<>();
     }
 
-    public Task(String name, int phaseId, int durationInManHours, String description) {
+    public Task(String name, String description, int projectId) {
         this.name = name;
-        this.phaseId = phaseId;
-        this.durationInManHours = durationInManHours;
         this.description = description;
+        this.projectId = projectId;
     }
 
+/*
+
+    public void setName(String name) {
+        this.name = name;
+        this.description = description;
+        this.tasks = new ArrayList<>();
+    }
+*/
 
     // Getters
 
@@ -30,12 +39,8 @@ public class Task {
         return id;
     }
 
-    public int getPhaseId() {
-        return phaseId;
-    }
-
-    public int getDurationInManHours() {
-        return durationInManHours;
+    public int getProjectId() {
+        return projectId;
     }
 
     public String getName() {
@@ -46,18 +51,18 @@ public class Task {
         return description;
     }
 
+    public ArrayList<SubTask> getTasks() {
+        return subTasks;
+    }
+
     // Setters
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setPhaseId(int phaseId) {
-        this.phaseId = phaseId;
-    }
-
-    public void setDurationInManHours(int durationInManHours) {
-        this.durationInManHours = durationInManHours;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public void setName(String name) {
@@ -66,5 +71,9 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setSubTasks(ArrayList<SubTask> subTasks) {
+        this.subTasks = subTasks;
     }
 }

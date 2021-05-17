@@ -30,23 +30,23 @@
 <!--        <th>Description</th>-->
 <!--        <th>Man-hours</th>-->
 <!--    </tr>-->
-<!--    <tr th:each="phase:${project.phases}">-->
-<!--        <td th:text="${phase.name}"></td>-->
+<!--    <tr th:each="task:${project.tasks}">-->
+<!--        <td th:text="${task.name}"></td>-->
 <!--    </tr>-->
-<!--    <tr th:each="task:${phase.tasks}">-->
-<!--        <td th:text="${task.phaseId}">Phase</td>-->
-<!--        <td th:text="${task.name}">Task name</td>-->
-<!--        <td th:text="${task.description}">Description</td>-->
-<!--        <td th:text="${task.durationInManHours}">Task name</td>-->
+<!--    <tr th:each="subTask:${task.subTasks}">-->
+<!--        <td th:text="${subTask.phaseId}">Phase</td>-->
+<!--        <td th:text="${subTask.name}">Task name</td>-->
+<!--        <td th:text="${subTask.description}">Description</td>-->
+<!--        <td th:text="${subTask.durationInManHours}">Task name</td>-->
 <!--    </tr>-->
 <!--</table>-->
 
-<section th:each="phase : ${project.phases}">
-    <p th:text="${'Phase: ' + phase.name}"></p>
-    <ul th:each="task: ${phase.tasks}">
-        <li th:text="${'Task: ' + task.name}"></li>
-        <li th:text="${'Description: ' + task.description}"></li>
-        <li th:text="${'Approximate man-hours: ' + task.durationInManHours}"></li>
+<section th:each="task : ${project.tasks}">
+    <p th:text="${'Phase: ' + task.name}"></p>
+    <ul th:each="subTask: ${task.subTasks}">
+        <li th:text="${'Task: ' + subTask.name}"></li>
+        <li th:text="${'Description: ' + subTask.description}"></li>
+        <li th:text="${'Approximate man-hours: ' + subTask.durationInManHours}"></li>
     </ul>
 </section>
 

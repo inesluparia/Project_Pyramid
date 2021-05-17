@@ -1,11 +1,11 @@
 package com.example.projectpyramid.domain.services;
 
-import com.example.projectpyramid.data_access.PhaseMapper;
-import com.example.projectpyramid.data_access.ProjectMapper;
 import com.example.projectpyramid.data_access.TaskMapper;
-import com.example.projectpyramid.domain.entities.Phase;
-import com.example.projectpyramid.domain.entities.Project;
+import com.example.projectpyramid.data_access.ProjectMapper;
+import com.example.projectpyramid.data_access.SubTaskMapper;
 import com.example.projectpyramid.domain.entities.Task;
+import com.example.projectpyramid.domain.entities.Project;
+import com.example.projectpyramid.domain.entities.SubTask;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,8 +15,8 @@ public class ProjectServices {
     private final int costPerHour = 250;
     private int programmers = 4;
     ProjectMapper projectMapper = new ProjectMapper();
-    PhaseMapper phaseMapper = new PhaseMapper();
     TaskMapper taskMapper = new TaskMapper();
+    SubTaskMapper subTaskMapper = new SubTaskMapper();
 
 
     public int createProject(String userId, String name, String description, String clientId) throws Exception {
@@ -30,20 +30,20 @@ public class ProjectServices {
     }
 
 
-    public Phase addPhase(String name, String description, int projectId) throws Exception {
-        Phase phase = new Phase(name, description, projectId);
-        phaseMapper.addPhase(phase);
-        return phase;
+    public Task addTask(String name, String description, int projectId) throws Exception {
+        Task task = new Task(name, description, projectId);
+        taskMapper.addTask(task);
+        return task;
     }
 
 
-   public Task addTask(String name, String phaseId, String durationInManHours, String description) throws Exception {
+   public SubTask addSubTask(String name, String phaseId, String durationInManHours, String description) throws Exception {
        int intPhaseId = Integer.parseInt(phaseId);
        int intDurationInManHours = Integer.parseInt(durationInManHours);
 
-       Task task = new Task(name, intPhaseId, intDurationInManHours, description);
-       taskMapper.addTask(task);
-       return task;
+       SubTask subTask = new SubTask(name, intPhaseId, intDurationInManHours, description);
+       subTaskMapper.addSubTask(subTask);
+       return subTask;
    }
 
 
@@ -56,20 +56,20 @@ public class ProjectServices {
         return projects;
     }
 
-    public ArrayList<Phase> getPhases(int projectId) {
-        ArrayList<Phase> phases = phaseMapper.getPhases(projectId);
+    public ArrayList<Task> getTask(int projectId) {
+        ArrayList<Task> tasks = taskMapper.getTasks(projectId);
 
-        return phases;
+        return tasks;
     }
 
     //Adds lists of phases and tasks to the returned project before forwarding it to controller
     private void populateProject(Project project) {
-        ArrayList<Phase> phases = phaseMapper.getPhases(project.getId());
-        for (Phase phase : phases) {
-            ArrayList<Task> tasks = taskMapper.getTasks(phase.getId());
-            phase.setTasks(tasks);
+        ArrayList<Task> tasks = taskMapper.getTasks(project.getId());
+        for (Task task : tasks) {
+            ArrayList<SubTask> subTasks = subTaskMapper.getSubTasks(task.getId());
+            task.setSubTasks(subTasks);
         }
-        project.setPhases(phases);
+        project.setTasks(tasks);
     }
 
     public Project getProjectFromId(int projectId) throws Exception {
@@ -82,11 +82,11 @@ public class ProjectServices {
     public int getTotalManHours(int projectId) throws Exception {
         int total= 0;
         Project project = getProjectFromId(projectId);
-        ArrayList<Phase> phases = project.getPhases();
-        for (Phase phase : phases) {
-            ArrayList<Task> tasks = phase.getTasks();
-            for (Task task : tasks) {
-                total += task.getDurationInManHours();
+        ArrayList<Task> tasks = project.getTasks();
+        for (Task task : tasks) {
+            ArrayList<SubTask> subTasks = task.getTasks();
+            for (SubTask subTask : subTasks) {
+                total += subTask.getDurationInManHours();
             }
         }
         return total;
