@@ -46,13 +46,11 @@
             <option th:each="task: ${project.tasks}" th:value="${task.id}" th:text="${task.name}">
             </option>
         </select>
-
-
         <br><br>
         Description: <br>
         <textarea type="text" name="description" rows="4" cols="50"></textarea>
         <br><br>
-        Duration in man hours: <br>
+        Duration in man-hours: <br>
         <input type="number" name="duration">
         <br><br>
         <input type="submit" value="Add subTask" form="add-subTask">

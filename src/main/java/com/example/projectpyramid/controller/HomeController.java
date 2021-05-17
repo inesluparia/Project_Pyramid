@@ -101,7 +101,7 @@ public class HomeController {
         return "createtask.html";
     }
 
-    @PostMapping("/add-sub-task")
+    @PostMapping("/add-subTask")
     public String createSubTask(WebRequest request, Model model) throws Exception {
         String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
         int intProjId = Integer.parseInt(projId);
