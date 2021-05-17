@@ -7,12 +7,13 @@ import com.example.projectpyramid.domain.entities.Phase;
 import com.example.projectpyramid.domain.entities.Project;
 import com.example.projectpyramid.domain.entities.Task;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProjectServices {
 
     private final int costPerHour = 250;
-    private final int totalEmployees = 4;
+    private int programmers = 4;
     ProjectMapper projectMapper = new ProjectMapper();
     PhaseMapper phaseMapper = new PhaseMapper();
     TaskMapper taskMapper = new TaskMapper();
@@ -38,9 +39,7 @@ public class ProjectServices {
 
     public Task addTask(String name, String phaseId, String durationInManHours, String description) {
         int PhaseIdint = Integer.parseInt(phaseId);
-
         Task task = new Task();
-
         return tas;
     }
 */
@@ -76,17 +75,18 @@ public class ProjectServices {
         return project;
     }
 
+
     public int getTotalManHours(int projectId) throws Exception {
-        int totalDuration = 0;
+        int total= 0;
         Project project = getProjectFromId(projectId);
         ArrayList<Phase> phases = project.getPhases();
         for (Phase phase : phases) {
             ArrayList<Task> tasks = phase.getTasks();
             for (Task task : tasks) {
-                totalDuration += task.getDurationInManHours();
+                total += task.getDurationInManHours();
             }
         }
-        return totalDuration;
+        return total;
     }
 
     public int getTotalCost(int projectId) throws Exception {
@@ -94,19 +94,35 @@ public class ProjectServices {
         return totalDuration * costPerHour;
     }
 
-    // TODO unit test for this method.
-    public String getTotalCalenderTime(int projectId) throws Exception {
+//    public String getTotalCalenderTime(int projectId) throws Exception {
+//        //a month has in average 4.35 weeks and therefore 152.25 working hours
+//        //a week has 35 working hours
+//        // a day has 7 working hours
+//
+//        //int manHours= getTotalManHours(projectId);
+//        double manHours = 600;
+//        int months = (int) (manHours / 152.25);
+//        int weeks = (int) ((manHours % 152.25) / 35);
+//        int days = (int) (((manHours % 152.25) % 35) / 7);
+//        return "There are " + totalEmployees + " programmers assigned to this project\n" +
+//                "This project will take approximately " + months + " months, " + weeks +
+//                " weeks and " + days + " working days to be completed.";
+//    }
+
+    public LocalDate getCompletionDate(int projectId) throws Exception {
+        LocalDate date = LocalDate.now();
+        int manHours= getTotalManHours(projectId);
         //a month has in average 4.35 weeks and therefore 152.25 working hours
         //a week has 35 working hours
         // a day has 7 working hours
-
-        //int manHours= getTotalManHours(projectId);
-        double manHours = 600;
         int months = (int) (manHours / 152.25);
         int weeks = (int) ((manHours % 152.25) / 35);
         int days = (int) (((manHours % 152.25) % 35) / 7);
-        return "There are " + totalEmployees + " programmers assigned to this project\n" +
-                "This project will take aproximately " + months + " months, " + weeks +
-                " weeks and " + days + " working days to be completed.";
+        date.plusMonths(months);
+        date.plusWeeks(weeks);
+        date.plusDays(days);
+        return date;
     }
+
+
 }
