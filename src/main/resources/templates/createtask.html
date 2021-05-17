@@ -7,39 +7,39 @@
 </head>
 <body>
 
-<section th:each="phase : ${project.phases}">
-    <p th:text="${'Phase: ' + phase.name}"></p>
-    <ul th:each="task: ${phase.tasks}">
-        <li th:text="${'Task: ' + task.name}"></li>
-        <li th:text="${'Description: ' + task.description}"></li>
-        <li th:text="${'Approximate man-hours: ' + task.durationInManHours}"></li>
+<section th:each="task : ${project.tasks}">
+    <p th:text="${'Phase: ' + task.name}"></p>
+    <ul th:each="subTask: ${task.subTasks}">
+        <li th:text="${'Task: ' + subTask.name}"></li>
+        <li th:text="${'Description: ' + subTask.description}"></li>
+        <li th:text="${'Approximate man-hours: ' + subTask.durationInManHours}"></li>
     </ul>
 </section>
 
 <div>
-    <form name="add-phase" action="add-phase" method="POST" id="add-phase">
-        <h3>Add phase</h3>
+    <form name="add-task" action="add-task" method="POST" id="add-task">
+        <h3>Add task</h3>
         Phase name: <br>
         <input type="text" name="name">
         <br><br>
         Description: <br>
         <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
         <br><br><br><br>
-        <input type="submit" value="add phase" form="add-phase">
+        <input type="submit" value="add task" form="add-task">
     </form>
 </div>
 
 
 <section>
-    <h3>Add task</h3>
+    <h3>Add subTask</h3>
 
-    <form action="add-task" method="POST" id="add-task">
+    <form action="add-subTask" method="POST" id="add-subTask">
         Task name: <br>
         <input type="text" name="name">
         <br><br>
-        <label for="phase">Select belonging phase:</label><br>
-        <select name="phase" id="phase" th:object="${project.phases}">
-            <option th:each="phase: ${project.phases}" th:value="${phase.id}" th:text="${phase.name}">
+        <label for="task">Select belonging task:</label><br>
+        <select name="task" id="task" th:object="${project.tasks}">
+            <option th:each="task: ${project.tasks}" th:value="${task.id}" th:text="${task.name}">
             </option>
         </select>
 
@@ -51,7 +51,7 @@
         Duration in man hours: <br>
         <input type="number" name="duration">
         <br><br>
-        <input type="submit" value="Add task" form="add-task">
+        <input type="submit" value="Add subTask" form="add-subTask">
     </form>
 
 </section>
