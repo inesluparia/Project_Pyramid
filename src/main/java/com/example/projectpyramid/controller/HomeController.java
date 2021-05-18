@@ -105,7 +105,7 @@ public class HomeController {
     public String createSubTask(WebRequest request, Model model) throws Exception {
         String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
         int intProjId = Integer.parseInt(projId);
-        ArrayList<Task> tasks = projectServices.getTask(intProjId);
+        ArrayList<Task> tasks = projectServices.getTasks(intProjId);
         model.addAttribute("tasks", tasks);
         String name = request.getParameter("name");
         String taskId = request.getParameter("task");
@@ -117,6 +117,9 @@ public class HomeController {
         model.addAttribute("project", project);
         return "createtask.html";
     }
+
+
+
 
     @GetMapping("/edit-project")
     public String editProject(@RequestParam("id") int projectId, Model model) throws Exception {
@@ -134,7 +137,7 @@ public class HomeController {
 
     @GetMapping ("/fill-project-form")
     public String editProjectInfo(){
-        return "under construction";
+        return "editproject";
     }
 
 
@@ -145,6 +148,19 @@ public class HomeController {
     public String updateProject(){
         return "editproject";
     }
+
+    @PostMapping("/update-task")
+    public String updateTask() {
+        return "editproject";
+    }
+
+    @PostMapping("/update-subtask")
+    public String updateSubTask() {
+        return "editproject";
+    }
+
+
+
 
     @GetMapping("/userpage")
     public String userPage(WebRequest request, Model model) throws Exception {

@@ -49,7 +49,7 @@ public class ProjectMapper {
                 Project project = new Project(projectId, author, client, projectName, description);
                 project.setIsActive(isActive);
                 return project;
-            }
+
         } catch (SQLException ex) {
             // FIXME either handle exception or something else, bc this cascades throughout lots of other code.
             throw new Exception(ex.getMessage());

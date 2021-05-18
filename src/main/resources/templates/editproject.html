@@ -20,7 +20,7 @@
 
    <a th:href="${'/fill-task-form?id=' + task.id}"> <p th:text="${'Task: ' + task.name}"></p> </a>
     <ul th:each="subtask : ${task.subTasks}">
-        <a th:href="${'/edit-Subtask?id=' + subtask.id}">
+        <a th:href="${'/fill-subtask-form?id=' + subtask.id}">
         <li th:text="${'Subtask: ' + subtask.name}"></li>
         <li th:text="${'Description: ' + subtask.description}"></li>
         <li th:text="${'Approximate man-hours: ' + subtask.durationInManHours}"></li>

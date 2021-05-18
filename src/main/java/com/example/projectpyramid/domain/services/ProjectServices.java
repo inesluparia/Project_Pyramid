@@ -62,6 +62,11 @@ public class ProjectServices {
         return tasks;
     }
 
+    public Task getTask(int taskId) {
+        Task task = taskMapper.getTask(taskId);
+        return task;
+    }
+
     //Adds lists of phases and tasks to the returned project before forwarding it to controller
     private void populateProject(Project project) {
         ArrayList<Task> tasks = taskMapper.getTasks(project.getId());
