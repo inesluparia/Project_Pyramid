@@ -77,12 +77,11 @@ public class HomeController {
         String description = request.getParameter("description");
 
         int projectId = projectServices.createProject(userId, projectName, description, clientId);
-        String projId = String.valueOf(projectId);
         //Save project in model
         Project project = projectServices.getProjectFromId(projectId);
         model.addAttribute("project", project);
         //Save projectID in session
-        request.setAttribute("projectId", projId, WebRequest.SCOPE_SESSION);
+        request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
         return "createtask.html";
     }
     
@@ -91,21 +90,20 @@ public class HomeController {
         // Requests data from html inputs to use in addPhase() method
         String taskName = request.getParameter("name");
         String taskDescription = request.getParameter("description");
-        String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
-        // Converts datatype to match the parameter requirement
-        int intProjId = Integer.parseInt(projId);
-        projectServices.addTask(taskName, taskDescription, intProjId);
+        int projId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+
+        projectServices.addTask(taskName, taskDescription, projId);
         // Get project information to show created phases that are designated to the new project
-        Project project = projectServices.getProjectFromId(intProjId);
+        Project project = projectServices.getProjectFromId(projId);
         model.addAttribute("project", project);
         return "createtask.html";
     }
 
     @PostMapping("/add-subTask")
     public String createSubTask(WebRequest request, Model model) throws Exception {
-        String projId = (String) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
-        int intProjId = Integer.parseInt(projId);
-        ArrayList<Task> tasks = projectServices.getTasks(intProjId);
+        int projId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        //int intProjId = Integer.parseInt(projId);
+        ArrayList<Task> tasks = projectServices.getTasks(projId);
         model.addAttribute("tasks", tasks);
         String name = request.getParameter("name");
         String taskId = request.getParameter("task");
@@ -113,7 +111,7 @@ public class HomeController {
         String description = request.getParameter("description");
         projectServices.addSubTask(name, taskId, durationInManHours, description);
 
-        Project project = projectServices.getProjectFromId(intProjId);
+        Project project = projectServices.getProjectFromId(projId);
         model.addAttribute("project", project);
         return "createtask.html";
     }
@@ -122,17 +120,23 @@ public class HomeController {
 
 
     @GetMapping("/edit-project")
-    public String editProject(@RequestParam("id") int projectId, Model model) throws Exception {
+    public String editProjectContent(@RequestParam("id") int projectId, WebRequest request, Model model) throws Exception {
+        request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
+        boolean projectBoo = false;
         Project project = projectServices.getProjectFromId(projectId);
         model.addAttribute("project", project);
+        model.addAttribute("projectBoo", projectBoo);
         return "editproject";
     }
 
-    @GetMapping ("/fill-task-form")
-    public String editTask(@RequestParam("id") int taskId, Model model) {
-        Task task = projectServices.getTask(taskId);
-        model.addAttribute("task", task);
-    return "editproject";
+    @GetMapping ("/fill-project-form")
+    public String fillProjectForm(Model model, WebRequest request) throws Exception {
+        Integer projId = (Integer) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        boolean projectBoo = true;
+       Project project = projectServices.getProjectFromId(projId);
+       model.addAttribute("project", project);
+        model.addAttribute("projectBoo", projectBoo);
+        return "editproject";
     }
 
     @GetMapping ("/fill-task-form")
@@ -145,7 +149,10 @@ public class HomeController {
     return "editproject";
     }
 
-
+    @GetMapping ("/fill-subtask-form")
+    public String fillSubTaskForm(){
+        return "under construction";
+    }
 
 
 
