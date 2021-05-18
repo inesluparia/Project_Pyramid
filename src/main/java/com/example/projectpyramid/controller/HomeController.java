@@ -135,9 +135,14 @@ public class HomeController {
     return "editproject";
     }
 
-    @GetMapping ("/fill-project-form")
-    public String editProjectInfo(){
-        return "editproject";
+    @GetMapping ("/fill-task-form")
+    public String fillTaskForm(@RequestParam("id") int taskId, Model model, WebRequest request) throws Exception{
+        int projId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        Project project = projectServices.getProjectFromId(projId);
+        model.addAttribute("project", project);
+        Task task = projectServices.getTask(taskId);
+        model.addAttribute("task", task);
+    return "editproject";
     }
 
 
@@ -146,12 +151,12 @@ public class HomeController {
 
     @PostMapping ("/update-project")
     public String updateProject(){
-        return "editproject";
+         return "redirect:edit-project";
     }
 
     @PostMapping("/update-task")
     public String updateTask() {
-        return "editproject";
+        return "redirect:edit-project";
     }
 
     @PostMapping("/update-subtask")

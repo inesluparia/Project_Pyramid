@@ -28,7 +28,7 @@
     </ul>
 </div>
 <br><br>
-<div th:unless="${project == null}">
+<div th:if="${projectBoo}">
     <form name="edit-project-info-form" action="update-project" method="POST">
 
         Project name:<br>
@@ -42,7 +42,7 @@
     </form>
 </div>
 
-<div th:unless="${task == null}">
+<div th:if="${task}">
     <form name="edit-task-form" action="update-task" method="POST" id="add-task">
         <h3>Add task</h3>
         Task name: <br>
