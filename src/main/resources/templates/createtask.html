@@ -12,6 +12,9 @@
 <p th:if="${project.isActive == true}">Project state: Not active</p>
 
 
+
+
+
 <section th:each="task : ${project.tasks}">
     <p th:text="${'Task: ' + task.name}"></p>
     <ul th:each="subtask : ${task.subTasks}">

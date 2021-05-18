@@ -68,7 +68,6 @@ public class HomeController {
         return "createproject.html";
     }
 
-            
     @PostMapping("/map-project")
     public String createProject(WebRequest request, Model model) throws Exception {
         // Requests data from html inputs to use in createProject() method
@@ -119,6 +118,12 @@ public class HomeController {
         return "createtask.html";
     }
 
+    @GetMapping("/edit-project")
+    public String editProject(@RequestParam("id") int projectId, Model model) throws Exception {
+        Project project = projectServices.getProjectFromId(projectId);
+        model.addAttribute("project", project);
+        return "editproject";
+    }
 
     @PostMapping ("/edit-project-info")
     @ResponseBody
