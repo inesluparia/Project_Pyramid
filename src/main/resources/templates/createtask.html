@@ -34,7 +34,7 @@
     </form>
 </div>
 
-<section>
+<div th:unless="${project.tasks.isEmpty()}">
     <h3>Add subTask</h3>
 
     <form action="add-subTask" method="POST" id="add-subTask">
@@ -56,7 +56,7 @@
         <input type="submit" value="Add subTask" form="add-subTask">
     </form>
 
-</section>
+</div>
 
 <!--<section>-->
 <!--    <h3>Add subTask</h3>-->

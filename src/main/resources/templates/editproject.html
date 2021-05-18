@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a href="edit-project-info">
+<h2 th:text="${project.projectName}"></h2>
+<p th:text="${project.client.name}"></p>
+<p th:text="${project.description}"></p>
+<p th:if="${project.isActive == false}">Project state: Active</p>
+<p th:if="${project.isActive == true}">Project state: Not active</p>
+</a>
+<br>
+<br>
+<div th:each="task : ${project.tasks}">
+
+   <a th:href="${'/edit-task?id=' + task.id}"> <p th:text="${'Task: ' + task.name}"></p> </a>
+    <ul th:each="subtask : ${task.subTasks}">
+        <a th:href="${'/edit-Subtask?id=' + subtask.id}">
+        <li th:text="${'Subtask: ' + subtask.name}"></li>
+        <li th:text="${'Description: ' + subtask.description}"></li>
+        <li th:text="${'Approximate man-hours: ' + subtask.durationInManHours}"></li>
+        </a>
+    </ul>
+</div>
+
+
+
+<div th:if=" ">
+    <form name="edit-project-info" action="map-project???" method="POST">
+
+        Project name:<br>
+        <input type="text" name="project-name">
+        <br><br>
+        Description:<br>
+        <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
+        <!--<label for="select-client">Client</label>
+        name="client" id="select-client"-->
+        <br>
+        <br>
+
+        <select name="client" id="client" th:object="${clients}">
+            <option>Select client</option>
+            <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
+            </option>
+        </select>
+        <br><br>
+        <input type="submit" value="Create project">
+
+    </form>
+</div>
+
+project name: e-commerce something
+
+
+
+
+
+</body>
+</html>

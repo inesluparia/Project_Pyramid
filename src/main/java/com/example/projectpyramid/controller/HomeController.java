@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
@@ -119,6 +120,22 @@ public class HomeController {
     }
 
 
+    @PostMapping ("/edit-project-info")
+    @ResponseBody
+    public String editProjectInfo(){
+        return "under construction";
+    }
+    @PostMapping ("/edit-task")
+    @ResponseBody
+    public String editTask(){
+        return "under construction";
+    }
+    @PostMapping ("/edit-subtask")
+    @ResponseBody
+    public String editSubTask(){
+        return "under construction";
+    }
+
     @GetMapping("/userpage")
     public String userPage(WebRequest request, Model model) throws Exception {
         String userId = (String) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
@@ -150,5 +167,6 @@ public class HomeController {
     public String allProjects(){
         return "allprojects";
     }
+
 }
 

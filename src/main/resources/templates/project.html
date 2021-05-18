@@ -59,5 +59,9 @@
 <p th:text="${'Estimated date for completion: ' + completionDate}">Estimated completion date is: </p>
 <!--<p th:text="${'Estimated date for completion: ' + #calendars.format(completionDate,'dd-MM-yyyy')}">Estimated completion date is: </p>-->
 
+<button>
+    <a th:href="${'edit-project?id=' + project.id}">Edit this project</a>
+</button>
+
 </body>
 </html>
