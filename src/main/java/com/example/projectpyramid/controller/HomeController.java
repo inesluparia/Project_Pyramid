@@ -125,20 +125,25 @@ public class HomeController {
         return "editproject";
     }
 
-    @PostMapping ("/edit-project-info")
-    @ResponseBody
+    @GetMapping ("/fill-task-form")
+    public String editTask(@RequestParam("id") int taskId, Model model) {
+        Task task = projectServices.getTask(taskId);
+        model.addAttribute("task", task);
+    return "editproject";
+    }
+
+    @GetMapping ("/fill-project-form")
     public String editProjectInfo(){
         return "under construction";
     }
-    @PostMapping ("/edit-task")
-    @ResponseBody
-    public String editTask(){
-        return "under construction";
-    }
-    @PostMapping ("/edit-subtask")
-    @ResponseBody
-    public String editSubTask(){
-        return "under construction";
+
+
+
+
+
+    @PostMapping ("/update-project")
+    public String updateProject(){
+        return "editproject";
     }
 
     @GetMapping("/userpage")

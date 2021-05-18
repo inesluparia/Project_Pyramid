@@ -56,7 +56,7 @@ public class ProjectServices {
         return projects;
     }
 
-    public ArrayList<Task> getTask(int projectId) {
+    public ArrayList<Task> getTasks(int projectId) {
         ArrayList<Task> tasks = taskMapper.getTasks(projectId);
 
         return tasks;

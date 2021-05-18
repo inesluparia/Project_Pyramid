@@ -38,7 +38,7 @@ public class ProjectMapper {
             PreparedStatement preparedStatement = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, projectId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            resultSet.next();
                 int authorId = resultSet.getInt("author_id");
                 User author = userMapper.getUser(authorId);
                 int clientId = resultSet.getInt("client_id");
@@ -54,7 +54,6 @@ public class ProjectMapper {
             // FIXME either handle exception or something else, bc this cascades throughout lots of other code.
             throw new Exception(ex.getMessage());
         }
-        return null;
     }
 
     public ArrayList<Project> getProjectsFromUserId(int id) throws Exception {

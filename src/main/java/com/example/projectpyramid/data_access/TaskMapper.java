@@ -46,4 +46,25 @@ public class TaskMapper {
         }
     }
 
+    public Task getTask(int taskId) {
+
+        try {
+            String query = "SELECT name, description, project_id FROM tasks WHERE id = ?";
+            Connection connection = DBManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, taskId);
+            ResultSet results = preparedStatement.executeQuery();
+
+            results.next();
+            int projectId = results.getInt("project_id");
+            String name = results.getString("name");
+            String description = results.getString("description");
+
+            Task task = new Task(taskId, projectId, name, description);
+            return task;
+
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
 }
