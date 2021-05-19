@@ -132,4 +132,20 @@ public class ProjectServices {
         return date;
     }
 
+    public void updateTask(String taskName, String taskDescription, int taskId) {
+        taskMapper.update(taskName, taskDescription, taskId);
+    }
+
+    public void updateProject(String projectName, String description, int projectId) {
+        projectMapper.update(projectName, description, projectId);
+    }
+
+    public void updateSubTask(String name, String description, String durationInManHours, int subtaskId) {
+        int intDurationInManHours = Integer.parseInt(durationInManHours);
+    subTaskMapper.update(name, description, intDurationInManHours, subtaskId);
+    }
+
+    public SubTask getSubtask(int subtaskId) {
+        return subTaskMapper.getSubtask(subtaskId);
+    }
 }

@@ -3,7 +3,7 @@ package com.example.projectpyramid.domain.entities;
 public class SubTask {
 
     private int id;
-    private int subTaskId;
+    private int taskId;
     private int durationInManHours;
     private String name;
     private String description;
@@ -18,7 +18,7 @@ public class SubTask {
 
     public SubTask(String name, int subTaskId, int durationInManHours, String description) {
         this.name = name;
-        this.subTaskId = subTaskId;
+        this.taskId = subTaskId;
         this.durationInManHours = durationInManHours;
         this.description = description;
     }
@@ -30,8 +30,8 @@ public class SubTask {
         return id;
     }
 
-    public int getSubTaskId() {
-        return subTaskId;
+    public int getTaskId() {
+        return taskId;
     }
 
     public int getDurationInManHours() {
@@ -52,8 +52,8 @@ public class SubTask {
         this.id = id;
     }
 
-    public void setSubTaskId(int phaseId) {
-        this.subTaskId = phaseId;
+    public void setTaskId(int phaseId) {
+        this.taskId = phaseId;
     }
 
     public void setDurationInManHours(int durationInManHours) {

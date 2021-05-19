@@ -13,7 +13,7 @@ public class SubTaskMapper {
             String SQL = "INSERT INTO subtasks (name, task_id, description, duration) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, subTask.getName());
-            ps.setInt(2, subTask.getSubTaskId());
+            ps.setInt(2, subTask.getTaskId());
             ps.setString(3, subTask.getDescription());
             ps.setInt(4, subTask.getDurationInManHours());
             ps.executeUpdate();
@@ -23,13 +23,13 @@ public class SubTaskMapper {
     }
 
 
-    public ArrayList<SubTask> getSubTasks(int phaseId){
+    public ArrayList<SubTask> getSubTasks(int taskId ){
         String query = "SELECT id, name, description, duration FROM subtasks WHERE task_id = ?";
         Connection connection = DBManager.getConnection();
         ArrayList<SubTask> subTasks = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, phaseId);
+            preparedStatement.setInt(1, taskId );
             ResultSet results = preparedStatement.executeQuery();
 
             while (results.next()) {
@@ -38,7 +38,7 @@ public class SubTaskMapper {
                 int duration = results.getInt("duration");
                 String description = results.getString("description");
 
-                subTasks.add(new SubTask(id, phaseId, duration, name, description));
+                subTasks.add(new SubTask(id, taskId , duration, name, description));
             }
 
             return subTasks;

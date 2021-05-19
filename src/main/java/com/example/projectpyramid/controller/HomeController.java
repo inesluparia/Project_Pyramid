@@ -116,12 +116,11 @@ public class HomeController {
         return "createtask.html";
     }
 
-
-
-
     @GetMapping("/edit-project")
-    public String editProjectContent(@RequestParam("id") int projectId, WebRequest request, Model model) throws Exception {
+    public String editProjectContent(/*@RequestParam("id") int projectId,*/ WebRequest request, Model model) throws Exception {
+        int projectId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
+
         boolean projectBoo = false;
         Project project = projectServices.getProjectFromId(projectId);
         model.addAttribute("project", project);
@@ -155,24 +154,34 @@ public class HomeController {
     }
 
 
+    @PostMapping("/update-project")
+    public String updateProject(WebRequest request) {
+        int projectId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        String projectName = request.getParameter("project-name");
+        String description = request.getParameter("description");
+        projectServices.updateProject(projectName, description, projectId);
 
-    @PostMapping ("/update-project")
-    public String updateProject(){
-         return "redirect:edit-project";
+        return "redirect:edit-project";
     }
 
     @PostMapping("/update-task")
-    public String updateTask() {
+    public String updateTask(@RequestParam("id") int taskId, WebRequest request) {
+        String taskName = request.getParameter("name");
+        String taskDescription = request.getParameter("description");
+
+        projectServices.updateTask(taskName, taskDescription, taskId);
         return "redirect:edit-project";
     }
 
     @PostMapping("/update-subtask")
-    public String updateSubTask() {
-        return "editproject";
+    public String updateSubTask(@RequestParam("id") int subtaskId, WebRequest request) {
+        String name = request.getParameter("name");
+        String durationInManHours = request.getParameter("duration");
+        String description = request.getParameter("description");
+
+        projectServices.updateSubTask(name, description, durationInManHours, subtaskId);
+        return "redirect:edit-project";
     }
-
-
-
 
     @GetMapping("/userpage")
     public String userPage(WebRequest request, Model model) throws Exception {
@@ -186,7 +195,8 @@ public class HomeController {
     }
 
     @GetMapping("/project")
-    public String projectPage(@RequestParam("id") int projectId, Model model) throws Exception {
+    public String projectPage(@RequestParam("id") int projectId, Model model, WebRequest request) throws Exception {
+        request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
         Project project = projectServices.getProjectFromId(projectId);
         model.addAttribute("project", project);
         model.addAttribute("programmers", 4);
