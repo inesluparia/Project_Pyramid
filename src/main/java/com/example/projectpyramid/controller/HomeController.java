@@ -62,7 +62,7 @@ public class HomeController {
     }
 
     @GetMapping("/createproject")
-    public String projectCreation(Model model){
+    public String projectCreation(Model model) {
         ArrayList<Client> clients = clientServices.getClients();
         model.addAttribute("clients", clients);
         return "createproject.html";
@@ -84,7 +84,7 @@ public class HomeController {
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
         return "createtask.html";
     }
-    
+
     @PostMapping("/add-task")
     public String createTask(WebRequest request, Model model) throws Exception {
         // Requests data from html inputs to use in addPhase() method
@@ -128,29 +128,36 @@ public class HomeController {
         return "editproject";
     }
 
-    @GetMapping ("/fill-project-form")
+    @GetMapping("/fill-project-form")
     public String fillProjectForm(Model model, WebRequest request) throws Exception {
         Integer projId = (Integer) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
         boolean projectBoo = true;
-       Project project = projectServices.getProjectFromId(projId);
-       model.addAttribute("project", project);
+        Project project = projectServices.getProjectFromId(projId);
+        model.addAttribute("project", project);
         model.addAttribute("projectBoo", projectBoo);
         return "editproject";
     }
 
-    @GetMapping ("/fill-task-form")
-    public String fillTaskForm(@RequestParam("id") int taskId, Model model, WebRequest request) throws Exception{
+    @GetMapping("/fill-task-form")
+    public String fillTaskForm(@RequestParam("id") int taskId, Model model, WebRequest request) throws Exception {
         int projId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
         Project project = projectServices.getProjectFromId(projId);
         model.addAttribute("project", project);
         Task task = projectServices.getTask(taskId);
         model.addAttribute("task", task);
-    return "editproject";
+        return "editproject";
     }
 
-    @GetMapping ("/fill-subtask-form")
-    public String fillSubTaskForm(){
-        return "under construction";
+    @GetMapping("/fill-subtask-form")
+    public String fillSubTaskForm(@RequestParam("id") int subtaskId, Model model, WebRequest request) throws Exception {
+        int projId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        Project project = projectServices.getProjectFromId(projId);
+        model.addAttribute("project", project);
+
+        SubTask subTask = projectServices.getSubtask(subtaskId);
+        model.addAttribute("subtask", subTask);
+
+        return "editproject";
     }
 
 
@@ -207,12 +214,12 @@ public class HomeController {
     }
 
     @GetMapping("/myprojects")
-    public String myProjects(){
+    public String myProjects() {
         return "myprojects";
     }
 
     @GetMapping("/projectlist")
-    public String allProjects(){
+    public String allProjects() {
         return "allprojects";
     }
 

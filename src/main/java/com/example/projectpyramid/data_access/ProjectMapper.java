@@ -29,8 +29,6 @@ public class ProjectMapper {
     }
 
 
-
-
     public Project getProject(int projectId) throws Exception {
         try {
             Connection con = DBManager.getConnection();
@@ -83,28 +81,21 @@ public class ProjectMapper {
         }
     }
 
-    public ArrayList<Task> getTasks(int projectId) {
-        String query = "SELECT id, name, description FROM tasks WHERE project_id = ?";
+
+    public void update(String name, String description, int id) {
+        String query = "UPDATE projects SET name = ?, description = ? WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, projectId);
-            ResultSet results = preparedStatement.executeQuery();
-
-            ArrayList<Task> tasks = new ArrayList<>();
-            while (results.next()) {
-                int id = results.getInt("id");
-                String name = results.getString("name");
-                String description = results.getString("description");
-
-                tasks.add(new Task(id, projectId, name, description));
-            }
-
-            return tasks;
+            PreparedStatement ps = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setInt(3, id);
+            ps.executeUpdate();
 
         } catch (SQLException ex) {
-            return null;
+            System.out.println("An Exception occured:");
+            ex.printStackTrace();
         }
     }
 }

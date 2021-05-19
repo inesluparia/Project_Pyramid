@@ -8,9 +8,9 @@ public class SubTask {
     private String name;
     private String description;
 
-    public SubTask(int id, int subTaskId, int durationInManHours, String name, String description) {
+    public SubTask(int id, int taskId, int durationInManHours, String name, String description) {
         this.id = id;
-        this.subTaskId = subTaskId;
+        this.taskId = taskId;
         this.durationInManHours = durationInManHours;
         this.name = name;
         this.description = description;

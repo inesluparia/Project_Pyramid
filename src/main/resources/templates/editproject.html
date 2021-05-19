@@ -31,10 +31,10 @@
     <form name="edit-project-info-form" action="update-project" method="POST">
 
         Project name:<br>
-        <input type="text" name="project-name" th:placeholder="${project.projectName}">
+        <textarea type="text" name="project-name" th:text="${project.projectName}"></textarea>
         <br><br>
         Description:<br>
-        <textarea type="text" name="description" rows="4" cols="50" th:placeholder="${project.description}"></textarea>
+        <textarea type="text" name="description" rows="4" cols="50" th:text="${project.description}"></textarea>
         <br><br>
         <input type="submit" value="Update project info">
 
@@ -53,6 +53,24 @@
         <input type="submit" value="Update task">
     </form>
 </div>
+
+
+<div th:if="${subtask}">
+    <form name="edit-task-form" th:action="${'/update-subtask?id=' + subtask.id}" method="POST" id="add-task">
+        <h3>Add task</h3>
+        Task name: <br>
+        <textarea type="text" name="name" th:text="${subtask.name}"></textarea>
+        <br><br>
+        Description: <br>
+        <textarea type="text" name="description" rows="4" cols="50" th:text="${subtask.description}"></textarea><br>
+        <br><br><br><br>
+        Man-hours: <br>
+        <textarea type="text" name="duration" th:text="${subtask.durationInManHours}"></textarea>
+        <br><br>
+        <input type="submit" value="Update subtask">
+    </form>
+</div>
+
 
 </body>
 </html>

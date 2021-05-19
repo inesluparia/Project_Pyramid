@@ -48,4 +48,46 @@ public class SubTaskMapper {
         }
     }
 
+    public SubTask getSubtask(int subTaskId) {
+
+        try {
+            String query = "SELECT name, description, duration, task_id FROM subtasks WHERE id = ?";
+            Connection connection = DBManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, subTaskId);
+            ResultSet results = preparedStatement.executeQuery();
+
+            results.next();
+            String name = results.getString("name");
+            String description = results.getString("description");
+            int durationInManHours = results.getInt("duration");
+            int taskId = results.getInt("task_id");
+            SubTask subTask = new SubTask(subTaskId, taskId, durationInManHours, name, description);
+            return subTask;
+
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+
+
+    public void update(String name, String description, int durationInManHours, int id) {
+        String query = "UPDATE subtasks SET name = ?, description = ?, duration = ? WHERE id = ?";
+        Connection connection = DBManager.getConnection();
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setInt(3, durationInManHours);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+
+            //wasSuccessful = ps.executeUpdate() > 0;
+
+        } catch (SQLException ex) {
+            System.out.println("An Exception occured:");
+            ex.printStackTrace();
+        }
+    }
 }

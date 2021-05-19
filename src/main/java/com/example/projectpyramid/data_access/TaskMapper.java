@@ -1,6 +1,7 @@
 package com.example.projectpyramid.data_access;
 
 import com.example.projectpyramid.domain.entities.Task;
+import com.example.projectpyramid.domain.entities.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -65,6 +66,26 @@ public class TaskMapper {
 
         } catch (SQLException ex) {
             return null;
+        }
+    }
+
+
+    public void update(String name, String description, int id) {
+        String query = "UPDATE tasks SET name = ?, description = ? WHERE id = ?";
+        Connection connection = DBManager.getConnection();
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setInt(3, id);
+            ps.executeUpdate();
+
+            //wasSuccessful = ps.executeUpdate() > 0;
+
+        } catch (SQLException ex) {
+            System.out.println("An Exception occured:");
+            ex.printStackTrace();
         }
     }
 }
