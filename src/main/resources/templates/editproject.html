@@ -32,10 +32,10 @@
     <form name="edit-project-info-form" action="update-project" method="POST">
 
         Project name:<br>
-        <input type="text" name="project-name" th:placeholder="${project.projectName}">
+        <textarea type="text" name="project-name" th:text="${project.projectName}"></textarea>
         <br><br>
         Description:<br>
-        <textarea type="text" name="description" rows="4" cols="50" th:placeholder="${project.description}"></textarea>
+        <textarea type="text" name="description" rows="4" cols="50" th:text="${project.description}"></textarea>
         <br><br>
         <input type="submit" value="Update project info">
 
