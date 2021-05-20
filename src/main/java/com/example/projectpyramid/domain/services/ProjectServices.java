@@ -27,7 +27,6 @@ public class ProjectServices {
         int userIdInt = Integer.parseInt(userId);
         int clientIdInt = Integer.parseInt(clientId);
 
-
         // TODO er det nødvendigt at lave et objekt af projekt til metoden?
        return  projectMapper.insertProject(name, userIdInt, clientIdInt, description);
 
