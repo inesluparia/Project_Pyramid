@@ -1,0 +1,5 @@
+ /* enkelt stylesheet til at samle alle stylesheets */
+
+@import "global.css";
+@import "general.css";
+@import "pagestyles/logo.css";

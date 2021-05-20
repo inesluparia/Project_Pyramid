@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;600&display=swap');
+
+* {
+    box-sizing: border-box;
+    outline: none;
+}
+
+body {
+    background-color: var(--primary-background-color);
+    color: var(--text-color);
+    font-family: 'Jost', Helvetica, Arial, sans-serif;
+}
+
+.flex-container {
+    display: flex;
+}
+
+section:first-of-type {
+    margin: 0;
+}
+
+button {
+    padding: 0.75rem 1rem;
+    background-color: var(--accent-color);
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    font-size: 1.15rem;
+    font-family: inherit;
+    outline: revert;
+}
+
+button:hover {
+    filter: brightness(0.75);
+}
+
+.text-field {
+    position: relative;
+    margin: 1.75rem 0 0.5rem;
+    z-index: 1;
+}
+
+.text-field:focus-within label, input:not(:placeholder-shown) + label {
+    transform: scale(0.8) translateY(-1.75rem);
+}
+
+label {
+    position: absolute;
+    left: 0;
+    transform-origin: 0;
+    transform: translate(1rem, 0.75rem);
+    transition: transform 300ms;
+    color: var(--link-color);
+    z-index: -1;
+}
+
+.full-width {
+    width: 100%;
+}
+
+input[type="text"], input[type="password"] {
+    border: none;
+    border-bottom: 2px var(--link-color) solid;
+    background-color: #ffffff0d;
+    font-size: 1rem;
+    color: var(--text-color);
+    padding: 0.85rem;
+    width: 100%;
+}
+
+.sub-task.completed {
+    text-decoration: line-through;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+section {
+    background-color: var(--secondary-background-color);
+    padding: 2.25rem;
+    height: 100%;
+    margin-left: 6rem;
+    flex: 1;
+}
+
+.half-width {
+    width: 50%;
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: var(--link-color);
+    outline: revert;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.small-space-above {
+    margin-top: 0.5rem;
+}
+
+.medium-space-above {
+    margin-top: 1rem;
+}
+
+.large-space-above {
+    margin-top: 2.5rem;
+}
+
+.small-space-below {
+    margin-bottom: 0.5rem;
+}
+
+.medium-space-below {
+    margin-bottom: 1rem;
+}
+
+.large-space-below {
+    margin-bottom: 2.5rem;
+}
+
+/* logo properties */
+
+.background {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background: transparent;
+    justify-content: center;
+    align-items: center;
+}
+
+.greeting-pyramid-logo-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.greeting-logo{
+    margin: 0 auto;
+}
+
+.greeting-pyramid-layer-1{
+    /*background: var(--secondary-background-color);*/
+}
+
+.greeting-pyramid-layer-2 {
+    background: var(--accent-color);
+    clip-path: polygon(52% 43%, -284% 412%, 100% 100%);
+}
+
+.greeting-pyramid-layer-3 {
+    height: var(--logo-size);
+    width: var(--logo-size);
+    background: yellow;
+    clip-path: polygon(52% 43%, 0% 100%, 80% 100%);
+}
+
+.greeting-title {
+    text-align: center;
+}
+
+#greeting-title-name {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: var(--accent-color);
+    font-size: 1.25rem;
+}
+
+.sign-up-section::before {
+    content: 'Sign up';
+    transform: rotate(90deg) translate(1.5rem, 11rem);
+    position: absolute;
+    font-size: 4em;
+}
+
+.login-section::before {
+    content: 'Login';
+    transform: rotate(90deg) translate(-0.5rem, 9rem);
+    position: absolute;
+    font-size: 4em;
+}
+
+main {
+    margin: 2.5% 25%;
+}
+
+@media only screen and (max-width: 1200px) {
+    main {
+        margin: 2.5% 15%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    main {
+        margin: 2.5%;
+    }
+
+    .flex-container {
+        flex-direction: column;
+    }
+
+    section {
+        margin: 3rem 0 0;
+    }
+
+    .login-section::before {
+        content: none;
+    }
+
+    .sign-up-section::before {
+        content: none;
+    }
+}

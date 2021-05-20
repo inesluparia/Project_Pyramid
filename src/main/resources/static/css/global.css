@@ -1,0 +1,13 @@
+:root {
+    font-size: 16px;
+
+    --text-color: white;
+
+    --link-color: #0fbdca;
+
+    --primary-background-color: #0d024b;
+    --secondary-background-color: #193280;
+    --accent-color: #ffc80b;
+
+    --logo-size: 3rem;
+}

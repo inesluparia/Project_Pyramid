@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-<head>
-    <link rel="stylesheet" href="stylesheet.css">
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head.html :: head">
 </head>
 <body>
-
-<h2 th:text="${'Hej ' + name}"></h2>
-
-
-<ul>
-    <li th:each="project:${projects}">
-        <a th:href="${'/project?id=' + project.id}" th:text="${project.projectName}"></a>
-    </li>
-</ul>
-
-<br>
-<button>
-    <a href="/createproject">Start a new project</a>
-</button>
-<br>
-<br>
-(EVT. 3.SEE ALL PROJECTS)
-
+<main>
+    <h1 th:text="${'Hi, ' + name}"></h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolorem est impedit placeat rem? Accusamus corporis doloribus eius fuga ipsam laborum neque quas quo sed veniam? Autem culpa et ratione?</p>
+    <ul class="space-above medium-space-below">
+        <li th:each="project:${projects}">
+            <a th:href="${'/project?id=' + project.id}" th:text="${project.projectName}"></a>
+        </li>
+    </ul>
+    <a href="/createproject">
+        <button>Start a new project</button>
+    </a>
+</main>
 </body>
+<footer th:replace="fragments/footer.html :: footer"></footer>
 </html>
