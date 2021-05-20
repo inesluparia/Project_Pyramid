@@ -28,7 +28,6 @@ public class ProjectMapper {
         }
     }
 
-
     public Project getProject(int projectId) throws Exception {
         try {
             Connection con = DBManager.getConnection();
@@ -37,20 +36,20 @@ public class ProjectMapper {
             preparedStatement.setInt(1, projectId);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-                int authorId = resultSet.getInt("author_id");
-                User author = userMapper.getUser(authorId);
-                int clientId = resultSet.getInt("client_id");
-                Client client = clientMapper.getClientFromId(clientId);
-                String projectName = resultSet.getString("name");
-                boolean isActive = resultSet.getInt("is_active") != 0;
-                String description = resultSet.getString("description");
-                Project project = new Project(projectId, author, client, projectName, description);
-                project.setIsActive(isActive);
-                return project;
-
+            int authorId = resultSet.getInt("author_id");
+            User author = userMapper.getUser(authorId);
+            int clientId = resultSet.getInt("client_id");
+            Client client = clientMapper.getClientFromId(clientId);
+            String projectName = resultSet.getString("name");
+            boolean isActive = resultSet.getInt("is_active") != 0;
+            String description = resultSet.getString("description");
+            Project project = new Project(projectId, author, client, projectName, description);
+            project.setIsActive(isActive);
+            return project;
         } catch (SQLException ex) {
-            // FIXME either handle exception or something else, bc this cascades throughout lots of other code.
+            // FIXME either handle exception or something else, because this cascades throughout lots of other code.
             throw new Exception(ex.getMessage());
+
         }
     }
 
