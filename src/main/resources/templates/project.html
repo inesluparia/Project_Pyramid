@@ -1,68 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<table>
-    <tr>
-    <tr>
-        <th>Project name</th>
-        <th>Author</th>
-        <th>Client</th>
-        <th>Description</th>
-        <th>Is active?</th>
-    </tr>
-    <tr>
-    <td th:text="${project.projectName}"></td>
-    <td th:text="${project.author.fullName}"></td>
-    <td th:text="${project.client.name}"></td>
-    <td th:text="${project.description}"></td>
-    <td th:if="${project.isActive == false}">Nej</td>
-    <td th:if="${project.isActive == true}">Ja</td>
-</tr>
-</table>
-<!--<table>having problems with the nested loop and table, will try lists-->
-<!--    <tr>-->
-<!--        <th>Phase ID</th>-->
-<!--        <th>Task</th>-->
-<!--        <th>Description</th>-->
-<!--        <th>Man-hours</th>-->
-<!--    </tr>-->
-<!--    <tr th:each="task:${project.tasks}">-->
-<!--        <td th:text="${task.name}"></td>-->
-<!--    </tr>-->
-<!--    <tr th:each="subTask:${task.subTasks}">-->
-<!--        <td th:text="${subTask.phaseId}">Phase</td>-->
-<!--        <td th:text="${subTask.name}">Task name</td>-->
-<!--        <td th:text="${subTask.description}">Description</td>-->
-<!--        <td th:text="${subTask.durationInManHours}">Task name</td>-->
-<!--    </tr>-->
-<!--</table>-->
-
-<section th:each="task : ${project.tasks}">
-    <p th:text="${'Task: ' + task.name}"></p>
-    <ul th:each="subtask : ${task.subTasks}">
-        <li th:text="${'Subtask: ' + subtask.name}"></li>
-        <li th:text="${'Description: ' + subtask.description}"></li>
-        <li th:text="${'Approximate man-hours: ' + subtask.durationInManHours}"></li>
-    </ul>
-</section>
-
-<h2>Project estimations</h2>
-<br>
-<p th:text="${'Programmers assigned to this project: ' + programmers}"></p>
-<p th:text="${'Estimated cost in DKK: ' + totalCost}"> Estimated cost for this project in DKK: </p>
-<p th:text="${'Estimated cost in man-hours: ' + totalManHours}"> Estimated cost for this project in
-    man-hours: </p>
-<p th:text="${'Estimated date for completion: ' + completionDate}">Estimated completion date is: </p>
-<!--<p th:text="${'Estimated date for completion: ' + #calendars.format(completionDate,'dd-MM-yyyy')}">Estimated completion date is: </p>-->
-
-<button>
-   <!-- <a th:href="${'edit-project?id=' + project.id}">Edit this project</a> -->
-    <a href="edit-project">Edit this project</a>
-</button>
-
-</body>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="fragments/head.html :: head"></head>
+    <body>
+        <table>
+            <tr>
+                <th>Project name</th>
+                <th>Author</th>
+                <th>Client</th>
+                <th>Description</th>
+                <th>Is active?</th>
+            </tr>
+            <tr>
+                <td th:text="${project.projectName}"></td>
+                <td th:text="${project.author.fullName}"></td>
+                <td th:text="${project.client.name}"></td>
+                <td th:text="${project.description}"></td>
+                <td th:text="${project.isActive ? 'Ja' : 'Nej'}"></td>
+            </tr>
+        </table>
+        <section th:each="task : ${project.getTasks()}">
+            <p th:text="${'Task: ' + task.name}"></p>
+            <ul th:each="subtask : ${task.subTasks}">
+                <li th:text="${'Subtask: ' + subtask.name}"></li>
+                <li th:text="${'Description: ' + subtask.description}"></li>
+                <li th:text="${'Approximate man-hours: ' + subtask.durationInManHours}"></li>
+            </ul>
+        </section>
+        <h2>Project estimations</h2>
+        <br>
+        <p th:text="${'Programmers assigned to this project: ' + programmers}"></p>
+        <p th:text="${'Estimated cost in DKK: ' + totalCost}"> Estimated cost for this project in DKK: </p>
+        <p th:text="${'Estimated cost in man-hours: ' + totalManHours}"> Estimated cost for this project in man-hours: </p>
+        <p th:text="${'Estimated date for completion: ' + completionDate}">Estimated completion date is: </p>
+        <!--<p th:text="${'Estimated date for completion: ' + #calendars.format(completionDate,'dd-MM-yyyy')}">Estimated completion date is: </p>-->
+        <button>
+           <!-- <a th:href="${'edit-project?id=' + project.id}">Edit this project</a> -->
+            <a href="edit-project">Edit this project</a>
+        </button>
+    </body>
 </html>

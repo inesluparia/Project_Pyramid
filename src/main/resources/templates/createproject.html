@@ -1,48 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <link rel="stylesheet" href="stylesheet.css">
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="fragments/head.html :: head"></head>
+    <body>
+        <form name="create-project" action="map-project" method="POST">
+            Project name:<br>
+            <input type="text" name="project-name">
+            <br><br>
+            Description:<br>
+            <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
+            <!--<label for="select-client">Client</label>
+            name="client" id="select-client"-->
+            <br>
+            <br>
+            <select name="client" id="client" th:object="${clients}">
+                <option>Select client</option>
+                <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
+                </option>
+            </select>
+            <br><br>
+            <input type="submit" value="Create project">
 
-<div>
-    <form name="create-project" action="map-project" method="POST">
-
-        Project name:<br>
-        <input type="text" name="project-name">
-        <br><br>
-        Description:<br>
-        <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
-        <!--<label for="select-client">Client</label>
-        name="client" id="select-client"-->
-        <br>
-        <br>
-
-        <select name="client" id="client" th:object="${clients}">
-            <option>Select client</option>
-            <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
-            </option>
-        </select>
-        <br><br>
-        <input type="submit" value="Create project">
-
-    </form>
-</div>
-
-
-<br><br><br><br>
-<b>add task</b><br>
-<b>name</b>_____ <br> <b>description</b>______<br>
-
-<b>dependency task</b>_____<br>
-<i>if this task is dependent on another task or subTask add it <br></i>
-
-write tasks nr here if a certain task or subTask needs to be CONCLUDED before this starts<br>
-
-<b>add subTask</b>
-
-
-</body>
+        </form>
+        <br><br><br><br>
+        <b>add task</b><br>
+        <b>name</b>_____ <br> <b>description</b>______<br>
+        <b>dependency task</b>_____<br>
+        <i>if this task is dependent on another task or subTask add it <br></i>write tasks nr here if a certain task or subTask needs to be CONCLUDED before this starts<br>
+        <b>add subTask</b>
+    </body>
 </html>

@@ -1,91 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <link rel="stylesheet" href="stylesheet.css">
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1 th:text="${project.projectName}"></h1>
-<p th:text="${project.client.name}"></p>
-<p th:if="${project.isActive == false}">Project state: Active</p>
-<p th:if="${project.isActive == true}">Project state: Not active</p>
-
-
-
-
-
-<section th:each="task : ${project.tasks}">
-    <p th:text="${'Task: ' + task.name}"></p>
-    <ul th:each="subtask : ${task.subTasks}">
-        <li th:text="${'Subtask: ' + subtask.name}"></li>
-        <li th:text="${'Description: ' + subtask.description}"></li>
-        <li th:text="${'Approximate man-hours: ' + subtask.durationInManHours}"></li>
-    </ul>
-</section>
-
-<div>
-    <form name="add-task" action="add-task" method="POST" id="add-task">
-        <h3>Add task</h3>
-        Task name: <br>
-        <input type="text" name="name">
-        <br><br>
-        Description: <br>
-        <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
-        <br><br><br><br>
-        <input type="submit" value="add task" form="add-task">
-    </form>
-</div>
-
-<div th:unless="${project.tasks.isEmpty()}">
-    <h3>Add subTask</h3>
-
-    <form action="add-subTask" method="POST" id="add-subTask">
-        Task name: <br>
-        <input type="text" name="name">
-        <br><br>
-        <label for="task">Select belonging task:</label><br>
-        <select name="task" id="task" th:object="${project.tasks}">
-            <option th:each="task: ${project.tasks}" th:value="${task.id}" th:text="${task.name}">
-            </option>
-        </select>
-        <br><br>
-        Description: <br>
-        <textarea type="text" name="description" rows="4" cols="50"></textarea>
-        <br><br>
-        Duration in man-hours: <br>
-        <input type="number" name="duration">
-        <br><br>
-        <input type="submit" value="Add subTask" form="add-subTask">
-    </form>
-
-</div>
-
-<!--<section>-->
-<!--    <h3>Add subTask</h3>-->
-
-<!--    <form action="add-subTask" method="POST" id="add-subTask">-->
-<!--        Task name: <br>-->
-<!--        <input type="text" name="name">-->
-<!--        <br><br>-->
-<!--        <label for="task">Select belonging task:</label><br>-->
-<!--        <select name="task" id="task" th:object="${project.tasks}">-->
-<!--            <option th:each="task: ${project.tasks}" th:value="${task.id}" th:text="${task.name}">-->
-<!--            </option>-->
-<!--        </select>-->
-
-
-<!--        <br><br>-->
-<!--        Description: <br>-->
-<!--        <textarea type="text" name="description" rows="4" cols="50"></textarea>-->
-<!--        <br><br>-->
-<!--        Duration in man hours: <br>-->
-<!--        <input type="number" name="duration">-->
-<!--        <br><br>-->
-<!--        <input type="submit" value="Add subTask" form="add-subTask">-->
-<!--    </form>-->
-
-<!--</section>-->
-
-</body>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="fragments/head.html :: head"></head>
+    <body>
+        <h1 th:text="${project.projectName}"></h1>
+        <p th:text="${project.client.name}"></p>
+        <p th:if="${project.isActive == false}">Project state: Active</p>
+        <p th:if="${project.isActive == true}">Project state: Not active</p>
+        <section th:each="task : ${project.tasks}">
+            <p th:text="${'Task: ' + task.name}"></p>
+            <ul th:each="subtask : ${task.subTasks}">
+                <li th:text="${'Subtask: ' + subtask.name}"></li>
+                <li th:text="${'Description: ' + subtask.description}"></li>
+                <li th:text="${'Approximate man-hours: ' + subtask.durationInManHours}"></li>
+            </ul>
+        </section>
+        <div>
+            <form name="add-task" action="add-task" method="POST" id="add-task">
+                <h3>Add task</h3>
+                Task name: <br>
+                <input type="text" name="name">
+                <br><br>
+                Description: <br>
+                <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
+                <br><br><br><br>
+                <input type="submit" value="add task" form="add-task">
+            </form>
+        </div>
+        <div th:unless="${project.tasks.isEmpty()}">
+            <h3>Add subTask</h3>
+            <form action="add-subTask" method="POST" id="add-subTask">
+                Task name: <br>
+                <input type="text" name="name">
+                <br><br>
+                <label for="task">Select belonging task:</label><br>
+                <select name="task" id="task" th:object="${project.tasks}">
+                    <option th:each="task: ${project.tasks}" th:value="${task.id}" th:text="${task.name}"></option>
+                </select>
+                <br><br>
+                Description: <br>
+                <textarea type="text" name="description" rows="4" cols="50"></textarea>
+                <br><br>
+                Duration in man-hours: <br>
+                <input type="number" name="duration">
+                <br><br>
+                <input type="submit" value="Add subTask" form="add-subTask">
+            </form>
+        </div>
+        <!--<section>-->
+        <!--    <h3>Add subTask</h3>-->
+        <!--    <form action="add-subTask" method="POST" id="add-subTask">-->
+        <!--        Task name: <br>-->
+        <!--        <input type="text" name="name">-->
+        <!--        <br><br>-->
+        <!--        <label for="task">Select belonging task:</label><br>-->
+        <!--        <select name="task" id="task" th:object="${project.tasks}">-->
+        <!--            <option th:each="task: ${project.tasks}" th:value="${task.id}" th:text="${task.name}">-->
+        <!--            </option>-->
+        <!--        </select>-->
+        <!--        <br><br>-->
+        <!--        Description: <br>-->
+        <!--        <textarea type="text" name="description" rows="4" cols="50"></textarea>-->
+        <!--        <br><br>-->
+        <!--        Duration in man hours: <br>-->
+        <!--        <input type="number" name="duration">-->
+        <!--        <br><br>-->
+        <!--        <input type="submit" value="Add subTask" form="add-subTask">-->
+        <!--    </form>-->
+        <!--</section>-->
+    </body>
 </html>

@@ -1,60 +1,60 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head.html :: head"></head>
-<body>
-<main>
-    <header class="greeting-pyramid-logo-container large-space-above large-space-below">
-        <div class="greeting-logo">
-            <div class="greeting-pyramid-layer-1">
-                <div class="greeting-pyramid-layer-2">
-                    <div class="greeting-pyramid-layer-3"></div>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head th:replace="fragments/head.html :: head"></head>
+    <body>
+        <main>
+            <header class="greeting-pyramid-logo-container large-space-above large-space-below">
+                <div class="greeting-logo">
+                    <div class="greeting-pyramid-layer-1">
+                        <div class="greeting-pyramid-layer-2">
+                            <div class="greeting-pyramid-layer-3"></div>
+                        </div>
+                    </div>
                 </div>
+                <div class="greeting-title">
+                    <h1 id="greeting-title-name">WELCOME TO PYRAMID</h1>
+                </div>
+            </header>
+            <div class="flex-container">
+                <section class="login-section">
+                    <h2>Log into your existing account</h2>
+                    <form name="login" action="login" method="POST">
+                        <div class="text-field">
+                            <input required="" class="full-width" id="username" name="username" type="text" autocomplete="username" placeholder=" ">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="text-field">
+                            <input id="password" class="full-width" name="password" type="password" autocomplete="current-password" placeholder=" ">
+                            <label for="password">Password</label>
+                        </div>
+                        <a href="#">Forgot your password?</a>
+                        <button class="full-width medium-space-above" type="submit" value="Log in">Login</button>
+                    </form>
+                </section>
+                <section class="sign-up-section">
+                    <h2>or... create a new one</h2>
+                    <form name="create-user" action="/createuser" method="POST">
+                        <div class="text-field">
+                            <input required="" id="fullname" class="full-width" name="name" type="text" autocomplete="name" placeholder=" ">
+                            <label for="fullname">Name</label>
+                        </div>
+                        <div class="text-field">
+                            <input required="" id="newUsername" class="full-width" name="username" type="text" autocomplete="username" placeholder=" ">
+                            <label for="newUsername">Username</label>
+                        </div>
+                        <div class="text-field">
+                            <input id="newPassword" class="full-width" name="password1" type="password" autocomplete="new-password" placeholder=" ">
+                            <label for="newPassword">Password</label>
+                        </div>
+                        <div class="text-field">
+                            <input id="confirmNewPassword" class="full-width" name="password2" type="password" autocomplete="new-password" placeholder=" ">
+                            <label for="confirmNewPassword">Confirm password</label>
+                        </div>
+                        <button class="full-width medium-space-above" type="submit" value="Create user">Create account</button>
+                    </form>
+                </section>
             </div>
-        </div>
-        <div class="greeting-title">
-            <h1 id="greeting-title-name">WELCOME TO PYRAMID</h1>
-        </div>
-    </header>
-    <div class="flex-container">
-        <section class="login-section">
-            <h2>Log into your existing account</h2>
-            <form name="login" action="login" method="POST">
-                <div class="text-field">
-                    <input required="" class="full-width" id="username" name="username" type="text" autocomplete="username" placeholder=" ">
-                    <label for="username">Username</label>
-                </div>
-                <div class="text-field">
-                    <input id="password" class="full-width" name="password" type="password" autocomplete="current-password" placeholder=" ">
-                    <label for="password">Password</label>
-                </div>
-                <a href="#">Forgot your password?</a>
-                <button class="full-width medium-space-above" type="submit" value="Log in">Login</button>
-            </form>
-        </section>
-        <section class="sign-up-section">
-            <h2>or... create a new one</h2>
-            <form name="create-user" action="/createuser" method="POST">
-                <div class="text-field">
-                    <input required="" id="fullname" class="full-width" name="name" type="text" autocomplete="name" placeholder=" ">
-                    <label for="fullname">Name</label>
-                </div>
-                <div class="text-field">
-                    <input required="" id="newUsername" class="full-width" name="username" type="text" autocomplete="username" placeholder=" ">
-                    <label for="newUsername">Username</label>
-                </div>
-                <div class="text-field">
-                    <input id="newPassword" class="full-width" name="password1" type="password" autocomplete="new-password" placeholder=" ">
-                    <label for="newPassword">Password</label>
-                </div>
-                <div class="text-field">
-                    <input id="confirmNewPassword" class="full-width" name="password2" type="password" autocomplete="new-password" placeholder=" ">
-                    <label for="confirmNewPassword">Confirm password</label>
-                </div>
-                <button class="full-width medium-space-above" type="submit" value="Create user">Create account</button>
-            </form>
-        </section>
-    </div>
-</main>
-<footer th:replace="fragments/footer.html :: footer"></footer>
-</body>
+        </main>
+        <footer th:replace="fragments/footer.html :: footer"></footer>
+    </body>
 </html>
