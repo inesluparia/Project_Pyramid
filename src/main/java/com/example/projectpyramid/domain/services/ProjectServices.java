@@ -20,6 +20,10 @@ public class ProjectServices {
 
 
     public int createProject(String userId, String name, String description, String clientId) throws Exception {
+        if (description.length() > 255) {
+            throw new Exception("Description is too long");
+        }
+
         int userIdInt = Integer.parseInt(userId);
         int clientIdInt = Integer.parseInt(clientId);
 

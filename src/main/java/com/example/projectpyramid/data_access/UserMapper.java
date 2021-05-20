@@ -64,11 +64,11 @@ public class UserMapper {
     }
 
     public User login(String userName, String password) throws Exception {
+            Connection connection = DBManager.getConnection();
         try {
-            Connection con = DBManager.getConnection();
             String SQL = "SELECT id, fullname FROM users "
                     + "WHERE username=? AND password=?;";
-            PreparedStatement ps = con.prepareStatement(SQL);
+            PreparedStatement ps = connection.prepareStatement(SQL);
             ps.setString(1, userName);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
@@ -82,6 +82,7 @@ public class UserMapper {
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }
+
     }
 
     public User getUser(int userId) throws Exception {

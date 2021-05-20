@@ -6,10 +6,7 @@ import com.example.projectpyramid.domain.services.ProjectServices;
 import com.example.projectpyramid.domain.services.UserServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
@@ -32,6 +29,12 @@ public class HomeController {
 //        User user = userServices.login("Andersand", "1234");
 //        return user.getUserName();
 //    }
+
+    @ExceptionHandler(Exception.class)
+    public String anotherError(Model model, Exception exception) {
+        model.addAttribute("message", exception.getMessage());
+        return "errorpage.html";
+    }
 
     @PostMapping("/login")
     public String login(WebRequest request) throws Exception {

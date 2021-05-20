@@ -28,7 +28,6 @@ public class ProjectMapper {
         }
     }
 
-
     public Project getProject(int projectId) throws Exception {
         try {
             Connection con = DBManager.getConnection();
@@ -49,8 +48,9 @@ public class ProjectMapper {
                 return project;
 
         } catch (SQLException ex) {
-            // FIXME either handle exception or something else, bc this cascades throughout lots of other code.
+            // FIXME either handle exception or something else, because this cascades throughout lots of other code.
             throw new Exception(ex.getMessage());
+
         }
     }
 
