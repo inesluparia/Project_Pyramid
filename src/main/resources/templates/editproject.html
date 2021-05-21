@@ -22,6 +22,8 @@
             </ul>
         </div>
         <br><br>
+        <button th:onclick="${}">Add a new subtask</button>
+        <button></button>
         <div th:if="${projectBoo}">
             <form name="edit-project-info-form" action="update-project" method="POST">
                 Project name:<br>
@@ -59,6 +61,18 @@
                 <textarea type="text" name="duration" th:text="${subtask.durationInManHours}"></textarea>
                 <br><br>
                 <input type="submit" value="Update subtask">
+            </form>
+        </div>
+        <div th:if="addTaskButtonPressed">
+            <form name="add-task-form" action="add-task" method="POST">
+                <h3>Add task</h3>
+                Task name: <br>
+                <input type="text" name="name">
+                <br><br>
+                Description: <br>
+                <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
+                <br><br><br><br>
+                <input type="submit" value="add task" form="add-task">
             </form>
         </div>
     </body>
