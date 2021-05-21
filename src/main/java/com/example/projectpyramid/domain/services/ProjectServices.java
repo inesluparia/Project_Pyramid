@@ -18,7 +18,6 @@ public class ProjectServices {
     TaskMapper taskMapper = new TaskMapper();
     SubTaskMapper subTaskMapper = new SubTaskMapper();
 
-
     public int createProject(String userId, String name, String description, String clientId) throws Exception {
         if (description.length() > 255) {
             throw new Exception("Description is too long");
@@ -29,9 +28,7 @@ public class ProjectServices {
 
         // TODO er det nødvendigt at lave et objekt af projekt til metoden?
        return  projectMapper.insertProject(name, userIdInt, clientIdInt, description);
-
     }
-
 
     public Task addTask(String name, String description, int projectId) throws Exception {
         Task task = new Task(name, description, projectId);
@@ -39,23 +36,23 @@ public class ProjectServices {
         return task;
     }
 
+    public SubTask addSubTask(String name, String taskId, String durationInManHours, String description) throws Exception {
+        int intTaskId = Integer.parseInt(taskId);
+        int intDurationInManHours = Integer.parseInt(durationInManHours);
 
-   public SubTask addSubTask(String name, String phaseId, String durationInManHours, String description) throws Exception {
-       int intPhaseId = Integer.parseInt(phaseId);
-       int intDurationInManHours = Integer.parseInt(durationInManHours);
+        SubTask subTask = new SubTask(name, intTaskId, intDurationInManHours, description);
+        subTaskMapper.insertSubTask(subTask);
 
-       SubTask subTask = new SubTask(name, intPhaseId, intDurationInManHours, description);
-       subTaskMapper.insertSubTask(subTask);
-       return subTask;
-   }
+        return subTask;
+    }
 
+    public ArrayList<Project> getProjectsFromUserId(int userId) throws Exception {
+        ArrayList<Project> projects = projectMapper.getProjectsFromUserId(userId);
 
-    public ArrayList<Project> getProjectsFromUserId(String userId) throws Exception {
-        int intUserId = Integer.parseInt(userId);
-        ArrayList<Project> projects = projectMapper.getProjectsFromUserId(intUserId);
         for (Project p : projects) {
             populateProject(p);
         }
+
         return projects;
     }
 

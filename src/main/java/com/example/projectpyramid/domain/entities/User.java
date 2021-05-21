@@ -31,6 +31,10 @@ public class User {
         return userName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     // Setters
 
     public void setId(int id) {

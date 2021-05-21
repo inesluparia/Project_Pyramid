@@ -23,19 +23,17 @@ public class HomeController {
         return "index";
     }
 
-//    @GetMapping("/logintest")
-//    @ResponseBody
-//    public String loginTest() throws Exception {
-//        User user = userServices.login("Andersand", "1234");
-//        return user.getUserName();
-//    }
-
-    @ExceptionHandler(Exception.class)
-    public String anotherError(Model model, Exception exception) {
-        model.addAttribute("message", exception.getMessage());
-        return "errorpage.html";
-    }
-
+    /**
+     * User logs in to create a new project or see existing projects.
+     * Login method in userServices is called for validation.
+     * The returned users name and ID are then saved in the model
+     * to redirect to the userpage.
+     * @param request WebRequest.class from the Spring framework
+     * @return redirect:userpage
+     * @throws Exception Because of interaction with MySQL DB
+     *
+     *
+     */
     @PostMapping("/login")
     public String login(WebRequest request) throws Exception {
         String username = request.getParameter("username");
@@ -57,11 +55,14 @@ public class HomeController {
     public String createUser(WebRequest request, Model model) throws Exception {
         String username = request.getParameter("username");
         String name = request.getParameter("name");
-        String password = request.getParameter("password1");
-        String confirmPassword = request.getParameter("password2");
-        User user = userServices.createUser(name, username, password, confirmPassword);
-        model.addAttribute("name", user.getFullName());
-        return "success";
+        String password = request.getParameter("password");
+
+        int userId = userServices.createUser(name, username, password);
+        if (userId == 0)
+            model.addAttribute("errorMessage", "User could not be created");
+        else
+            model.addAttribute("success", "User was successfully created");
+        return "index.html";
     }
 
     @GetMapping("/createproject")
@@ -207,12 +208,12 @@ public class HomeController {
     @GetMapping("/project")
     public String projectPage(@RequestParam("id") int projectId, Model model, WebRequest request) throws Exception {
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
-        Project project = projectServices.getProjectFromId(projectId);
-        model.addAttribute("project", project);
-        model.addAttribute("programmers", 4);
-        model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
-        model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
-        model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
+        saveProjectToModel(model, projectId);
+        saveProjectEstimationsToModel(model, projectId);
+//        model.addAttribute("programmers", 4);
+//        model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
+//        model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
+//        model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
         return "project";
     }
 

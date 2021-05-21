@@ -58,13 +58,17 @@ label {
     width: 100%;
 }
 
+input {
+    font-family: inherit;
+}
+
 input[type="text"], input[type="password"] {
     border: none;
     border-bottom: 2px var(--link-color) solid;
     background-color: #ffffff0d;
     font-size: 1rem;
     color: var(--text-color);
-    padding: 0.85rem;
+    padding: 0.725rem 0.85rem;
     width: 100%;
 }
 

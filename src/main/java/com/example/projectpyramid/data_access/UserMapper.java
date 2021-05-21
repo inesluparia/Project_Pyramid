@@ -5,29 +5,31 @@ import java.sql.*;
 
 public class UserMapper {
 
-    // FIXME insert password as well, rn it defaults to 1234.
-    public boolean insert(User user) throws Exception {
-        String query = "INSERT INTO users (fullname, username, password) VALUES (?, ?, 1234)";
+    /*method that recieves a User object, inserts it in the DB and returns the generated userId
+    * */
+    public int insert(User user) throws Exception {
+        String query = "INSERT INTO users (fullname, username, password) VALUES (?, ?, ?)";
         Connection connection = DBManager.getConnection();
-        boolean wasSuccessful = false;
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setString(1, user.getFullName());
             preparedStatement.setString(2, user.getUserName());
-            wasSuccessful = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            System.out.println("An Exception occured:");
-            ex.printStackTrace();
-        } finally {
-            connection.clearWarnings();
-            connection.close();
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.executeUpdate();
+
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+            int userId = resultSet.getInt(1);
+            return userId;
+
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            throw new Exception("Username is already taken.");
         }
-        return wasSuccessful;
     }
 
-    // TODO update password as well.
     public boolean update(User user) throws Exception {
-        String query = "UPDATE users SET fullname = ?, username = ? WHERE id = ?";
+        String query = "UPDATE users SET fullname = ?, username = ?, password = ? WHERE id = ?";
         Connection connection = DBManager.getConnection();
         boolean wasSuccessful = false;
 
@@ -35,7 +37,8 @@ public class UserMapper {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setString(1, user.getFullName());
             preparedStatement.setString(2, user.getUserName());
-            preparedStatement.setInt(3, user.getId());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setInt(4, user.getId());
 
             wasSuccessful = preparedStatement.executeUpdate() > 0;
 
@@ -51,7 +54,7 @@ public class UserMapper {
     }
 
     public boolean delete(User user) {
-        String query = "DELETE FROM users WHERE id = ?;";
+        String query = "DELETE FROM users WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
@@ -63,19 +66,19 @@ public class UserMapper {
         }
     }
 
-    public User login(String userName, String password) throws Exception {
-            Connection connection = DBManager.getConnection();
+    /*method that recieves login credentials and returns the userId if successfull*/
+    public int login(String userName, String password) throws Exception {
+        Connection connection = DBManager.getConnection();
         try {
-            String SQL = "SELECT id, fullname FROM users "
-                    + "WHERE username=? AND password=?;";
-            PreparedStatement ps = connection.prepareStatement(SQL);
-            ps.setString(1, userName);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                String fullName = rs.getString("fullname");
-                int userId = rs.getInt("id");
-                return new User(userId, fullName, userName);
+            String query = "SELECT id, fullname FROM users WHERE username = ? AND password = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, userName);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String fullName = resultSet.getString("fullname");
+                int userId = resultSet.getInt("id");
+                return userId;
             } else {
                 throw new Exception("Could not validate user");
             }
@@ -87,38 +90,18 @@ public class UserMapper {
 
     public User getUser(int userId) throws Exception {
         try {
-            Connection con = DBManager.getConnection();
-            String SQL = "SELECT username, fullname FROM users "
-                    + "WHERE id=?;";
-            PreparedStatement ps = con.prepareStatement(SQL);
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                String fullName = rs.getString("fullname");
-                String userName = rs.getString("username");
+            Connection connection = DBManager.getConnection();
+            String query = "SELECT username, fullname FROM users WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String fullName = resultSet.getString("fullname");
+                String userName = resultSet.getString("username");
                 return new User(userId, fullName, userName);
             } else {
                 throw new Exception("Could not find user");
             }
-        } catch (SQLException ex) {
-            throw new Exception(ex.getMessage());
-        }
-    }
-
-    // TODO handle username not being unique.
-    public User insertUser(String name, String userName, String password) throws Exception {
-        try {
-            Connection con = DBManager.getConnection();
-            String SQL = "INSERT INTO users (fullname, username, password) VALUES (?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, name);
-            ps.setString(2, userName);
-            ps.setString(3, password);
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-            int userId = rs.getInt(1);
-            return new User(userId, name, userName);
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }

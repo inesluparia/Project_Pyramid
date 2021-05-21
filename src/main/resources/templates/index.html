@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
     <head th:replace="fragments/head.html :: head"></head>
+    <script>
+        function validateForm() {
+            let password = document.forms["create-user"]["password"].value;
+            let confirmPassword = document.forms["create-user"]["confirmPassword"].value;
+
+            let errorMessageElement = document.getElementsByClassName("validation-error")[0];
+            errorMessageElement.style.display = password === confirmPassword ? "none" : "initial";
+        }
+    </script>
     <body>
         <main>
             <header class="greeting-pyramid-logo-container large-space-above large-space-below">
@@ -43,13 +52,14 @@
                             <label for="newUsername">Username</label>
                         </div>
                         <div class="text-field">
-                            <input id="newPassword" class="full-width" name="password1" type="password" autocomplete="new-password" placeholder=" ">
+                            <input id="newPassword" class="full-width" name="password" type="password" autocomplete="new-password" placeholder=" " oninput="validateForm()">
                             <label for="newPassword">Password</label>
                         </div>
                         <div class="text-field">
-                            <input id="confirmNewPassword" class="full-width" name="password2" type="password" autocomplete="new-password" placeholder=" ">
+                            <input id="confirmNewPassword" class="full-width" name="confirmPassword" type="password" autocomplete="new-password" placeholder=" " oninput="validateForm()">
                             <label for="confirmNewPassword">Confirm password</label>
                         </div>
+                        <p class="validation-error" style="display: none">Passwords do not match</p>
                         <button class="full-width medium-space-above" type="submit" value="Create user">Create account</button>
                     </form>
                 </section>
