@@ -11,6 +11,7 @@
         </a>
         <br>
         <br>
+        <button>Add a new task</button>
         <div th:each="task : ${project.tasks}">
            <a th:href="${'/fill-task-form?id=' + task.id}" th:text="${'Task: ' + task.name}"></a>
             <ul th:each="subtask : ${task.subTasks}">
@@ -49,7 +50,7 @@
             </form>
         </div>
         <div th:if="${subtask}">
-            <form name="edit-task-form" th:action="${'/update-subtask?id=' + subtask.id}" method="POST" id="add-task">
+            <form name="edit-task-form" th:action="${'/update-subtask?id=' + subtask.id}" method="POST">
                 <h3>Add task</h3>
                 Task name: <br>
                 <textarea type="text" name="name" th:text="${subtask.name}"></textarea>

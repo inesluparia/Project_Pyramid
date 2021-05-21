@@ -1,9 +1,11 @@
-package com.example.projectpyramid.data_access;
+package com.example.projectpyramid.data_access.mappers;
+import com.example.projectpyramid.data_access.DBManager;
+import com.example.projectpyramid.data_access.Mapper;
 import com.example.projectpyramid.domain.entities.User;
 
 import java.sql.*;
 
-public class UserMapper {
+public class UserMapper implements Mapper<User> {
 
     /*method that recieves a User object, inserts it in the DB and returns the generated userId
     * */
@@ -28,7 +30,7 @@ public class UserMapper {
         }
     }
 
-    public boolean update(User user) throws Exception {
+    public void update(User user) throws Exception {
         String query = "UPDATE users SET fullname = ?, username = ?, password = ? WHERE id = ?";
         Connection connection = DBManager.getConnection();
         boolean wasSuccessful = false;
@@ -49,20 +51,18 @@ public class UserMapper {
             connection.clearWarnings();
             connection.close();
         }
-
-        return wasSuccessful;
     }
 
-    public boolean delete(User user) {
+    public void delete(User user) {
         String query = "DELETE FROM users WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setInt(1, user.getId());
-            return preparedStatement.executeUpdate() > 0;
+            preparedStatement.executeUpdate();
         } catch (SQLException ex) {
-            return false;
+            // TODO handle this exception.
         }
     }
 
@@ -87,7 +87,7 @@ public class UserMapper {
         }
     }
 
-    public User getUser(int userId) throws Exception {
+    public User get(int userId) throws Exception {
         try {
             Connection connection = DBManager.getConnection();
             String query = "SELECT username, fullname FROM users WHERE id = ?";

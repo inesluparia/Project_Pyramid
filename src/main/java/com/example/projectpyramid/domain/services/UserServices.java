@@ -1,6 +1,6 @@
 package com.example.projectpyramid.domain.services;
 
-import com.example.projectpyramid.data_access.UserMapper;
+import com.example.projectpyramid.data_access.mappers.UserMapper;
 import com.example.projectpyramid.domain.entities.User;
 
 public class UserServices {
@@ -18,7 +18,7 @@ public class UserServices {
     }
 
     public User getUserFromId(int userId) throws Exception{
-       return userMapper.getUser(userId);
+       return userMapper.get(userId);
     }
 
     // TODO implement changePassword() method.

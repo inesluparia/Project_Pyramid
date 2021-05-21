@@ -1,8 +1,8 @@
 package com.example.projectpyramid.domain.services;
 
-import com.example.projectpyramid.data_access.TaskMapper;
-import com.example.projectpyramid.data_access.ProjectMapper;
-import com.example.projectpyramid.data_access.SubTaskMapper;
+import com.example.projectpyramid.data_access.mappers.TaskMapper;
+import com.example.projectpyramid.data_access.mappers.ProjectMapper;
+import com.example.projectpyramid.data_access.mappers.SubTaskMapper;
 import com.example.projectpyramid.domain.entities.Task;
 import com.example.projectpyramid.domain.entities.Project;
 import com.example.projectpyramid.domain.entities.SubTask;

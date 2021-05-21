@@ -1,21 +1,22 @@
-package com.example.projectpyramid.data_access;
+package com.example.projectpyramid.data_access.mappers;
 
-import com.example.projectpyramid.domain.entities.Task;
-import com.example.projectpyramid.domain.entities.User;
+import com.example.projectpyramid.data_access.DBManager;
+import com.example.projectpyramid.domain.entities.SubTask;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class TaskMapper {
+public class SubTaskMapper {
 
-    public void insertTask(Task task) throws Exception {
+    public void insertSubTask(SubTask subTask) throws Exception {
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "INSERT INTO tasks (name, project_id, description) VALUES (?, ?, ?)";
+            String SQL = "INSERT INTO subtasks (name, task_id, description, duration) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, task.getName());
-            ps.setInt(2, task.getProjectId());
-            ps.setString(3, task.getDescription());
+            ps.setString(1, subTask.getName());
+            ps.setInt(2, subTask.getTaskId());
+            ps.setString(3, subTask.getDescription());
+            ps.setInt(4, subTask.getDurationInManHours());
             ps.executeUpdate();
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
@@ -23,46 +24,47 @@ public class TaskMapper {
     }
 
 
-    public ArrayList<Task> getTasks(int projectId) {
-
+    public ArrayList<SubTask> getSubTasks(int taskId ){
+        String query = "SELECT id, name, description, duration FROM subtasks WHERE task_id = ?";
+        Connection connection = DBManager.getConnection();
+        ArrayList<SubTask> subTasks = new ArrayList<>();
         try {
-            String query = "SELECT id, name, description FROM tasks WHERE project_id = ?";
-            Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, projectId);
+            preparedStatement.setInt(1, taskId );
             ResultSet results = preparedStatement.executeQuery();
-            ArrayList<Task> tasks = new ArrayList<>();
+
             while (results.next()) {
                 int id = results.getInt("id");
                 String name = results.getString("name");
+                int duration = results.getInt("duration");
                 String description = results.getString("description");
 
-                tasks.add(new Task(id, projectId, name, description));
+                subTasks.add(new SubTask(id, taskId , duration, name, description));
             }
 
-            return tasks;
+            return subTasks;
 
         } catch (SQLException ex) {
             return null;
         }
     }
 
-    public Task getTask(int taskId) {
+    public SubTask getSubtask(int subTaskId) {
 
         try {
-            String query = "SELECT name, description, project_id FROM tasks WHERE id = ?";
+            String query = "SELECT name, description, duration, task_id FROM subtasks WHERE id = ?";
             Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, taskId);
+            preparedStatement.setInt(1, subTaskId);
             ResultSet results = preparedStatement.executeQuery();
 
             results.next();
-            int projectId = results.getInt("project_id");
             String name = results.getString("name");
             String description = results.getString("description");
-
-            Task task = new Task(taskId, projectId, name, description);
-            return task;
+            int durationInManHours = results.getInt("duration");
+            int taskId = results.getInt("task_id");
+            SubTask subTask = new SubTask(subTaskId, taskId, durationInManHours, name, description);
+            return subTask;
 
         } catch (SQLException ex) {
             return null;
@@ -70,15 +72,16 @@ public class TaskMapper {
     }
 
 
-    public void update(String name, String description, int id) {
-        String query = "UPDATE tasks SET name = ?, description = ? WHERE id = ?";
+    public void update(String name, String description, int durationInManHours, int id) {
+        String query = "UPDATE subtasks SET name = ?, description = ?, duration = ? WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
             PreparedStatement ps = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             ps.setString(1, name);
             ps.setString(2, description);
-            ps.setInt(3, id);
+            ps.setInt(3, durationInManHours);
+            ps.setInt(4, id);
             ps.executeUpdate();
 
             //wasSuccessful = ps.executeUpdate() > 0;

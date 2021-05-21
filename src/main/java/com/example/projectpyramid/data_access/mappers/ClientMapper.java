@@ -1,4 +1,5 @@
-package com.example.projectpyramid.data_access;
+package com.example.projectpyramid.data_access.mappers;
+import com.example.projectpyramid.data_access.DBManager;
 import com.example.projectpyramid.domain.entities.Client;
 import java.sql.*;
 import java.util.ArrayList;

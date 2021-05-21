@@ -1,4 +1,5 @@
-package com.example.projectpyramid.data_access;
+package com.example.projectpyramid.data_access.mappers;
+import com.example.projectpyramid.data_access.DBManager;
 import com.example.projectpyramid.domain.entities.*;
 
 import java.sql.*;
@@ -37,7 +38,7 @@ public class ProjectMapper {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             int authorId = resultSet.getInt("author_id");
-            User author = userMapper.getUser(authorId);
+            User author = userMapper.get(authorId);
             int clientId = resultSet.getInt("client_id");
             Client client = clientMapper.getClientFromId(clientId);
             String projectName = resultSet.getString("name");
@@ -63,7 +64,7 @@ public class ProjectMapper {
             ArrayList<Project> projects = new ArrayList<>();
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("id");
-                User author = userMapper.getUser(id);
+                User author = userMapper.get(id);
                 int clientId = resultSet.getInt("client_id");
                 Client client = clientMapper.getClientFromId(clientId);
                 String projectName = resultSet.getString("name");
