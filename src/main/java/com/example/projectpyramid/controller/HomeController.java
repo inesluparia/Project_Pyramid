@@ -37,7 +37,7 @@ public class HomeController {
      * @param request WebRequest.class from the Spring framework
      * @return redirect:userpage
      * @throws Exception Because of interaction with MySQL DB
-     *
+     * @see UserMapper#login
      *
      */
     @PostMapping("/login")
