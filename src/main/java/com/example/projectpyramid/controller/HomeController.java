@@ -18,6 +18,12 @@ public class HomeController {
     ProjectServices projectServices = new ProjectServices();
     ClientServices clientServices = new ClientServices();
 
+
+
+    /**
+     * index or home endpoint that presents the user with a log-in form and a create-user form
+     * @return index.html
+     */
     @GetMapping("/")
     public String renderIndex() {
         return "index";
@@ -38,22 +44,34 @@ public class HomeController {
     public String login(WebRequest request) throws Exception {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User user = userServices.login(username, password);
-        String user_Id = String.valueOf(user.getId());
-        request.setAttribute("userId", user_Id, WebRequest.SCOPE_SESSION);
-        request.setAttribute("name", user.getFullName(), WebRequest.SCOPE_SESSION);
+        int userId = userServices.login(username, password);
+        request.setAttribute("userId", userId, WebRequest.SCOPE_SESSION);
         return "redirect:userpage";
     }
 
-    @GetMapping("/log-ud")
-    public String logUd(WebRequest request) {
-        request.setAttribute("userId", null, WebRequest.SCOPE_SESSION);
-        return "index.html";
+    /**
+     * This method runs after log-in validation,
+     * the getProjectsFromUserId method from projectServices is called
+     * and a list of the users projects is saved in the model
+     * before returning userpage.html
+     * @param request
+     * @param model
+     * @return userpage.html
+     * @throws Exception
+     */
+    @GetMapping("/userpage")
+    public String userPage(WebRequest request, Model model) throws Exception {
+        int userId = (int) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
+        request.setAttribute("name", userServices.getUserFromId(userId).getFullName(), WebRequest.SCOPE_SESSION);
+        ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
+        model.addAttribute("projects", projects);
+        return "userpage";
     }
 
     @PostMapping("/createuser")
     public String createUser(WebRequest request, Model model) throws Exception {
         String username = request.getParameter("username");
+        //pseudocode-check if empty in DB
         String name = request.getParameter("name");
         String password = request.getParameter("password");
 
@@ -95,7 +113,7 @@ public class HomeController {
         String taskDescription = request.getParameter("description");
         int projectId = getProjectIdFromSession(request);
 
-        projectServices.addTask(taskName, taskDescription, projId);
+        projectServices.addTask(taskName, taskDescription, projectId);
         // Get project information to show created phases that are designated to the new project
         saveProjectToModel(model, projectId);
         return "createtask.html";
@@ -191,17 +209,17 @@ public class HomeController {
         return "redirect:edit-project";
     }
 
-    @GetMapping("/userpage")
-    public String userPage(WebRequest request, Model model) throws Exception {
-        String userId = (String) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
-        String name = (String) request.getAttribute("name", WebRequest.SCOPE_SESSION);
-        //evt lave en metode updateProjects() som kalder på de nedestående linjer
-        ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
-        model.addAttribute("projects", projects);
-        model.addAttribute("name", name);
-        return "userpage";
-    }
-
+    /**
+     * After user selects a specific project he is redirected to this endpoint.
+     * the project ID from the session is used to call saveProjectToModel and
+     * saveProjectEstimationsToModel methods.
+     * and a project Object is saved
+     * @param projectId
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/project")
     public String projectPage(@RequestParam("id") int projectId, Model model, WebRequest request) throws Exception {
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
@@ -213,6 +231,19 @@ public class HomeController {
 //        model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
         return "project";
     }
+
+    @GetMapping("/log-ud")
+    public String logUd(WebRequest request) {
+        request.setAttribute("userId", null, WebRequest.SCOPE_SESSION);
+        return "index.html";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String anotherError(Model model, Exception exception) {
+        model.addAttribute("message", exception.getMessage() + "\n\n" + exception.getClass());
+        return "errorpage.html";
+    }
+
 
     @GetMapping("/myprojects")
     public String myProjects() {
