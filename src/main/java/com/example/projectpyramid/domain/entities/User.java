@@ -5,6 +5,7 @@ public class User {
     private int id;
     private String fullName;
     private String userName;
+    private String password;
 
     public User(int id, String fullName, String userName) {
         this.id = id;
@@ -12,9 +13,10 @@ public class User {
         this.userName = userName;
     }
 
-    public User(String fullName, String userName) {
+    public User(String fullName, String userName, String password) {
         this.fullName = fullName;
         this.userName = userName;
+        this.password = password;
     }
 
     // Getters
@@ -47,5 +49,9 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

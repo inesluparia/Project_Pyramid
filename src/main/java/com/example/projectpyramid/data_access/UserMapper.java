@@ -85,7 +85,6 @@ public class UserMapper {
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }
-
     }
 
     public User getUser(int userId) throws Exception {

@@ -82,10 +82,9 @@ public class HomeController {
 
         int projectId = projectServices.createProject(userId, projectName, description, clientId);
         //Save project in model
+        
         Project project = projectServices.getProjectFromId(projectId);
-        model.addAttribute("project", project);
-        //Save projectID in session
-        request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
+        saveProjectToModel(model, projectId);
         return "createtask.html";
     }
 
@@ -94,20 +93,19 @@ public class HomeController {
         // Requests data from html inputs to use in addPhase() method
         String taskName = request.getParameter("name");
         String taskDescription = request.getParameter("description");
-        int projId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        int projectId = getProjectIdFromSession(request);
 
         projectServices.addTask(taskName, taskDescription, projId);
         // Get project information to show created phases that are designated to the new project
-        Project project = projectServices.getProjectFromId(projId);
-        model.addAttribute("project", project);
+        saveProjectToModel(model, projectId);
         return "createtask.html";
     }
 
     @PostMapping("/add-subTask")
     public String createSubTask(WebRequest request, Model model) throws Exception {
-        int projId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        int projectId = getProjectIdFromSession(request);
         //int intProjId = Integer.parseInt(projId);
-        ArrayList<Task> tasks = projectServices.getTasks(projId);
+        ArrayList<Task> tasks = projectServices.getTasks(projectId);
         model.addAttribute("tasks", tasks);
         String name = request.getParameter("name");
         String taskId = request.getParameter("task");
@@ -115,38 +113,36 @@ public class HomeController {
         String description = request.getParameter("description");
         projectServices.addSubTask(name, taskId, durationInManHours, description);
 
-        Project project = projectServices.getProjectFromId(projId);
-        model.addAttribute("project", project);
+        saveProjectToModel(model, projectId);
+
         return "createtask.html";
     }
 
     @GetMapping("/edit-project")
     public String editProjectContent(/*@RequestParam("id") int projectId,*/ WebRequest request, Model model) throws Exception {
-        int projectId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        int projectId = getProjectIdFromSession(request);
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
 
         boolean projectBoo = false;
-        Project project = projectServices.getProjectFromId(projectId);
-        model.addAttribute("project", project);
         model.addAttribute("projectBoo", projectBoo);
+        saveProjectToModel(model, projectId);
         return "editproject";
     }
 
     @GetMapping("/fill-project-form")
     public String fillProjectForm(Model model, WebRequest request) throws Exception {
-        Integer projId = (Integer) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        int projectId = getProjectIdFromSession(request);
         boolean projectBoo = true;
-        Project project = projectServices.getProjectFromId(projId);
-        model.addAttribute("project", project);
+        saveProjectToModel(model, projectId);
         model.addAttribute("projectBoo", projectBoo);
         return "editproject";
     }
 
     @GetMapping("/fill-task-form")
     public String fillTaskForm(@RequestParam("id") int taskId, Model model, WebRequest request) throws Exception {
-        int projId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
-        Project project = projectServices.getProjectFromId(projId);
-        model.addAttribute("project", project);
+        int projectId = getProjectIdFromSession(request);
+        saveProjectToModel(model, projectId);
+
         Task task = projectServices.getTask(taskId);
         model.addAttribute("task", task);
         return "editproject";
@@ -154,9 +150,9 @@ public class HomeController {
 
     @GetMapping("/fill-subtask-form")
     public String fillSubTaskForm(@RequestParam("id") int subtaskId, Model model, WebRequest request) throws Exception {
-        int projId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
-        Project project = projectServices.getProjectFromId(projId);
-        model.addAttribute("project", project);
+        int projectId = getProjectIdFromSession(request);
+        saveProjectToModel(model, projectId);
+
 
         SubTask subTask = projectServices.getSubtask(subtaskId);
         model.addAttribute("subtask", subTask);
@@ -167,7 +163,7 @@ public class HomeController {
 
     @PostMapping("/update-project")
     public String updateProject(WebRequest request) {
-        int projectId = (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+        int projectId = getProjectIdFromSession(request);
         String projectName = request.getParameter("project-name");
         String description = request.getParameter("description");
         projectServices.updateProject(projectName, description, projectId);
@@ -176,6 +172,7 @@ public class HomeController {
     }
 
     @PostMapping("/update-task")
+
     public String updateTask(@RequestParam("id") int taskId, WebRequest request) {
         String taskName = request.getParameter("name");
         String taskDescription = request.getParameter("description");
@@ -227,5 +224,21 @@ public class HomeController {
         return "allprojects";
     }
 
-}
+    public int getProjectIdFromSession(WebRequest request){
+        return (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+    }
 
+    private void saveProjectToModel(Model model, int projectId) throws Exception {
+        Project project = projectServices.getProjectFromId(projectId);
+        model.addAttribute("project", project);
+    }
+
+    public void saveProjectEstimationsToModel(Model model, int projectId) throws Exception{
+        model.addAttribute("programmers", 4);
+        model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
+        model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
+        model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
+    }
+
+
+}
