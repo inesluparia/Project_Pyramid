@@ -11,11 +11,7 @@ public class Project {
     private boolean isActive;
     private ArrayList<Task> tasks;
 
-    public Project(int id,
-                   User author,
-                   Client client,
-                   String projectName,
-                   String description) {
+    public Project(int id, User author, Client client, String projectName, String description) {
         this.id = id;
         this.author = author;
         this.client = client;
@@ -24,10 +20,7 @@ public class Project {
         this.tasks = new ArrayList<>();
     }
 
-    public Project(User author,
-                   Client client,
-                   String projectName,
-                   String description) {
+    public Project(User author, Client client, String projectName, String description) {
         this.author = author;
         this.client = client;
         this.projectName = projectName;
