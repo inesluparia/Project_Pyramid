@@ -3,7 +3,7 @@
     <head th:replace="fragments/head.html :: head"></head>
     <body>
         <a href="fill-project-form">
-            <h2 th:text="${project.projectName}"></h2>
+            <h2 th:text="${project.name}"></h2>
             <p th:text="${'Client: ' + project.client.name}"></p>
             <p th:text="${'Project description: ' + project.description}"></p>
             <p th:if="${project.isActive == false}">Project state: Active</p>
@@ -28,7 +28,7 @@
         <div th:if="${projectBoo}">
             <form name="edit-project-info-form" action="update-project" method="POST">
                 Project name:<br>
-                <textarea type="text" name="project-name" th:text="${project.projectName}"></textarea>
+                <textarea type="text" name="project-name" th:text="${project.name}"></textarea>
                 <br><br>
                 Description:<br>
                 <textarea type="text" name="description" rows="4" cols="50" th:text="${project.description}"></textarea>

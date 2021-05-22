@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
     <head th:replace="fragments/head.html :: head"></head>
     <body>
-        <h1 th:text="${project.projectName}"></h1>
+        <h1 th:text="${project.name}"></h1>
         <p th:text="${project.client.name}"></p>
         <p th:if="${project.isActive == false}">Project state: Active</p>
         <p th:if="${project.isActive == true}">Project state: Not active</p>
