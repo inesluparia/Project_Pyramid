@@ -10,6 +10,8 @@ public class Task {
     private String description;
     private ArrayList<SubTask> subTasks;
 
+    public Task() { }
+
     public Task(int id, int projectId, String name, String description) {
         this.id = id;
         this.projectId = projectId;
@@ -18,20 +20,11 @@ public class Task {
         this.subTasks = new ArrayList<>();
     }
 
-    public Task(String name, String description, int projectId) {
+    public Task(int projectId, String name, String description) {
         this.name = name;
         this.description = description;
         this.projectId = projectId;
     }
-
-/*
-
-    public void setName(String name) {
-        this.name = name;
-        this.description = description;
-        this.tasks = new ArrayList<>();
-    }
-*/
 
     // Getters
 

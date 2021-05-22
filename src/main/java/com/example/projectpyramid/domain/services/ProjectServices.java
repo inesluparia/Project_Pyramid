@@ -26,12 +26,11 @@ public class ProjectServices {
         int userIdInt = Integer.parseInt(userId);
         int clientIdInt = Integer.parseInt(clientId);
 
-        // TODO er det nødvendigt at lave et objekt af projekt til metoden?
-       return  projectMapper.insertProject(name, userIdInt, clientIdInt, description);
+        return  projectMapper.insertProject(name, userIdInt, clientIdInt, description);
     }
 
     public Task addTask(String name, String description, int projectId) throws Exception {
-        Task task = new Task(name, description, projectId);
+        Task task = new Task(projectId, name, description);
         taskMapper.insertTask(task);
         return task;
     }
