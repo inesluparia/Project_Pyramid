@@ -11,19 +11,19 @@
                 <th>Is active?</th>
             </tr>
             <tr>
-                <td th:text="${project.projectName}"></td>
-                <td th:text="${project.author.fullName}"></td>
-                <td th:text="${project.client.name}"></td>
-                <td th:text="${project.description}"></td>
-                <td th:text="${project.isActive ? 'Ja' : 'Nej'}"></td>
+                <td th:text="${project.getName()}"></td>
+                <td th:text="${project.getAuthor().getFullName()}"></td>
+                <td th:text="${project.getClient().getName()}"></td>
+                <td th:text="${project.getDescription()}"></td>
+                <td th:text="${project.getIsActive() ? 'Yes' : 'No'}"></td>
             </tr>
         </table>
         <section th:each="task : ${project.getTasks()}">
-            <p th:text="${'Task: ' + task.name}"></p>
+            <p th:text="${'Task: ' + task.getName()}"></p>
             <ul th:each="subtask : ${task.subTasks}">
-                <li th:text="${'Subtask: ' + subtask.name}"></li>
-                <li th:text="${'Description: ' + subtask.description}"></li>
-                <li th:text="${'Approximate man-hours: ' + subtask.durationInManHours}"></li>
+                <li th:text="${'Subtask: ' + subtask.getName()}"></li>
+                <li th:text="${'Description: ' + subtask.getDescription()}"></li>
+                <li th:text="${'Approximate man-hours: ' + subtask.getDurationInManHours()}"></li>
             </ul>
         </section>
         <h2>Project estimations</h2>

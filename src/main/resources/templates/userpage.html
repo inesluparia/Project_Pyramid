@@ -7,7 +7,7 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolorem est impedit placeat rem? Accusamus corporis doloribus eius fuga ipsam laborum neque quas quo sed veniam? Autem culpa et ratione?</p>
             <ul class="space-above medium-space-below">
                 <li th:each="project:${projects}">
-                    <a th:href="${'/project?id=' + project.id}" th:text="${project.projectName}"></a>
+                    <a th:href="${'/project?id=' + project.id}" th:text="${project.name}"></a>
                 </li>
             </ul>
             <a href="/createproject">
