@@ -8,21 +8,22 @@ public class SubTask {
     private String name;
     private String description;
 
-    public SubTask(int id, int taskId, int durationInManHours, String name, String description) {
+    public SubTask() { }
+
+    public SubTask(int id, int taskId, String name, String description, int durationInManHours) {
         this.id = id;
         this.taskId = taskId;
-        this.durationInManHours = durationInManHours;
         this.name = name;
         this.description = description;
-    }
-
-    public SubTask(String name, int subTaskId, int durationInManHours, String description) {
-        this.name = name;
-        this.taskId = subTaskId;
         this.durationInManHours = durationInManHours;
-        this.description = description;
     }
 
+    public SubTask(int taskId, String name, String description, int durationInManHours) {
+        this.taskId = taskId;
+        this.name = name;
+        this.description = description;
+        this.durationInManHours = durationInManHours;
+    }
 
     // Getters
 

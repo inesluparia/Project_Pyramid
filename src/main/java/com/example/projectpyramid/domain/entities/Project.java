@@ -48,7 +48,7 @@ public class Project {
         return client;
     }
 
-    public String getProjectName() {
+    public String getName() {
         return projectName;
     }
 

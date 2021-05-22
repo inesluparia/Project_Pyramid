@@ -18,7 +18,7 @@ public class UserServices {
     }
 
     public User getUserFromId(int userId) throws Exception{
-       return userMapper.get(userId);
+       return userMapper.findById(userId);
     }
 
     // TODO implement changePassword() method.

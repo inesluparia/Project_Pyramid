@@ -39,7 +39,7 @@ public class ProjectServices {
         int intTaskId = Integer.parseInt(taskId);
         int intDurationInManHours = Integer.parseInt(durationInManHours);
 
-        SubTask subTask = new SubTask(name, intTaskId, intDurationInManHours, description);
+        SubTask subTask = new SubTask(intTaskId, name, description, intDurationInManHours);
         subTaskMapper.insertSubTask(subTask);
 
         return subTask;

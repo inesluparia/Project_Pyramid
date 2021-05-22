@@ -1,8 +1,10 @@
 package com.example.projectpyramid.data_access;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 public interface Mapper<T> {
-    int insert(T t) throws Exception;
-    void delete(T t) throws Exception;
-    void update(T t) throws Exception;
-    T get(int id) throws Exception;
+    int insert(T t) throws SQLIntegrityConstraintViolationException;
+    void update(T t);
+    void delete(T t);
+    T findById(int id);
 }
