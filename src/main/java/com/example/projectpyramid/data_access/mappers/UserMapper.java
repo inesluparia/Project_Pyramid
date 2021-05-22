@@ -64,6 +64,7 @@ public class UserMapper implements Mapper<User> {
 
     /**
      * Deletes a user from the database.
+     * TODO unit test to ensure authored projects' author_id gets set to null.
      *
      * @param user The user to be deleted from the database.
      */

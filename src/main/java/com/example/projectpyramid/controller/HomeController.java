@@ -18,8 +18,6 @@ public class HomeController {
     ProjectServices projectServices = new ProjectServices();
     ClientServices clientServices = new ClientServices();
 
-
-
     /**
      * index or home endpoint that presents the user with a log-in form and a create-user form
      * @return index.html
@@ -177,7 +175,6 @@ public class HomeController {
         return "editproject";
     }
 
-
     @PostMapping("/update-project")
     public String updateProject(WebRequest request) {
         int projectId = getProjectIdFromSession(request);
@@ -224,10 +221,6 @@ public class HomeController {
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
         saveProjectToModel(model, projectId);
         saveProjectEstimationsToModel(model, projectId);
-//        model.addAttribute("programmers", 4);
-//        model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
-//        model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
-//        model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
         return "project";
     }
 
@@ -242,7 +235,6 @@ public class HomeController {
         model.addAttribute("message", exception.getMessage() + "\n\n" + exception.getClass());
         return "errorpage.html";
     }
-
 
     @GetMapping("/myprojects")
     public String myProjects() {
@@ -269,6 +261,4 @@ public class HomeController {
         model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
         model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
     }
-
-
 }

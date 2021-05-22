@@ -4,6 +4,7 @@ import com.example.projectpyramid.data_access.Mapper;
 import com.example.projectpyramid.domain.entities.Client;
 import com.example.projectpyramid.domain.entities.Project;
 import com.example.projectpyramid.domain.entities.User;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class ClientMapper implements Mapper<Client> {
      * @return The id of the newly inserted client, 0 if unable to insert.
      * @throws SQLIntegrityConstraintViolationException If name or cvr already exists.
      */
-    public int insert(Client client) throws SQLIntegrityConstraintViolationException {
+    public int insert(@NotNull Client client) throws SQLIntegrityConstraintViolationException {
         String query = "INSERT INTO clients (name, cvr) VALUES (?, ?)";
         Connection connection = DBManager.getConnection();
         int clientId = 0;
@@ -48,7 +49,7 @@ public class ClientMapper implements Mapper<Client> {
      *
      * @param client The client that has been changed.
      */
-    public void update(Client client) {
+    public void update(@NotNull Client client) {
         String query = "UPDATE clients SET name = ?, cvr = ? WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
@@ -68,7 +69,7 @@ public class ClientMapper implements Mapper<Client> {
      *
      * @param client The client to be deleted from the database.
      */
-    public void delete(Client client) {
+    public void delete(@NotNull Client client) {
         String query = "DELETE FROM clients WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
