@@ -21,7 +21,7 @@ public class UserMapper implements Mapper<User> {
         int userId = 0;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getFullName());
             preparedStatement.setString(2, user.getUsername());
             preparedStatement.setString(3, user.getPassword());
