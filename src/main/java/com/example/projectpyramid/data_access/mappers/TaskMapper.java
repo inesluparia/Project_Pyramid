@@ -41,6 +41,8 @@ public class TaskMapper implements Mapper<Task> {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.getMessage();
         }
 
         return taskId;

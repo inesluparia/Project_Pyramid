@@ -16,7 +16,7 @@ public class DBManager {
     private static String url;
     private static Connection connection = null;
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws DatabaseConnectionException {
 
         if (connection != null)
             return connection;
@@ -42,6 +42,9 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        if (connection == null)
+            throw new DatabaseConnectionException();
 
         return connection;
     }
