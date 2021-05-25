@@ -18,15 +18,15 @@ public class ProjectServices {
     TaskMapper taskMapper = new TaskMapper();
     SubTaskMapper subTaskMapper = new SubTaskMapper();
 
-    public int createProject(String userId, String name, String description, String clientId) throws Exception {
+    public int createProject(int userId, String name, String description, String clientId) throws Exception {
         if (description.length() > 255) {
             throw new Exception("Description is too long");
         }
 
-        int userIdInt = Integer.parseInt(userId);
+        //int userIdInt = Integer.parseInt(userId);
         int clientIdInt = Integer.parseInt(clientId);
 
-        return  projectMapper.insertProject(name, userIdInt, clientIdInt, description);
+        return  projectMapper.insertProject(name, userId, clientIdInt, description);
     }
 
     public Task addTask(String name, String description, int projectId) throws Exception {

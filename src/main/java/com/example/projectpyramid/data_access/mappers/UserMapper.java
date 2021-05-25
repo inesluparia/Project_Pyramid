@@ -15,6 +15,7 @@ public class UserMapper implements Mapper<User> {
      * @return The id of the newly inserted user, 0 if unable to insert.
      * @throws SQLIntegrityConstraintViolationException If the username is already taken.
      */
+
     public int insert(@NotNull User user) throws SQLIntegrityConstraintViolationException {
         String query = "INSERT INTO users (fullname, username, password) VALUES (?, ?, ?)";
         Connection connection = DBManager.getConnection();

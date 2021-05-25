@@ -90,14 +90,15 @@ public class HomeController {
     @PostMapping("/map-project")
     public String createProject(WebRequest request, Model model) throws Exception {
         // Requests data from html inputs to use in createProject() method
-        String userId = (String) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
+        int userId = (int) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
         String clientId = request.getParameter("client");
         String projectName = request.getParameter("project-name");
         String description = request.getParameter("description");
 
         int projectId = projectServices.createProject(userId, projectName, description, clientId);
         //Save project in model
-        
+        request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
+
         Project project = projectServices.getProjectFromId(projectId);
         saveProjectToModel(model, projectId);
         return "createtask.html";
