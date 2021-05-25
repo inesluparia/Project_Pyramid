@@ -29,7 +29,7 @@
         <div th:unless="${project.tasks.isEmpty()}">
             <h3>Add subTask</h3>
             <form action="add-subTask" method="POST" id="add-subTask">
-                Task name: <br>
+                Subtask name: <br>
                 <input type="text" name="name">
                 <br><br>
                 <label for="task">Select belonging task:</label><br>
@@ -43,7 +43,7 @@
                 Duration in man-hours: <br>
                 <input type="number" name="duration">
                 <br><br>
-                <input type="submit" value="Add subTask" form="add-subTask">
+                <input type="submit" value="Add subtask" form="add-subTask">
             </form>
         </div>
         <br>

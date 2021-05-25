@@ -95,20 +95,13 @@ public class HomeController {
 
     @PostMapping("/createproject")
     public String createProject(WebRequest request, Model model) throws Exception {
-
         int userId = (int) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
         User author = userServices.getUserFromId(userId);
-
         String clientId = request.getParameter("client");
         Client client = clientServices.getClientFromId(Integer.parseInt(clientId));
-
         String name = request.getParameter("project-name");
-
         String description = request.getParameter("description");
-
         int projectId = projectServices.createProject(author, client, name, description);
-        //Save project in model
-
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
 
         saveProjectToModel(model, projectId);
@@ -144,17 +137,14 @@ public class HomeController {
         String durationInManHours = request.getParameter("duration");
         String description = request.getParameter("description");
         projectServices.addSubTask(name, taskId, durationInManHours, description);
-
         saveProjectToModel(model, projectId);
-
         return "create-elements.html";
     }
 
     @GetMapping("/edit-project")
-    public String editProjectContent(/*@RequestParam("id") int projectId,*/ WebRequest request, Model model) throws Exception {
+    public String editProjectContent(WebRequest request, Model model) throws Exception  {
         int projectId = getProjectIdFromSession(request);
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
-
         boolean projectBoo = false;
         model.addAttribute("projectBoo", projectBoo);
         saveProjectToModel(model, projectId);
@@ -194,7 +184,6 @@ public class HomeController {
         String projectName = request.getParameter("project-name");
         String description = request.getParameter("description");
         projectServices.updateProject(projectName, description, projectId);
-
         return "redirect:edit-project";
     }
 
@@ -269,9 +258,10 @@ public class HomeController {
     }
 
     public void saveProjectEstimationsToModel(Model model, int projectId) throws Exception{
-        model.addAttribute("programmers", 4);
-        model.addAttribute("totalCost", projectServices.getTotalCost(projectId));
-        model.addAttribute("totalManHours", projectServices.getTotalManHours(projectId));
-        model.addAttribute("completionDate", projectServices.getCompletionDate(projectId));
+        model.addAttribute("programmers", projectServices.getProgrammers());
+        int manHours = projectServices.getTotalManHours(projectId);
+        model.addAttribute("totalManHours", manHours);
+        model.addAttribute("totalCost", projectServices.getTotalCost(manHours));
+        model.addAttribute("completionDate", projectServices.getCompletionDate(manHours));
     }
 }

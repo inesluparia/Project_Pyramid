@@ -12,14 +12,18 @@ public class ProjectServices {
 
     private final int costPerHour = 250;
     private int programmers = 4;
-    ProjectMapper projectMapper;
-    TaskMapper taskMapper;
-    SubTaskMapper subTaskMapper;
+    private ProjectMapper projectMapper;
+    private TaskMapper taskMapper;
+    private SubTaskMapper subTaskMapper;
 
     public ProjectServices(){
         projectMapper = new ProjectMapper();
         taskMapper = new TaskMapper();
         subTaskMapper = new SubTaskMapper();
+    }
+
+    public int getProgrammers() {
+        return programmers;
     }
 
     public int createProject(User author, Client client, String name, String description) throws Exception {
@@ -110,9 +114,8 @@ public class ProjectServices {
         return totalAmountOfManHours;
     }
 
-    public int getTotalCost(int projectId) throws Exception {
-        int totalDuration = getTotalManHours(projectId);
-        return totalDuration * costPerHour;
+    public int getTotalCost(int manHours){
+        return manHours * costPerHour;
     }
 
 //    public String getTotalCalenderTime(int projectId) throws Exception {
@@ -130,9 +133,8 @@ public class ProjectServices {
 //                " weeks and " + days + " working days to be completed.";
 //    }
 
-    public LocalDate getCompletionDate(int projectId) throws Exception {
+    public LocalDate getCompletionDate(int manHours) throws Exception {
         LocalDate date = LocalDate.now();
-        int manHours= getTotalManHours(projectId);
         //a month has in average 4.35 weeks and therefore 152.25 working hours
         //a week has 35 working hours
         // a day has 7 working hours
