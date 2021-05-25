@@ -31,8 +31,8 @@ public class ProjectServices {
 
     public Task addTask(String name, String description, int projectId) throws Exception {
         Task task = new Task(projectId, name, description);
-        taskMapper.insertTask(task);
-        return task;
+        task.setId(taskMapper.insert(task));
+        return task.getId() > 0 ? task : null;
     }
 
     public SubTask addSubTask(String name, String taskId, String durationInManHours, String description) throws Exception {
@@ -51,7 +51,6 @@ public class ProjectServices {
         for (Project p : projects) {
             populateProject(p);
         }
-
         return projects;
     }
 
@@ -66,18 +65,18 @@ public class ProjectServices {
         return task;
     }
 
-    //Adds lists of tasks and subtasks to the returned project before forwarding it to controller
-    private void populateProject(Project project) {
-        ArrayList<Task> tasks = taskMapper.getTasks(project.getId());
+    // Adds lists of tasks and subtasks to the returned project before forwarding it to controller.
+    private void populateProject(Project project) throws DBManager.DatabaseConnectionException {
+        ArrayList<Task> tasks = (ArrayList<Task>) taskMapper.findAllByProjectId(project.getId());
         for (Task task : tasks) {
-            ArrayList<SubTask> subTasks = subTaskMapper.getSubTasks(task.getId());
+            ArrayList<SubTask> subTasks = (ArrayList<SubTask>) subTaskMapper.findAllByTaskId(task.getId());
             task.setSubTasks(subTasks);
         }
         project.setTasks(tasks);
     }
 
-    public Project getProjectFromId(int projectId) throws Exception {
-        Project project = projectMapper.getProject(projectId);
+    public Project getProjectFromId(int projectId) throws DBManager.DatabaseConnectionException {
+        Project project = projectMapper.findById(projectId);
         populateProject(project);
         return project;
     }
@@ -118,7 +117,7 @@ public class ProjectServices {
 
     public LocalDate getCompletionDate(int projectId) throws Exception {
         LocalDate date = LocalDate.now();
-        int manHours= getTotalManHours(projectId);
+        int manHours = getTotalManHours(projectId);
         //a month has in average 4.35 weeks and therefore 152.25 working hours
         //a week has 35 working hours
         // a day has 7 working hours

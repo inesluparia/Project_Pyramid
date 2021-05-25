@@ -1,5 +1,6 @@
 package com.example.projectpyramid.controller;
 
+import com.example.projectpyramid.data_access.DBManager;
 import com.example.projectpyramid.domain.entities.*;
 import com.example.projectpyramid.domain.services.ClientServices;
 import com.example.projectpyramid.domain.services.ProjectServices;
@@ -186,12 +187,12 @@ public class HomeController {
     }
 
     @PostMapping("/update-task")
-
-    public String updateTask(@RequestParam("id") int taskId, WebRequest request) {
+    public String updateTask(@RequestParam("id") int taskId, WebRequest request) throws DBManager.DatabaseConnectionException {
         String taskName = request.getParameter("name");
         String taskDescription = request.getParameter("description");
+        int projectId = getProjectIdFromSession(request);
 
-        projectServices.updateTask(taskName, taskDescription, taskId);
+        projectServices.updateTask(projectId, taskId, taskName, taskDescription);
         return "redirect:edit-project";
     }
 

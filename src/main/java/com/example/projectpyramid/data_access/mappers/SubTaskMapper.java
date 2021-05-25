@@ -198,7 +198,7 @@ public class SubTaskMapper implements Mapper<SubTask> {
     /**
      * @deprecated and replaced by {@link SubTaskMapper#findById(int)}
      */
-    public SubTask getSubtask(int subTaskId) {
+    public SubTask getSubtask(int subTaskId) throws DBManager.DatabaseConnectionException{
 
         try {
             String query = "SELECT name, description, duration, task_id FROM subtasks WHERE id = ?";
