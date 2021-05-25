@@ -124,11 +124,11 @@ public class SubTaskMapper implements Mapper<SubTask> {
      */
     public ArrayList<SubTask> findAllByTaskId(int taskId) {
         String query = "SELECT id, name, description, duration FROM subtasks WHERE task_id = ?";
-        Connection con = DBManager.getConnection();
+        Connection connection = DBManager.getConnection();
         ArrayList<SubTask> subTasks = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, taskId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
