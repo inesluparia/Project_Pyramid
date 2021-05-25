@@ -69,7 +69,7 @@ public class HomeController {
         model.addAttribute("user", user);
         model.addAttribute("projects", projectServices.getProjectsFromUserId(user.getId()));
 
-//          int userId = ;
+//        int userId = ;
 //        int userId = (int) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
 //        request.setAttribute("name", userServices.getUserFromId(userId).getFullName(), WebRequest.SCOPE_SESSION);
 
