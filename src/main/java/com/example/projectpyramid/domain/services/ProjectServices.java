@@ -30,8 +30,9 @@ public class ProjectServices {
     public Task addTask(String name, String description, int projectId) throws Exception {
         Task task = new Task(projectId, name, description);
 
-        taskMapper.insertTask(task);
-        return task;
+        task.setId(taskMapper.insert(task));
+
+        return task.getId() > 0 ? task : null;
     }
 
     public SubTask addSubTask(String name, String taskId, String durationInManHours, String description) throws Exception {
@@ -39,9 +40,9 @@ public class ProjectServices {
         int intDurationInManHours = Integer.parseInt(durationInManHours);
 
         SubTask subTask = new SubTask(intTaskId, name, description, intDurationInManHours);
-        subTaskMapper.insertSubTask(subTask);
+        subTaskMapper.insert(subTask);
 
-        return subTask;
+        return subTask.getId() > 0 ? subTask : null;
     }
 
     public ArrayList<Project> getProjectsFromUserId(int userId) throws Exception {

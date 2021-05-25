@@ -131,8 +131,8 @@ public class ProjectMapper implements Mapper<Project> {
      * @param userId The author id of the projects to find.
      * @return List of found projects, empty if none found.
      */
-    public List<Project> findAllByUserId(int userId) {
-        String query = "SELECT id, client_id, name, description, is_active FROM projects WHERE author_id = ?";
+    public ArrayList<Project> findAllByUserId(int userId) {
+        String query = "SELECT id, client_id, name, description FROM projects WHERE author_id = ?";
         Connection con = DBManager.getConnection();
         ArrayList<Project> projects = new ArrayList<>();
 

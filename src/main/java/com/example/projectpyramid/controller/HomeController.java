@@ -101,22 +101,18 @@ public class HomeController {
         //Save project in model
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
 
-        Project project = projectServices.getProjectFromId(projectId);
         saveProjectToModel(model, projectId);
         return "createtask.html";
     }
 
     @PostMapping("/add-task")
     public String createTask(WebRequest request, Model model) throws Exception {
-        // Requests data from html inputs to use in addPhase() method
         String taskName = request.getParameter("name");
         String taskDescription = request.getParameter("description");
         int projectId = getProjectIdFromSession(request);
-
         projectServices.addTask(taskName, taskDescription, projectId);
-        // Get project information to show created phases that are designated to the new project
         saveProjectToModel(model, projectId);
-        return "createtask.html";
+        return "createproject.html";
     }
 
     @PostMapping("/add-subTask")
@@ -160,7 +156,6 @@ public class HomeController {
     public String fillTaskForm(@RequestParam("id") int taskId, Model model, WebRequest request) throws Exception {
         int projectId = getProjectIdFromSession(request);
         saveProjectToModel(model, projectId);
-
         Task task = projectServices.getTask(taskId);
         model.addAttribute("task", task);
         return "editproject";
@@ -170,11 +165,8 @@ public class HomeController {
     public String fillSubTaskForm(@RequestParam("id") int subtaskId, Model model, WebRequest request) throws Exception {
         int projectId = getProjectIdFromSession(request);
         saveProjectToModel(model, projectId);
-
-
         SubTask subTask = projectServices.getSubtask(subtaskId);
         model.addAttribute("subtask", subTask);
-
         return "editproject";
     }
 
