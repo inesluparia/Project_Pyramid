@@ -23,7 +23,6 @@ public class ProjectServices {
             throw new Exception("Description is too long");
         }
 
-        //int userIdInt = Integer.parseInt(userId);
         int clientIdInt = Integer.parseInt(clientId);
 
         return  projectMapper.insertProject(name, userId, clientIdInt, description);
