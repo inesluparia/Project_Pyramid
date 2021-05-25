@@ -256,7 +256,6 @@ public class HomeController {
         int projectId = getProjectIdFromSession(request);
         saveProjectToModel(model, projectId);
 
-
         SubTask subTask = projectServices.getSubtask(subtaskId);
         model.addAttribute("subtask", subTask);
 
