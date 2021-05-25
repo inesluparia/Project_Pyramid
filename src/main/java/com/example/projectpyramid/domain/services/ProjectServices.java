@@ -3,9 +3,7 @@ package com.example.projectpyramid.domain.services;
 import com.example.projectpyramid.data_access.mappers.TaskMapper;
 import com.example.projectpyramid.data_access.mappers.ProjectMapper;
 import com.example.projectpyramid.data_access.mappers.SubTaskMapper;
-import com.example.projectpyramid.domain.entities.Task;
-import com.example.projectpyramid.domain.entities.Project;
-import com.example.projectpyramid.domain.entities.SubTask;
+import com.example.projectpyramid.domain.entities.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,19 +16,20 @@ public class ProjectServices {
     TaskMapper taskMapper = new TaskMapper();
     SubTaskMapper subTaskMapper = new SubTaskMapper();
 
-    public int createProject(int userId, String name, String description, String clientId) throws Exception {
+    public int createProject(User author, Client client, String name, String description) throws Exception {
         if (description.length() > 255) {
             throw new Exception("Description is too long");
         }
 
-        //int userIdInt = Integer.parseInt(userId);
-        int clientIdInt = Integer.parseInt(clientId);
+        Project project = new Project(author, client, name, description);
 
-        return  projectMapper.insertProject(name, userId, clientIdInt, description);
-    }
+        project.setId(projectMapper.insert(project));
+        return project.getId();
+        }
 
     public Task addTask(String name, String description, int projectId) throws Exception {
         Task task = new Task(projectId, name, description);
+
         taskMapper.insertTask(task);
         return task;
     }
