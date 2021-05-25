@@ -89,15 +89,15 @@ public class ClientMapper implements Mapper<Client> {
      * @return The found client, null if not found.
      */
     public Client findById(int clientId) {
-        String query = "SELECT * FROM projects WHERE id = ?";
+        String query = "SELECT * FROM clients WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, clientId);
-            preparedStatement.executeUpdate();
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
                 int cvr = resultSet.getInt("cvr");

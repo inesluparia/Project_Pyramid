@@ -30,7 +30,7 @@ public class SubTaskMapper implements Mapper<SubTask> {
             preparedStatement.setInt(1, subTask.getTaskId());
             preparedStatement.setString(2, subTask.getName());
             preparedStatement.setString(3, subTask.getDescription());
-            preparedStatement.setInt(3, subTask.getDurationInManHours());
+            preparedStatement.setInt(4, subTask.getDurationInManHours());
             preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -98,9 +98,9 @@ public class SubTaskMapper implements Mapper<SubTask> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, subTaskId);
-            preparedStatement.executeUpdate();
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 int taskId = resultSet.getInt("task_id");
                 String name = resultSet.getString("name");
@@ -122,13 +122,13 @@ public class SubTaskMapper implements Mapper<SubTask> {
      * @param taskId The task id of the subtasks to find.
      * @return List of found subtasks, empty if none found.
      */
-    public List<SubTask> findAllByTaskId(int taskId) {
+    public ArrayList<SubTask> findAllByTaskId(int taskId) {
         String query = "SELECT id, name, description, duration FROM subtasks WHERE task_id = ?";
-        Connection con = DBManager.getConnection();
+        Connection connection = DBManager.getConnection();
         ArrayList<SubTask> subTasks = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, taskId);
             ResultSet resultSet = preparedStatement.executeQuery();
 

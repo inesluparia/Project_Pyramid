@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Project {
 
+
     private int id;
     private User author;
     private Client client;
@@ -65,6 +66,9 @@ public class Project {
     }
 
     //Setters
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
