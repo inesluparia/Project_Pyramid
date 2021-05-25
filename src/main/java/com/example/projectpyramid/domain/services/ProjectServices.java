@@ -130,20 +130,15 @@ public class ProjectServices {
         return date;
     }
 
-    public void updateTask(String taskName, String taskDescription, int taskId) {
-        taskMapper.update(taskName, taskDescription, taskId);
+    public void updateTask(int id, int projectId, String name, String description) throws DBManager.DatabaseConnectionException {
+        taskMapper.update(new Task(id, projectId, name, description));
     }
 
-    public void updateProject(String projectName, String description, int projectId) {
-        projectMapper.update(projectName, description, projectId);
+    public void updateSubTask(int id, int taskId, String name, String description, int durationInManHours) throws DBManager.DatabaseConnectionException {
+        subTaskMapper.update(new SubTask(id, taskId, name, description, durationInManHours));
     }
 
-    public void updateSubTask(String name, String description, String durationInManHours, int subtaskId) {
-        int intDurationInManHours = Integer.parseInt(durationInManHours);
-    subTaskMapper.update(name, description, intDurationInManHours, subtaskId);
-    }
-
-    public SubTask getSubtask(int subtaskId) {
-        return subTaskMapper.getSubtask(subtaskId);
+    public SubTask getSubtask(int subtaskId) throws DBManager.DatabaseConnectionException {
+        return subTaskMapper.findById(subtaskId);
     }
 }

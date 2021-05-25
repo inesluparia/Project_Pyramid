@@ -48,4 +48,11 @@ public class DBManager {
 
         return connection;
     }
+
+    public static class DatabaseConnectionException extends Exception {
+
+        public DatabaseConnectionException() {
+            super("There was a database error");
+        }
+    }
 }
