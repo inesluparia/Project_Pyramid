@@ -39,6 +39,7 @@ public class ProjectServices {
         int intTaskId = Integer.parseInt(taskId);
         int intDurationInManHours = Integer.parseInt(durationInManHours);
 
+
         SubTask subTask = new SubTask(intTaskId, name, description, intDurationInManHours);
         subTaskMapper.insert(subTask);
 
@@ -46,7 +47,9 @@ public class ProjectServices {
     }
 
     public ArrayList<Project> getProjectsFromUserId(int userId) throws Exception {
-        ArrayList<Project> projects = projectMapper.getProjectsFromUserId(userId);
+        ArrayList<Project> projects = projectMapper.findAllByUserId(userId);
+
+        //ArrayList<Project> projects = (ArrayList<Project>) projectMapper.findAllByUserId(userId);
 
         for (Project p : projects) {
             populateProject(p);
@@ -56,44 +59,49 @@ public class ProjectServices {
     }
 
     public ArrayList<Task> getTasks(int projectId) {
-        ArrayList<Task> tasks = taskMapper.getTasks(projectId);
+        ArrayList<Task> tasks = taskMapper.findAllByProjectId(projectId);
 
         return tasks;
     }
 
     public Task getTask(int taskId) {
-        Task task = taskMapper.getTask(taskId);
+        // Task task = taskMapper.getTask(taskId);
+        Task task = taskMapper.findById(taskId);
+
         return task;
     }
 
     //Adds lists of tasks and subtasks to the returned project before forwarding it to controller
     private void populateProject(Project project) {
-        ArrayList<Task> tasks = taskMapper.getTasks(project.getId());
+
+        ArrayList<Task> tasks = taskMapper.findAllByProjectId(project.getId());
         for (Task task : tasks) {
-            ArrayList<SubTask> subTasks = subTaskMapper.getSubTasks(task.getId());
+            ArrayList<SubTask> subTasks = subTaskMapper.findAllByTaskId(task.getId());
             task.setSubTasks(subTasks);
         }
+
         project.setTasks(tasks);
     }
 
     public Project getProjectFromId(int projectId) throws Exception {
-        Project project = projectMapper.getProject(projectId);
+        Project project = projectMapper.findById(projectId);
         populateProject(project);
         return project;
     }
 
 
     public int getTotalManHours(int projectId) throws Exception {
-        int total= 0;
+        int totalAmountOfManHours = 0;
         Project project = getProjectFromId(projectId);
         ArrayList<Task> tasks = project.getTasks();
+
         for (Task task : tasks) {
             ArrayList<SubTask> subTasks = task.getSubTasks();
             for (SubTask subTask : subTasks) {
-                total += subTask.getDurationInManHours();
+                totalAmountOfManHours += subTask.getDurationInManHours();
             }
         }
-        return total;
+        return totalAmountOfManHours;
     }
 
     public int getTotalCost(int projectId) throws Exception {
@@ -131,20 +139,26 @@ public class ProjectServices {
         return date;
     }
 
+    // Need HomeController edits to implement new method
     public void updateTask(String taskName, String taskDescription, int taskId) {
+
         taskMapper.update(taskName, taskDescription, taskId);
     }
 
+    // Need HomeController edits to implement new method
     public void updateProject(String projectName, String description, int projectId) {
+
         projectMapper.update(projectName, description, projectId);
     }
 
+    // Need HomeController edits to implement new method
     public void updateSubTask(String name, String description, String durationInManHours, int subtaskId) {
         int intDurationInManHours = Integer.parseInt(durationInManHours);
     subTaskMapper.update(name, description, intDurationInManHours, subtaskId);
     }
 
     public SubTask getSubtask(int subtaskId) {
-        return subTaskMapper.getSubtask(subtaskId);
+
+        return subTaskMapper.findById(subtaskId);
     }
 }

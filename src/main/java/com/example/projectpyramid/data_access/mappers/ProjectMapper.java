@@ -95,15 +95,14 @@ public class ProjectMapper implements Mapper<Project> {
      * @return The found project, null if not found.
      */
     public Project findById(int projectId) {
-        String query = "SELECT * FROM projects WHERE id = ?";
+        String query = "SELECT name, client_id, is_active, description, author_id FROM projects WHERE id=?";
         Connection connection = DBManager.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, projectId);
-            preparedStatement.executeUpdate();
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 int authorId = resultSet.getInt("author_id");
                 User author = userMapper.findById(authorId);
@@ -143,9 +142,7 @@ public class ProjectMapper implements Mapper<Project> {
 
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("id");
-
-                int authorId = resultSet.getInt("author_id");
-                User author = userMapper.findById(authorId);
+                User author = userMapper.findById(userId);
 
                 int clientId = resultSet.getInt("client_id");
                 Client client = clientMapper.findById(clientId);
@@ -201,8 +198,10 @@ public class ProjectMapper implements Mapper<Project> {
             resultSet.next();
             int authorId = resultSet.getInt("author_id");
             User author = userMapper.findById(authorId);
+
             int clientId = resultSet.getInt("client_id");
             Client client = clientMapper.getClientFromId(clientId);
+
             String projectName = resultSet.getString("name");
             boolean isActive = resultSet.getInt("is_active") != 0;
             String description = resultSet.getString("description");
@@ -226,10 +225,13 @@ public class ProjectMapper implements Mapper<Project> {
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<Project> projects = new ArrayList<>();
             while (resultSet.next()) {
+
                 int projectId = resultSet.getInt("id");
                 User author = userMapper.findById(id);
+
                 int clientId = resultSet.getInt("client_id");
                 Client client = clientMapper.getClientFromId(clientId);
+
                 String projectName = resultSet.getString("name");
                 boolean isActive = resultSet.getInt("is_active") != 0;
                 String description = resultSet.getString("description");

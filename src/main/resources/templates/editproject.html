@@ -52,8 +52,8 @@
         </div>
         <div th:if="${subtask}">
             <form name="edit-task-form" th:action="${'/update-subtask?id=' + subtask.id}" method="POST">
-                <h3>Add task</h3>
-                Task name: <br>
+                <h3>Add subtask</h3>
+                Subtask name: <br>
                 <textarea type="text" name="name" th:text="${subtask.name}"></textarea>
                 <br><br>
                 Description: <br>

@@ -99,9 +99,9 @@ public class TaskMapper implements Mapper<Task> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, taskId);
-            preparedStatement.executeUpdate();
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 int projectId = resultSet.getInt("project_id");
                 String name = resultSet.getString("name");
@@ -122,7 +122,7 @@ public class TaskMapper implements Mapper<Task> {
      * @param projectId The project id of the tasks to find.
      * @return List of found tasks, empty if none found.
      */
-    public List<Task> findAllByProjectId(int projectId) {
+    public ArrayList<Task> findAllByProjectId(int projectId) {
         String query = "SELECT id, name, description FROM tasks WHERE project_id = ?";
         Connection con = DBManager.getConnection();
         ArrayList<Task> tasks = new ArrayList<>();
