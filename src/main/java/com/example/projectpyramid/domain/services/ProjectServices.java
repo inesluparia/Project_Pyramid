@@ -1,12 +1,10 @@
 package com.example.projectpyramid.domain.services;
 
-import com.example.projectpyramid.data_access.mappers.TaskMapper;
-import com.example.projectpyramid.data_access.mappers.ProjectMapper;
-import com.example.projectpyramid.data_access.mappers.SubTaskMapper;
-import com.example.projectpyramid.domain.entities.Task;
-import com.example.projectpyramid.domain.entities.Project;
-import com.example.projectpyramid.domain.entities.SubTask;
+import com.example.projectpyramid.data_access.DBManager;
+import com.example.projectpyramid.data_access.mappers.*;
+import com.example.projectpyramid.domain.entities.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -18,35 +16,30 @@ public class ProjectServices {
     TaskMapper taskMapper = new TaskMapper();
     SubTaskMapper subTaskMapper = new SubTaskMapper();
 
-    public int createProject(String userId, String name, String description, String clientId) throws Exception {
-        if (description.length() > 255) {
+    public Project createProject(User author, Client client, String name, String description) throws Exception {
+
+        if (description.length() > 255)
             throw new Exception("Description is too long");
-        }
 
-        int userIdInt = Integer.parseInt(userId);
-        int clientIdInt = Integer.parseInt(clientId);
-
-        return  projectMapper.insertProject(name, userIdInt, clientIdInt, description);
+        Project project = new Project(author, client, name, description);
+        project.setId(projectMapper.insert(project));
+        return project.getId() > 0 ? project : null;
     }
 
-    public Task addTask(String name, String description, int projectId) throws Exception {
+    public Task addTask(int projectId, String name, String description) throws SQLIntegrityConstraintViolationException, DBManager.DatabaseConnectionException {
         Task task = new Task(projectId, name, description);
         task.setId(taskMapper.insert(task));
         return task.getId() > 0 ? task : null;
     }
 
-    public SubTask addSubTask(String name, String taskId, String durationInManHours, String description) throws Exception {
-        int intTaskId = Integer.parseInt(taskId);
-        int intDurationInManHours = Integer.parseInt(durationInManHours);
-
-        SubTask subTask = new SubTask(intTaskId, name, description, intDurationInManHours);
-        subTaskMapper.insertSubTask(subTask);
-
-        return subTask;
+    public SubTask addSubTask(int taskId, String name, String description, int durationInManHours) throws SQLIntegrityConstraintViolationException, DBManager.DatabaseConnectionException {
+        SubTask subTask = new SubTask(taskId, name, description, durationInManHours);
+        subTask.setId(subTaskMapper.insert(subTask));
+        return subTask.getId() > 0 ? subTask : null;
     }
 
-    public ArrayList<Project> getProjectsFromUserId(int userId) throws Exception {
-        ArrayList<Project> projects = projectMapper.getProjectsFromUserId(userId);
+    public ArrayList<Project> getProjectsFromUserId(int userId) throws DBManager.DatabaseConnectionException {
+        ArrayList<Project> projects = (ArrayList<Project>) projectMapper.findAllByUserId(userId);
 
         for (Project p : projects) {
             populateProject(p);
@@ -54,15 +47,12 @@ public class ProjectServices {
         return projects;
     }
 
-    public ArrayList<Task> getTasks(int projectId) {
-        ArrayList<Task> tasks = taskMapper.getTasks(projectId);
-
-        return tasks;
+    public ArrayList<Task> getTasks(int projectId) throws DBManager.DatabaseConnectionException {
+        return (ArrayList<Task>) taskMapper.findAllByProjectId(projectId);
     }
 
-    public Task getTask(int taskId) {
-        Task task = taskMapper.getTask(taskId);
-        return task;
+    public Task getTask(int taskId) throws DBManager.DatabaseConnectionException {
+        return taskMapper.findById(taskId);
     }
 
     // Adds lists of tasks and subtasks to the returned project before forwarding it to controller.
@@ -72,6 +62,7 @@ public class ProjectServices {
             ArrayList<SubTask> subTasks = (ArrayList<SubTask>) subTaskMapper.findAllByTaskId(task.getId());
             task.setSubTasks(subTasks);
         }
+
         project.setTasks(tasks);
     }
 
@@ -81,21 +72,22 @@ public class ProjectServices {
         return project;
     }
 
-
-    public int getTotalManHours(int projectId) throws Exception {
-        int total= 0;
+    public int getTotalManHours(int projectId) throws DBManager.DatabaseConnectionException {
+        int totalAmountOfManHours = 0;
         Project project = getProjectFromId(projectId);
         ArrayList<Task> tasks = project.getTasks();
+
         for (Task task : tasks) {
             ArrayList<SubTask> subTasks = task.getSubTasks();
             for (SubTask subTask : subTasks) {
-                total += subTask.getDurationInManHours();
+                totalAmountOfManHours += subTask.getDurationInManHours();
             }
         }
-        return total;
+
+        return totalAmountOfManHours;
     }
 
-    public int getTotalCost(int projectId) throws Exception {
+    public int getTotalCost(int projectId) throws DBManager.DatabaseConnectionException {
         int totalDuration = getTotalManHours(projectId);
         return totalDuration * costPerHour;
     }
@@ -128,6 +120,10 @@ public class ProjectServices {
         date.plusWeeks(weeks);
         date.plusDays(days);
         return date;
+    }
+
+    public void updateProject(int id, User author, Client client, String name, String description) throws DBManager.DatabaseConnectionException {
+        projectMapper.update(new Project(id, author, client, name, description));
     }
 
     public void updateTask(int id, int projectId, String name, String description) throws DBManager.DatabaseConnectionException {

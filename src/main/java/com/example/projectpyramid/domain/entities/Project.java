@@ -7,23 +7,23 @@ public class Project {
     private int id;
     private User author;
     private Client client;
-    private String projectName, description;
+    private String name, description;
     private boolean isActive;
     private ArrayList<Task> tasks;
 
-    public Project(int id, User author, Client client, String projectName, String description) {
+    public Project(int id, User author, Client client, String name, String description) {
         this.id = id;
         this.author = author;
         this.client = client;
-        this.projectName = projectName;
+        this.name = name;
         this.description = description;
         this.tasks = new ArrayList<>();
     }
 
-    public Project(User author, Client client, String projectName, String description) {
+    public Project(User author, Client client, String name, String description) {
         this.author = author;
         this.client = client;
-        this.projectName = projectName;
+        this.name = name;
         this.description = description;
     }
 
@@ -42,7 +42,7 @@ public class Project {
     }
 
     public String getName() {
-        return projectName;
+        return name;
     }
 
     public String getDescription() {
@@ -59,8 +59,20 @@ public class Project {
 
     //Setters
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDescription(String description) {

@@ -12,7 +12,7 @@
             </tr>
             <tr>
                 <td th:text="${project.getName()}"></td>
-                <td th:text="${project.getAuthor().getFullName()}"></td>
+                <td th:text="${project.getAuthor().getFullname()}"></td>
                 <td th:text="${project.getClient().getName()}"></td>
                 <td th:text="${project.getDescription()}"></td>
                 <td th:text="${project.getIsActive() ? 'Yes' : 'No'}"></td>
@@ -28,10 +28,10 @@
         </section>
         <h2>Project estimations</h2>
         <br>
-        <p th:text="${'Programmers assigned to this project: ' + programmers}"></p>
-        <p th:text="${'Estimated cost in DKK: ' + totalCost}"> Estimated cost for this project in DKK: </p>
-        <p th:text="${'Estimated cost in man-hours: ' + totalManHours}"> Estimated cost for this project in man-hours: </p>
-        <p th:text="${'Estimated date for completion: ' + completionDate}">Estimated completion date is: </p>
+<!--        <p th:text="${'Programmers assigned to this project: ' + programmers}"></p>-->
+<!--        <p th:text="${'Estimated cost in DKK: ' + totalCost}"> Estimated cost for this project in DKK: </p>-->
+<!--        <p th:text="${'Estimated cost in man-hours: ' + totalManHours}"> Estimated cost for this project in man-hours: </p>-->
+<!--        <p th:text="${'Estimated date for completion: ' + completionDate}">Estimated completion date is: </p>-->
         <!--<p th:text="${'Estimated date for completion: ' + #calendars.format(completionDate,'dd-MM-yyyy')}">Estimated completion date is: </p>-->
         <button>
            <!-- <a th:href="${'edit-project?id=' + project.id}">Edit this project</a> -->

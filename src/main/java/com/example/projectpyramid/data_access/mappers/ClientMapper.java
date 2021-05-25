@@ -19,12 +19,12 @@ public class ClientMapper implements Mapper<Client> {
      * @return The id of the newly inserted client, 0 if unable to insert.
      * @throws SQLIntegrityConstraintViolationException If name or cvr already exists.
      */
-    public int insert(@NotNull Client client) throws SQLIntegrityConstraintViolationException {
+    public int insert(@NotNull Client client) throws SQLIntegrityConstraintViolationException, DBManager.DatabaseConnectionException {
         String query = "INSERT INTO clients (name, cvr) VALUES (?, ?)";
-        Connection connection = DBManager.getConnection();
         int clientId = 0;
 
         try {
+            Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, client.getName());
             preparedStatement.setInt(2, client.getCvr());
@@ -49,11 +49,11 @@ public class ClientMapper implements Mapper<Client> {
      *
      * @param client The client that has been changed.
      */
-    public void update(@NotNull Client client) {
+    public void update(@NotNull Client client) throws DBManager.DatabaseConnectionException {
         String query = "UPDATE clients SET name = ?, cvr = ? WHERE id = ?";
-        Connection connection = DBManager.getConnection();
 
         try {
+            Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setString(1, client.getName());
             preparedStatement.setInt(2, client.getCvr());
@@ -69,11 +69,11 @@ public class ClientMapper implements Mapper<Client> {
      *
      * @param client The client to be deleted from the database.
      */
-    public void delete(@NotNull Client client) {
+    public void delete(@NotNull Client client) throws DBManager.DatabaseConnectionException {
         String query = "DELETE FROM clients WHERE id = ?";
-        Connection connection = DBManager.getConnection();
 
         try {
+            Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setInt(1, client.getId());
             preparedStatement.executeUpdate();
@@ -88,21 +88,21 @@ public class ClientMapper implements Mapper<Client> {
      * @param clientId The id of the client to find.
      * @return The found client, null if not found.
      */
-    public Client findById(int clientId) {
-        String query = "SELECT * FROM projects WHERE id = ?";
-        Connection connection = DBManager.getConnection();
+    public Client findById(int clientId) throws DBManager.DatabaseConnectionException {
+        String query = "SELECT * FROM clients WHERE id = ?";
 
         try {
+            Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, clientId);
-            preparedStatement.executeUpdate();
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
                 int cvr = resultSet.getInt("cvr");
 
-                return new Client(name, cvr);
+                return new Client(clientId, name, cvr);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -116,18 +116,19 @@ public class ClientMapper implements Mapper<Client> {
      *
      * @return List of found clients, empty if none found.
      */
-    public List<Client> findAll() {
+    public List<Client> findAll() throws DBManager.DatabaseConnectionException {
         String query = "SELECT * FROM clients";
-        Connection connection = DBManager.getConnection();
         ArrayList<Client> clients = new ArrayList<>();
 
         try {
+            Connection connection = DBManager.getConnection();
             ResultSet resultSet = connection.createStatement().executeQuery(query);
 
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int cvr = resultSet.getInt("cvr");
-                clients.add(new Client(name, cvr));
+                clients.add(new Client(id, name, cvr));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -141,11 +142,11 @@ public class ClientMapper implements Mapper<Client> {
     /**
      * @deprecated and replaced by {@link ClientMapper#findById(int)}
      */
-    public Client getClientFromId(int clientId) {
+    public Client getClientFromId(int clientId) throws Exception {
         Client client = new Client();
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "SELECT name, cvr FROM clients WHERE id =?";
+            String SQL = "SELECT name, cvr FROM clients WHERE id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, clientId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -165,7 +166,7 @@ public class ClientMapper implements Mapper<Client> {
     /**
      * @deprecated and replaced by {@link ClientMapper#findAll()}
      */
-    public ArrayList<Client> getClients() {
+    public ArrayList<Client> getClients() throws Exception {
         try {
             Connection con = DBManager.getConnection();
             String SQL = "SELECT * FROM clients";

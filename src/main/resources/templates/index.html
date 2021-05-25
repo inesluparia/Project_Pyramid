@@ -27,13 +27,16 @@
             <div class="flex-container">
                 <section class="login-section">
                     <h2>Log into your existing account</h2>
-                    <form name="login" action="login" method="POST">
+                    <!--<form name="login" action="login" method="POST">-->
+                    <form action="#" th:action="@{/login}" th:object="${user}" method="post">
                         <div class="text-field">
-                            <input required="" class="full-width" id="username" name="username" type="text" autocomplete="username" placeholder=" ">
+                            <!--<input required="" class="full-width" id="username" name="username" type="text" autocomplete="username" placeholder=" ">-->
+                            <input id="username" th:field="*{username}" class="full-width" type="text" placeholder=" ">
                             <label for="username">Username</label>
                         </div>
                         <div class="text-field">
-                            <input id="password" class="full-width" name="password" type="password" autocomplete="current-password" placeholder=" ">
+                            <!--<input id="password" class="full-width" name="password" type="password" autocomplete="current-password" placeholder=" ">-->
+                            <input id="password" th:field="*{password}" class="full-width" type="password" autocomplete="current-password" placeholder=" ">
                             <label for="password">Password</label>
                         </div>
                         <a href="#">Forgot your password?</a>
@@ -42,17 +45,18 @@
                 </section>
                 <section class="sign-up-section">
                     <h2>or... create a new one</h2>
-                    <form name="create-user" action="/createuser" method="POST">
+                    <!--<form name="create-user" action="/createuser" method="POST">-->
+                    <form action="#" th:action="@{/sign-up}" th:object="${user}" method="post">
                         <div class="text-field">
-                            <input required="" id="fullname" class="full-width" name="name" type="text" autocomplete="name" placeholder=" ">
+                            <input id="fullname" th:field="*{fullname}" required="" class="full-width" name="name" type="text" autocomplete="name" placeholder=" ">
                             <label for="fullname">Name</label>
                         </div>
                         <div class="text-field">
-                            <input required="" id="newUsername" class="full-width" name="username" type="text" autocomplete="username" placeholder=" ">
+                            <input required="" th:field="*{username}" id="newUsername" class="full-width" name="username" type="text" autocomplete="username" placeholder=" ">
                             <label for="newUsername">Username</label>
                         </div>
                         <div class="text-field">
-                            <input id="newPassword" class="full-width" name="password" type="password" autocomplete="new-password" placeholder=" " oninput="validateForm()">
+                            <input id="newPassword" th:field="*{password}" class="full-width" name="password" type="password" autocomplete="new-password" placeholder=" " oninput="validateForm()">
                             <label for="newPassword">Password</label>
                         </div>
                         <div class="text-field">

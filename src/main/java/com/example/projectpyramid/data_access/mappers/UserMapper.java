@@ -15,14 +15,14 @@ public class UserMapper implements Mapper<User> {
      * @return The id of the newly inserted user, 0 if unable to insert.
      * @throws SQLIntegrityConstraintViolationException If the username is already taken.
      */
-    public int insert(@NotNull User user) throws SQLIntegrityConstraintViolationException {
+    public int insert(@NotNull User user) throws SQLIntegrityConstraintViolationException, DBManager.DatabaseConnectionException {
         String query = "INSERT INTO users (fullname, username, password) VALUES (?, ?, ?)";
-        Connection connection = DBManager.getConnection();
         int userId = 0;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement.setString(1, user.getFullName());
+            Connection connection = DBManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, user.getFullname());
             preparedStatement.setString(2, user.getUsername());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.executeUpdate();
@@ -46,13 +46,13 @@ public class UserMapper implements Mapper<User> {
      *
      * @param user The user that has been changed.
      */
-    public void update(@NotNull User user) {
+    public void update(@NotNull User user) throws DBManager.DatabaseConnectionException {
         String query = "UPDATE users SET fullname = ?, username = ?, password = ? WHERE id = ?";
-        Connection connection = DBManager.getConnection();
 
         try {
+            Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement.setString(1, user.getFullName());
+            preparedStatement.setString(1, user.getFullname());
             preparedStatement.setString(2, user.getUsername());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setInt(4, user.getId());
@@ -68,11 +68,11 @@ public class UserMapper implements Mapper<User> {
      *
      * @param user The user to be deleted from the database.
      */
-    public void delete(@NotNull User user) {
+    public void delete(@NotNull User user) throws DBManager.DatabaseConnectionException {
         String query = "DELETE FROM users WHERE id = ?";
-        Connection connection = DBManager.getConnection();
 
         try {
+            Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setInt(1, user.getId());
             preparedStatement.executeUpdate();
@@ -87,15 +87,16 @@ public class UserMapper implements Mapper<User> {
      * @param userId The id of the user to find.
      * @return The found user, null if not found.
      */
-    public User findById(int userId) {
+    public User findById(int userId) throws DBManager.DatabaseConnectionException {
         String query = "SELECT username, fullname FROM users WHERE id = ?";
-        Connection connection = DBManager.getConnection();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            Connection connection = DBManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, userId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 String fullName = resultSet.getString("fullname");
                 String userName = resultSet.getString("username");
@@ -115,12 +116,12 @@ public class UserMapper implements Mapper<User> {
      * @param password The password of the user logging in.
      * @return Id of the user logging in, 0 if unable to authenticate.
      */
-    public int login(String username, String password) {
+    public int login(String username, String password) throws DBManager.DatabaseConnectionException {
         String query = "SELECT id FROM users WHERE username = ? AND password = ?";
-        Connection connection = DBManager.getConnection();
         int userId = 0;
 
         try {
+            Connection connection = DBManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);

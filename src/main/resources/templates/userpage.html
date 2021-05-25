@@ -3,11 +3,12 @@
     <head th:replace="fragments/head.html :: head"></head>
     <body>
         <main>
-            <h1 th:text="${'Hi, ' + session.name}"></h1>
+            <h1 th:text="${'Hi, ' + user.getFullname()}"></h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolorem est impedit placeat rem? Accusamus corporis doloribus eius fuga ipsam laborum neque quas quo sed veniam? Autem culpa et ratione?</p>
             <ul class="space-above medium-space-below">
                 <li th:each="project:${projects}">
-                    <a th:href="${'/project?id=' + project.id}" th:text="${project.name}"></a>
+<!--                    <a th:href="${'/project?id=' + project.id}" th:text="${project.name}"></a>-->
+                    <a th:href="${'/projects/' + project.id}" th:text="${project.getName()}"></a>
                 </li>
             </ul>
             <a href="/createproject">

@@ -1,5 +1,6 @@
 package com.example.projectpyramid.domain.services;
 
+import com.example.projectpyramid.data_access.DBManager;
 import com.example.projectpyramid.data_access.mappers.ClientMapper;
 import com.example.projectpyramid.domain.entities.Client;
 
@@ -9,12 +10,11 @@ public class ClientServices {
 
     ClientMapper clientMapper = new ClientMapper();
 
-    // TODO implement getClientFromId();
-    public Client getClientFromId(int clientId) {
-       return clientMapper.getClientFromId(clientId);
+    public Client getClientFromId(int clientId) throws DBManager.DatabaseConnectionException {
+       return clientMapper.findById(clientId);
     }
 
-    public ArrayList<Client> getClients(){
-        return clientMapper.getClients();
+    public ArrayList<Client> getClients() throws DBManager.DatabaseConnectionException {
+        return (ArrayList<Client>) clientMapper.findAll();
     }
 }

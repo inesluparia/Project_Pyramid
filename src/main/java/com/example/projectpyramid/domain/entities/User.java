@@ -3,18 +3,20 @@ package com.example.projectpyramid.domain.entities;
 public class User {
 
     private int id;
-    private String fullName;
+    private String fullname;
     private String username;
     private String password;
 
-    public User(int id, String fullName, String username) {
+    public User() { }
+
+    public User(int id, String fullname, String username) {
         this.id = id;
-        this.fullName = fullName;
+        this.fullname = fullname;
         this.username = username;
     }
 
-    public User(String fullName, String username, String password) {
-        this.fullName = fullName;
+    public User(String fullname, String username, String password) {
+        this.fullname = fullname;
         this.username = username;
         this.password = password;
     }
@@ -25,8 +27,8 @@ public class User {
         return id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFullname() {
+        return fullname;
     }
 
     public String getUsername() {
@@ -43,8 +45,8 @@ public class User {
         this.id = id;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public void setUsername(String username) {
