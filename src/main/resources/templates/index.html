@@ -3,8 +3,8 @@
     <head th:replace="fragments/head.html :: head"></head>
     <script>
         function validateForm() {
-            let password = document.forms["create-user"]["password"].value;
-            let confirmPassword = document.forms["create-user"]["confirmPassword"].value;
+            let password = document.forms["sign-up"]["password"].value;
+            let confirmPassword = document.forms["sign-up"]["confirmPassword"].value;
 
             let errorMessageElement = document.getElementsByClassName("validation-error")[0];
             errorMessageElement.style.display = password === confirmPassword ? "none" : "initial";
@@ -28,7 +28,7 @@
                 <section class="login-section">
                     <h2>Log into your existing account</h2>
                     <!--<form name="login" action="login" method="POST">-->
-                    <form action="#" th:action="@{/login}" th:object="${user}" method="post">
+                    <form name="login" action="#" th:action="@{/login}" th:object="${user}" method="post">
                         <div class="text-field">
                             <!--<input required="" class="full-width" id="username" name="username" type="text" autocomplete="username" placeholder=" ">-->
                             <input id="username" th:field="*{username}" class="full-width" type="text" placeholder=" ">
@@ -46,7 +46,7 @@
                 <section class="sign-up-section">
                     <h2>or... create a new one</h2>
                     <!--<form name="create-user" action="/createuser" method="POST">-->
-                    <form action="#" th:action="@{/sign-up}" th:object="${user}" method="post">
+                    <form name="sign-up" action="#" th:action="@{/sign-up}" th:object="${user}" method="post">
                         <div class="text-field">
                             <input id="fullname" th:field="*{fullname}" required="" class="full-width" name="name" type="text" autocomplete="name" placeholder=" ">
                             <label for="fullname">Name</label>

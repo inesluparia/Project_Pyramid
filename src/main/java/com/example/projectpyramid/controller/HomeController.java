@@ -38,6 +38,7 @@ public class HomeController {
     public String loginSubmit(@ModelAttribute User user, Model model, HttpSession session) throws Exception {
         int userId = userServices.login(user.getUsername(), user.getPassword());
         session.setAttribute("user_id", userId);
+
         return "redirect:/projects";
     }
 
@@ -49,9 +50,9 @@ public class HomeController {
     }
 
     @GetMapping("/logout")
-    public String logUd(WebRequest request) {
-        request.setAttribute("userId", null, WebRequest.SCOPE_SESSION);
-        return "index";
+    public String logOut(HttpSession session) {
+        session.setAttribute("user_id", null);
+        return "/";
     }
 
     @GetMapping("/projects")
@@ -66,15 +67,12 @@ public class HomeController {
         } catch (NumberFormatException ignored) { }
 
         User user = userServices.getUserFromId(userId);
+
+        if (user == null)
+            throw new Exception("401 Unauthorized");
+
         model.addAttribute("user", user);
         model.addAttribute("projects", projectServices.getProjectsFromUserId(user.getId()));
-
-//        int userId = ;
-//        int userId = (int) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
-//        request.setAttribute("name", userServices.getUserFromId(userId).getFullName(), WebRequest.SCOPE_SESSION);
-
-//        ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
-//        model.addAttribute("projects", projects);
 
         return "userpage";
     }
@@ -303,12 +301,13 @@ public class HomeController {
         return "redirect:edit-project";
     }
 
+    @GetMapping("/error")
     @ExceptionHandler(Exception.class)
     public String anotherError(Model model, Exception exception) {
         model.addAttribute("message", exception.getMessage() + "\n\n" + exception.getClass());
         exception.printStackTrace();
 
-        return "errorpage";
+        return "error";
     }
 
     @GetMapping("/myprojects")
