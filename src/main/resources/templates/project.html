@@ -2,24 +2,17 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
     <head th:replace="fragments/head.html :: head"></head>
     <body>
-        <table>
-            <tr>
-                <th>Project name</th>
-                <th>Author</th>
-                <th>Client</th>
-                <th>Description</th>
-                <th>Is active?</th>
-            </tr>
-            <tr>
-                <td th:text="${project.getName()}"></td>
-                <td th:text="${project.getAuthor().getFullName()}"></td>
-                <td th:text="${project.getClient().getName()}"></td>
-                <td th:text="${project.getDescription()}"></td>
-                <td th:text="${project.getIsActive() ? 'Yes' : 'No'}"></td>
-            </tr>
-        </table>
+        <div>
+            <h2 th:text="${'Project name: ' + project.getName()}"></h2>
+            <ul>
+                <li th:text="${'Author: ' + project.getAuthor().getFullName()}"></li>
+                <li th:text="${'Client: ' + project.getClient().getName()}"></li>
+                <li th:text="${'Description: ' + project.getDescription()}"></li>
+                <li th:text="${project.getIsActive() ? 'Is active' : 'Is not active'}"></li>
+            </ul>
+        </div>
         <section th:each="task : ${project.getTasks()}">
-            <p th:text="${'Task: ' + task.getName()}"></p>
+            <span th:text="${'Task: ' + task.getName()}"></span>
             <ul th:each="subtask : ${task.subTasks}">
                 <li th:text="${'Subtask: ' + subtask.getName()}"></li>
                 <li th:text="${'Description: ' + subtask.getDescription()}"></li>
@@ -27,12 +20,12 @@
             </ul>
         </section>
         <h2>Project estimations</h2>
-        <br>
         <p th:text="${'Programmers assigned to this project: ' + programmers}"></p>
         <p th:text="${'Estimated cost in DKK: ' + totalCost}"> Estimated cost for this project in DKK: </p>
         <p th:text="${'Estimated cost in man-hours: ' + totalManHours}"> Estimated cost for this project in man-hours: </p>
         <p th:text="${'Estimated date for completion: ' + completionDate}">Estimated completion date is: </p>
         <!--<p th:text="${'Estimated date for completion: ' + #calendars.format(completionDate,'dd-MM-yyyy')}">Estimated completion date is: </p>-->
+        <br>
         <button>
            <!-- <a th:href="${'edit-project?id=' + project.id}">Edit this project</a> -->
             <a href="edit-project">Edit existing tasks or subtasks</a>

@@ -10,7 +10,6 @@
             <p th:if="${project.isActive == true}">Project state: Not active</p>
         </a>
         <br>
-        <br>
 
         <div th:each="task : ${project.tasks}">
            <a th:href="${'/fill-task-form?id=' + task.id}" th:text="${'Task: ' + task.name}"></a>
@@ -23,7 +22,7 @@
             </ul>
         </div>
         <br><br>
-        <button><a href="/createtask">Add a new task or subtask</a></button>
+        <button><a href="/create-elements">Add a new task or subtask</a></button>
         <div th:if="${projectBoo}">
             <form name="edit-project-info-form" action="update-project" method="POST">
                 Project name:<br>
@@ -37,7 +36,7 @@
         </div>
         <div th:if="${task}">
             <form name="edit-task-form" th:action="${'/update-task?id=' + task.id}" method="POST">
-                <h3>Add task</h3>
+                <h3 th:text="${'Edit task' + task.name}">Edit task</h3>
                 Task name: <br>
                 <textarea type="text" name="name" th:text="${task.name}"></textarea>
                 <br><br>
@@ -45,11 +44,12 @@
                 <textarea type="text" name="description" rows="4" cols="50" th:text="${task.description}"></textarea><br>
                 <br><br><br><br>
                 <input type="submit" value="Update task">
+                <button><a href="/delete">Delete this task</a></button>
             </form>
         </div>
         <div th:if="${subtask}">
             <form name="edit-task-form" th:action="${'/update-subtask?id=' + subtask.id}" method="POST">
-                <h3>Add subtask</h3>
+                <h3 th:text="${'Edit subtask' + subtask.name}">Edit task</h3>
                 Subtask name: <br>
                 <textarea type="text" name="name" th:text="${subtask.name}"></textarea>
                 <br><br>
@@ -60,19 +60,8 @@
                 <textarea type="text" name="duration" th:text="${subtask.durationInManHours}"></textarea>
                 <br><br>
                 <input type="submit" value="Update subtask">
+                <button><a href="/delete">Delete this subtask</a></button>
             </form>
         </div>
-<!--        <div th:if="addTaskButtonPressed">-->
-<!--            <form name="add-task-form" action="add-task" method="POST">-->
-<!--                <h3>Add task</h3>-->
-<!--                Task name: <br>-->
-<!--                <input type="text" name="name">-->
-<!--                <br><br>-->
-<!--                Description: <br>-->
-<!--                <textarea type="text" name="description" rows="4" cols="50"></textarea><br>-->
-<!--                <br><br><br><br>-->
-<!--                <input type="submit" value="add task">-->
-<!--            </form>-->
-<!--        </div>-->
     </body>
 </html>

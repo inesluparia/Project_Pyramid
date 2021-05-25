@@ -112,14 +112,14 @@ public class HomeController {
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
 
         saveProjectToModel(model, projectId);
-        return "createtask.html";
+        return "create-elements.html";
     }
 
-    @GetMapping("/createtask")
+    @GetMapping("/create-elements")
     public String createTask(Model model, WebRequest request) throws Exception {
         int projectId = getProjectIdFromSession(request);
         saveProjectToModel(model, projectId);
-        return "createtask";
+        return "create-elements";
     }
 
 
@@ -130,7 +130,7 @@ public class HomeController {
         int projectId = getProjectIdFromSession(request);
         projectServices.addTask(taskName, taskDescription, projectId);
         saveProjectToModel(model, projectId);
-        return "createtask.html";
+        return "create-elements.html";
     }
 
     @PostMapping("/add-subTask")
@@ -147,7 +147,7 @@ public class HomeController {
 
         saveProjectToModel(model, projectId);
 
-        return "createtask.html";
+        return "create-elements.html";
     }
 
     @GetMapping("/edit-project")
