@@ -76,24 +76,40 @@ public class HomeController {
         return "userpage";
     }
 
+    @PostMapping("/projects")
+    public String createProject(Model model, HttpSession session) throws Exception {
+        return "";
+    }
+
     @GetMapping("/projects/{id}")
     public String showProject(@PathVariable int id, Model model, HttpSession session) throws Exception {
 
         if (session.getAttribute("user_id") == null)
-            throw new Exception("401 Unauthorized");
+            throw new Exception("Unauthorized access");
 
         int userId = (int) session.getAttribute("user_id");
 
         Project project = projectServices.getProjectFromId(id);
 
         if (project == null)
-            throw new Exception("404 Not Found");
+            throw new Exception("Project not found");
 
         if (userId != project.getAuthor().getId())
-            throw new Exception("403 Forbidden");
+            throw new Exception("You don't have access to this project");
 
+        saveProjectEstimationsToModel(model, id);
         model.addAttribute("project", project);
         return "project";
+    }
+
+    @PatchMapping("/projects/{id}")
+    public String editProject(@PathVariable int id, Model model, HttpSession session) throws Exception {
+        return "";
+    }
+
+    @DeleteMapping("/projects/{id}")
+    public String deleteProject(@PathVariable int id, Model model, HttpSession session) throws Exception {
+        return "";
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
