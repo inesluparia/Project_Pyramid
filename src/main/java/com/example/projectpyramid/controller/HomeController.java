@@ -59,7 +59,6 @@ public class HomeController {
     public String showProjects(Model model, HttpSession session) throws Exception {
 
         int userId = 0;
-
         try {
             if (session.getAttribute("user_id") != null) {
                 userId = (int) session.getAttribute("user_id");
@@ -78,7 +77,7 @@ public class HomeController {
     }
 
     @GetMapping("/projects/{id}")
-    public String showProject(@PathVariable int id, Model model, HttpSession session, HttpServletResponse response) throws Exception {
+    public String showProject(@PathVariable int id, Model model, HttpSession session) throws Exception {
 
         if (session.getAttribute("user_id") == null)
             throw new Exception("401 Unauthorized");
