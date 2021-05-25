@@ -23,9 +23,7 @@
             </ul>
         </div>
         <br><br>
-        <button><a href="/createtask">Add a new task</a></button>
-        <button><a href="/createtask">Add a new subtask</a></button>
-        <button></button>
+        <button><a href="/createtask">Add a new task or subtask</a></button>
         <div th:if="${projectBoo}">
             <form name="edit-project-info-form" action="update-project" method="POST">
                 Project name:<br>

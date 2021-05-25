@@ -12,9 +12,15 @@ public class ProjectServices {
 
     private final int costPerHour = 250;
     private int programmers = 4;
-    ProjectMapper projectMapper = new ProjectMapper();
-    TaskMapper taskMapper = new TaskMapper();
-    SubTaskMapper subTaskMapper = new SubTaskMapper();
+    ProjectMapper projectMapper;
+    TaskMapper taskMapper;
+    SubTaskMapper subTaskMapper;
+
+    public ProjectServices(){
+        projectMapper = new ProjectMapper();
+        taskMapper = new TaskMapper();
+        subTaskMapper = new SubTaskMapper();
+    }
 
     public int createProject(User author, Client client, String name, String description) throws Exception {
         if (description.length() > 255) {

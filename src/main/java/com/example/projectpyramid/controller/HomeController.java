@@ -14,9 +14,15 @@ import java.util.ArrayList;
 @Controller
 public class HomeController {
 
-    UserServices userServices = new UserServices();
-    ProjectServices projectServices = new ProjectServices();
-    ClientServices clientServices = new ClientServices();
+    UserServices userServices;
+    ProjectServices projectServices;
+    ClientServices clientServices;
+
+    HomeController(){
+        userServices = new UserServices();
+        projectServices = new ProjectServices();
+        clientServices = new ClientServices();
+    }
 
     /**
      * index or home endpoint that presents the user with a log-in form and a create-user form
@@ -87,7 +93,7 @@ public class HomeController {
         return "createproject.html";
     }
 
-    @PostMapping("/map-project")
+    @PostMapping("/createproject")
     public String createProject(WebRequest request, Model model) throws Exception {
 
         int userId = (int) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
@@ -124,7 +130,7 @@ public class HomeController {
         int projectId = getProjectIdFromSession(request);
         projectServices.addTask(taskName, taskDescription, projectId);
         saveProjectToModel(model, projectId);
-        return "createproject.html";
+        return "createtask.html";
     }
 
     @PostMapping("/add-subTask")
