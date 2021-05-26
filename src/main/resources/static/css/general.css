@@ -216,18 +216,18 @@ nav p {
 }
 
 main {
-    margin: 2.5% 25%;
+    margin: 7rem 25% 2.5%;
 }
 
 @media only screen and (max-width: 1200px) {
     main {
-        margin: 2.5% 15%;
+        margin: 7rem 15% 2.5%;
     }
 }
 
 @media only screen and (max-width: 800px) {
     main {
-        margin: 2.5%;
+        margin: 7rem 1rem 1rem;
     }
 
     .flex-container {
