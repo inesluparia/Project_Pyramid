@@ -6,6 +6,8 @@
         <main>
             <h1 th:text="${'Hi, ' + session.name}"></h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolorem est impedit placeat rem? Accusamus corporis doloribus eius fuga ipsam laborum neque quas quo sed veniam? Autem culpa et ratione?</p>
+            <h3 th:if="${projects}">Your current projects</h3>
+            <h3 th:unless="${projects}">You don't have any project at the moment</h3>
             <ul class="space-above medium-space-below">
                 <li th:each="project:${projects}">
                     <a th:href="${'/project?id=' + project.id}" th:text="${project.name}"></a>
@@ -15,6 +17,7 @@
                 <button>Start a new project</button>
             </a>
         </main>
+    <div th:if="${message}" th:text="${message}"></div>
     </body>
     <footer th:replace="fragments/footer.html :: footer"></footer>
 </html>

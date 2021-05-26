@@ -31,6 +31,8 @@
                 <!-- <a th:href="${'edit-project?id=' + project.id}">Edit this project</a> -->
                 <a href="edit-project">Edit existing tasks or subtasks</a>
             </button>
+            <button><a th:href="${'/delete?type=project&id=' + project.id}" >Delete this project</a></button>
+
         </main>
     </body>
 </html>

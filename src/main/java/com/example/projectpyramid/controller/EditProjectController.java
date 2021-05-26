@@ -98,4 +98,30 @@ public class EditProjectController {
         Project project = projectServices.getProjectFromId(projectId);
         model.addAttribute("project", project);
     }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("type") String type, @RequestParam("id") int id, Model model, WebRequest request) throws Exception {
+        switch (type) {
+            case "subtask":
+                projectServices.deleteSubtask(id);
+                break;
+            case "task":
+                projectServices.deleteTask(id);
+                break;
+            case "project": {
+                projectServices.deleteProject(id);
+                model.addAttribute("message", "Project was successfully deleted.");
+                return "userpage";
+            }
+            default:
+                model.addAttribute("deleteFail", "Element could not be deleted");
+        }
+        // if is succeeded
+        model.addAttribute("deleteSuccess", "Element was successfully deleted");
+
+        int projectId = getProjectIdFromSession(request);
+        saveProjectToModel(model, projectId);
+                return "editproject";
+    }
+
 }

@@ -69,13 +69,13 @@ public class UserMapper implements Mapper<User> {
      *
      * @param user The user to be deleted from the database.
      */
-    public void delete(@NotNull User user) {
+    public void delete(int id) {
         String query = "DELETE FROM users WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
