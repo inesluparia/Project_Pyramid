@@ -71,7 +71,6 @@ public class EditProjectController {
     }
 
     @PostMapping("/update-task")
-
     public String updateTask(@RequestParam("id") int taskId, WebRequest request) {
         String taskName = request.getParameter("name");
         String taskDescription = request.getParameter("description");

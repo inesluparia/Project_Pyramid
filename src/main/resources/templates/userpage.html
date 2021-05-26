@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
     <head th:replace="fragments/head.html :: head"></head>
     <body>
+        <nav th:replace="fragments/navbar.html :: navbar"></nav>
         <main>
             <h1 th:text="${'Hi, ' + session.name}"></h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolorem est impedit placeat rem? Accusamus corporis doloribus eius fuga ipsam laborum neque quas quo sed veniam? Autem culpa et ratione?</p>

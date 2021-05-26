@@ -4,6 +4,7 @@ import com.example.projectpyramid.data_access.mappers.TaskMapper;
 import com.example.projectpyramid.data_access.mappers.ProjectMapper;
 import com.example.projectpyramid.data_access.mappers.SubTaskMapper;
 import com.example.projectpyramid.domain.entities.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -128,7 +129,6 @@ public class ProjectServices {
 
     // Need HomeController edits to implement new method
     public void updateTask(String taskName, String taskDescription, int taskId) {
-
         taskMapper.update(taskName, taskDescription, taskId);
     }
 
