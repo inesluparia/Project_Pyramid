@@ -1,7 +1,5 @@
 package com.example.projectpyramid;
 
-import com.example.projectpyramid.controller.HomeController;
-import com.example.projectpyramid.domain.services.ProjectServices;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
