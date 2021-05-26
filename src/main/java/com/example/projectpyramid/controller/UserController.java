@@ -17,7 +17,6 @@ public class UserController {
     UserServices userServices = new UserServices();
     ProjectServices projectServices = new ProjectServices();
 
-
     @GetMapping("/logout")
     public String logUd(WebRequest request) {
         request.setAttribute("userId", null, WebRequest.SCOPE_SESSION);
