@@ -232,11 +232,6 @@ public class HomeController {
         return "index.html";
     }
 
-    @ExceptionHandler(Exception.class)
-    public String anotherError(Model model, Exception exception) {
-        model.addAttribute("message", exception.getMessage() + "\n\n" + exception.getClass());
-        return "errorpage.html";
-    }
 
     @GetMapping("/myprojects")
     public String myProjects() {
@@ -246,6 +241,12 @@ public class HomeController {
     @GetMapping("/projectlist")
     public String allProjects() {
         return "allprojects";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String anotherError(Model model, Exception exception) {
+        model.addAttribute("message", exception.getMessage() + "\n\n" + exception.getClass());
+        return "errorpage.html";
     }
 
     public int getProjectIdFromSession(WebRequest request){

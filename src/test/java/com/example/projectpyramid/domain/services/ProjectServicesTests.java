@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProjectServicesTests {
 
     private ProjectServices projectServices;
+    private Object IllegalArgumentException;
 
     @BeforeEach
     void initialize(){
@@ -31,8 +32,9 @@ class ProjectServicesTests {
     }
     @Test
     void getTotalCostManyManHoursFailTest() {
-        int cost = projectServices.getTotalCost(2000000000);
-        //assertThrows()
+        int cost = projectServices.getTotalCost(200000000);
+        //assertFalse(50000000000 == cost);
+        //assertThrows(Exception);
 
     }
 
@@ -40,7 +42,9 @@ class ProjectServicesTests {
     void getTotalCostNegativeManHoursTest() {
         int cost = projectServices.getTotalCost(-2);
         //expect exception of some type
-
+        assertThrows(IllegalArgumentException.class, () -> {
+            projectServices.getTotalCost(-2);
+        });
     }
 
 
