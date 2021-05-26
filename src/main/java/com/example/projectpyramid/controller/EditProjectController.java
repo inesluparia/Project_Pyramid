@@ -99,12 +99,4 @@ public class EditProjectController {
         Project project = projectServices.getProjectFromId(projectId);
         model.addAttribute("project", project);
     }
-
-    public void saveProjectEstimationsToModel(Model model, int projectId) throws Exception{
-        model.addAttribute("programmers", projectServices.getProgrammers());
-        int manHours = projectServices.getTotalManHours(projectId);
-        model.addAttribute("totalManHours", manHours);
-        model.addAttribute("totalCost", projectServices.getTotalCost(manHours));
-        model.addAttribute("completionDate", projectServices.getCompletionDate(manHours));
-    }
 }
