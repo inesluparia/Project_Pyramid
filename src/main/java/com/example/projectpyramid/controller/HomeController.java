@@ -18,7 +18,7 @@ public class HomeController {
     ProjectServices projectServices;
     ClientServices clientServices;
 
-    HomeController(){
+    HomeController() {
         userServices = new UserServices();
         projectServices = new ProjectServices();
         clientServices = new ClientServices();

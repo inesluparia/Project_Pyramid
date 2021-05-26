@@ -27,21 +27,18 @@ public class ProjectServices {
     }
 
     public int createProject(User author, Client client, String name, String description) throws Exception {
-        if (description.length() > 255) {
+
+        if (description.length() > 255)
             throw new Exception("Description is too long");
-        }
 
         Project project = new Project(author, client, name, description);
-
         project.setId(projectMapper.insert(project));
         return project.getId();
-        }
+    }
 
     public Task addTask(String name, String description, int projectId) throws Exception {
         Task task = new Task(projectId, name, description);
-
         task.setId(taskMapper.insert(task));
-
         return task.getId() > 0 ? task : null;
     }
 
