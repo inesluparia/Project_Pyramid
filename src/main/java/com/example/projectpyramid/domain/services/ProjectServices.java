@@ -115,36 +115,18 @@ public class ProjectServices {
     }
 
     public int getTotalCost(int manHours){
+        if (manHours < 0)
+            throw new IllegalArgumentException("man hours cannot be negative");
         return manHours * costPerHour;
     }
 
-//    public String getTotalCalenderTime(int projectId) throws Exception {
-//        //a month has in average 4.35 weeks and therefore 152.25 working hours
-//        //a week has 35 working hours
-//        // a day has 7 working hours
-//
-//        //int manHours= getTotalManHours(projectId);
-//        double manHours = 600;
-//        int months = (int) (manHours / 152.25);
-//        int weeks = (int) ((manHours % 152.25) / 35);
-//        int days = (int) (((manHours % 152.25) % 35) / 7);
-//        return "There are " + totalEmployees + " programmers assigned to this project\n" +
-//                "This project will take approximately " + months + " months, " + weeks +
-//                " weeks and " + days + " working days to be completed.";
-//    }
-
     public LocalDate getCompletionDate(int manHours) throws Exception {
         LocalDate date = LocalDate.now();
-        //a month has in average 4.35 weeks and therefore 152.25 working hours
         //a week has 35 working hours
         // a day has 7 working hours
-        int months = (int) (manHours / 152.25);
-        int weeks = (int) ((manHours % 152.25) / 35);
-        int days = (int) (((manHours % 152.25) % 35) / 7);
-        date.plusMonths(months);
-        date.plusWeeks(weeks);
-        date.plusDays(days);
-        return date;
+        LocalDate result = date.plusWeeks(manHours / 35);
+        LocalDate finalResult = result.plusDays((manHours % 35)/7);
+        return finalResult;
     }
 
     // Need HomeController edits to implement new method
