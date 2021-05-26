@@ -90,13 +90,13 @@ public class ProjectServices {
         project.setTasks(tasks);
     }
 
-    public Project getProjectFromId(int projectId) throws Exception {
+    public Project getProjectFromId(int projectId) {
         Project project = projectMapper.findById(projectId);
         populateProject(project);
         return project;
     }
 
-    public int getTotalManHours(int projectId) throws Exception {
+    public int getTotalManHours(int projectId) {
         int totalAmountOfManHours = 0;
         Project project = getProjectFromId(projectId);
         ArrayList<Task> tasks = project.getTasks();
@@ -116,7 +116,7 @@ public class ProjectServices {
         return manHours * costPerHour;
     }
 
-    public LocalDate getCompletionDate(int manHours) throws Exception {
+    public LocalDate getCompletionDate(int manHours) {
         LocalDate date = LocalDate.now();
         //a week has 35 working hours
         // a day has 7 working hours
