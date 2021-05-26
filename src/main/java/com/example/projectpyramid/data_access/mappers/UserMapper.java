@@ -67,7 +67,7 @@ public class UserMapper implements Mapper<User> {
      * Deletes a user from the database.
      * TODO unit test to ensure authored projects' author_id gets set to null.
      *
-     * @param user The user to be deleted from the database.
+     * @param id The user to be deleted from the database.
      */
     public void delete(int id) {
         String query = "DELETE FROM users WHERE id = ?";

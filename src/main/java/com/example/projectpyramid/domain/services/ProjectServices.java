@@ -17,7 +17,7 @@ public class ProjectServices {
     private TaskMapper taskMapper;
     private SubTaskMapper subTaskMapper;
 
-    public ProjectServices(){
+    public ProjectServices() {
         projectMapper = new ProjectMapper();
         taskMapper = new TaskMapper();
         subTaskMapper = new SubTaskMapper();
@@ -87,7 +87,6 @@ public class ProjectServices {
             ArrayList<SubTask> subTasks = subTaskMapper.findAllByTaskId(task.getId());
             task.setSubTasks(subTasks);
         }
-
         project.setTasks(tasks);
     }
 
@@ -96,7 +95,6 @@ public class ProjectServices {
         populateProject(project);
         return project;
     }
-
 
     public int getTotalManHours(int projectId) throws Exception {
         int totalAmountOfManHours = 0;
@@ -112,7 +110,7 @@ public class ProjectServices {
         return totalAmountOfManHours;
     }
 
-    public int getTotalCost(int manHours){
+    public int getTotalCost(int manHours) {
         if (manHours < 0)
             throw new IllegalArgumentException("man hours cannot be negative");
         return manHours * costPerHour;
@@ -123,7 +121,7 @@ public class ProjectServices {
         //a week has 35 working hours
         // a day has 7 working hours
         LocalDate result = date.plusWeeks(manHours / 35);
-        LocalDate finalResult = result.plusDays((manHours % 35)/7);
+        LocalDate finalResult = result.plusDays((manHours % 35) / 7);
         return finalResult;
     }
 
@@ -134,18 +132,29 @@ public class ProjectServices {
 
     // Need HomeController edits to implement new method
     public void updateProject(String projectName, String description, int projectId) {
-
         projectMapper.update(projectName, description, projectId);
     }
 
     // Need HomeController edits to implement new method
     public void updateSubTask(String name, String description, String durationInManHours, int subtaskId) {
         int intDurationInManHours = Integer.parseInt(durationInManHours);
-    subTaskMapper.update(name, description, intDurationInManHours, subtaskId);
+        subTaskMapper.update(name, description, intDurationInManHours, subtaskId);
     }
 
     public SubTask getSubtask(int subtaskId) {
-
         return subTaskMapper.findById(subtaskId);
     }
+
+    public void deleteTask(int taskId) {
+        taskMapper.delete(taskId);
+    }
+
+    public void deleteSubtask(int subTaskId) {
+        subTaskMapper.delete(subTaskId);
+    }
+
+    public void deleteProject(int projectId) {
+        projectMapper.delete(projectId);
+    }
+
 }

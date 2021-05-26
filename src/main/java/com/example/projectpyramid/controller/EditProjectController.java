@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.ArrayList;
-
 @Controller
 public class EditProjectController {
 
@@ -25,7 +23,7 @@ public class EditProjectController {
     }
 
     @GetMapping("/edit-project")
-    public String editProjectContent(WebRequest request, Model model) throws Exception  {
+    public String editProjectContent(WebRequest request, Model model) throws Exception {
         int projectId = getProjectIdFromSession(request);
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
         boolean projectBoo = false;
@@ -90,7 +88,7 @@ public class EditProjectController {
     }
 
 
-    public int getProjectIdFromSession(WebRequest request){
+    public int getProjectIdFromSession(WebRequest request) {
         return (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
     }
 
