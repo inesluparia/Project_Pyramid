@@ -1,5 +1,4 @@
-<nav th:fragment="navbar" xmlns:th="http://www.thymeleaf.org">
-  <a href="#">Lorem</a>
-  <a href="#">ipsum</a>
-  <a href="#">dolor</a>
+<nav th:fragment="navbar">
+    <a href="/userpage">My Projects</a>
+    <p th:text="'Logged in as ' + ${session.name}"></p><a href="/logout">log out</a>
 </nav>

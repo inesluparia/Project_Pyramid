@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
     <head th:replace="fragments/head.html :: head"></head>
+    <nav th:replace="fragments/navbar.html :: navbar"></nav>
     <body>
+        <nav th:replace="fragments/navbar.html :: navbar"></nav>
         <main>
             <div>
                 <h2 th:text="${'Project name: ' + project.getName()}"></h2>
