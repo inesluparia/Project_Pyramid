@@ -16,7 +16,7 @@ public class InitialController {
     @ExceptionHandler(Exception.class)
     public String anotherError(Model model, Exception exception) {
         model.addAttribute("message", exception.getMessage() + "\n\n" + exception.getClass());
-        return "errorpage.html";
+        return "error.html";
     }
 
 }
