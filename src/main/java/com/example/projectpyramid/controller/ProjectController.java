@@ -37,9 +37,21 @@ public class ProjectController {
      */
     @GetMapping("/project")
     public String projectPage(@RequestParam("id") int projectId, Model model, WebRequest request) throws Exception {
+
+        int userId = 0;
+        try {
+            userId = (int) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
+        } catch (NullPointerException ignored) { }
+
+        Project project = projectServices.getProjectFromId(projectId);
+
+        if (project.getAuthor().getId() != userId || userId == 0)
+            throw new Exception("Unauthorized access");
+
         request.setAttribute("projectId", projectId, WebRequest.SCOPE_SESSION);
         saveProjectToModel(model, projectId);
         saveProjectEstimationsToModel(model, projectId);
+
         return "project";
     }
 
