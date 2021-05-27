@@ -70,15 +70,15 @@ public class SubTaskMapper implements Mapper<SubTask> {
     /**
      * Deletes a subtask from the database.
      *
-     * @param subTask The subtask to be deleted from the database.
+     * @param id The subtask to be deleted from the database.
      */
-    public void delete(@NotNull SubTask subTask) {
+    public void delete(int id) {
         String query = "DELETE FROM subtasks WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement.setInt(1, subTask.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

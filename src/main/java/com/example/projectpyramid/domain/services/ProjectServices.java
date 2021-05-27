@@ -4,6 +4,7 @@ import com.example.projectpyramid.data_access.mappers.TaskMapper;
 import com.example.projectpyramid.data_access.mappers.ProjectMapper;
 import com.example.projectpyramid.data_access.mappers.SubTaskMapper;
 import com.example.projectpyramid.domain.entities.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,26 +13,33 @@ public class ProjectServices {
 
     private final int costPerHour = 250;
     private int programmers = 4;
-    ProjectMapper projectMapper = new ProjectMapper();
-    TaskMapper taskMapper = new TaskMapper();
-    SubTaskMapper subTaskMapper = new SubTaskMapper();
+    private ProjectMapper projectMapper;
+    private TaskMapper taskMapper;
+    private SubTaskMapper subTaskMapper;
+
+    public ProjectServices() {
+        projectMapper = new ProjectMapper();
+        taskMapper = new TaskMapper();
+        subTaskMapper = new SubTaskMapper();
+    }
+
+    public int getProgrammers() {
+        return programmers;
+    }
 
     public int createProject(User author, Client client, String name, String description) throws Exception {
-        if (description.length() > 255) {
+
+        if (description.length() > 255)
             throw new Exception("Description is too long");
-        }
 
         Project project = new Project(author, client, name, description);
-
         project.setId(projectMapper.insert(project));
         return project.getId();
-        }
+    }
 
     public Task addTask(String name, String description, int projectId) throws Exception {
         Task task = new Task(projectId, name, description);
-
         task.setId(taskMapper.insert(task));
-
         return task.getId() > 0 ? task : null;
     }
 
@@ -79,18 +87,16 @@ public class ProjectServices {
             ArrayList<SubTask> subTasks = subTaskMapper.findAllByTaskId(task.getId());
             task.setSubTasks(subTasks);
         }
-
         project.setTasks(tasks);
     }
 
-    public Project getProjectFromId(int projectId) throws Exception {
+    public Project getProjectFromId(int projectId) {
         Project project = projectMapper.findById(projectId);
         populateProject(project);
         return project;
     }
 
-
-    public int getTotalManHours(int projectId) throws Exception {
+    public int getTotalManHours(int projectId) {
         int totalAmountOfManHours = 0;
         Project project = getProjectFromId(projectId);
         ArrayList<Task> tasks = project.getTasks();
@@ -104,61 +110,51 @@ public class ProjectServices {
         return totalAmountOfManHours;
     }
 
-    public int getTotalCost(int projectId) throws Exception {
-        int totalDuration = getTotalManHours(projectId);
-        return totalDuration * costPerHour;
+    public int getTotalCost(int manHours) {
+        if (manHours < 0)
+            throw new IllegalArgumentException("man hours cannot be negative");
+        return manHours * costPerHour;
     }
 
-//    public String getTotalCalenderTime(int projectId) throws Exception {
-//        //a month has in average 4.35 weeks and therefore 152.25 working hours
-//        //a week has 35 working hours
-//        // a day has 7 working hours
-//
-//        //int manHours= getTotalManHours(projectId);
-//        double manHours = 600;
-//        int months = (int) (manHours / 152.25);
-//        int weeks = (int) ((manHours % 152.25) / 35);
-//        int days = (int) (((manHours % 152.25) % 35) / 7);
-//        return "There are " + totalEmployees + " programmers assigned to this project\n" +
-//                "This project will take approximately " + months + " months, " + weeks +
-//                " weeks and " + days + " working days to be completed.";
-//    }
-
-    public LocalDate getCompletionDate(int projectId) throws Exception {
+    public LocalDate getCompletionDate(int manHours) {
         LocalDate date = LocalDate.now();
-        int manHours= getTotalManHours(projectId);
-        //a month has in average 4.35 weeks and therefore 152.25 working hours
         //a week has 35 working hours
         // a day has 7 working hours
-        int months = (int) (manHours / 152.25);
-        int weeks = (int) ((manHours % 152.25) / 35);
-        int days = (int) (((manHours % 152.25) % 35) / 7);
-        date.plusMonths(months);
-        date.plusWeeks(weeks);
-        date.plusDays(days);
-        return date;
+        LocalDate result = date.plusWeeks(manHours / 35);
+        LocalDate finalResult = result.plusDays((manHours % 35) / 7);
+        return finalResult;
     }
 
     // Need HomeController edits to implement new method
     public void updateTask(String taskName, String taskDescription, int taskId) {
-
         taskMapper.update(taskName, taskDescription, taskId);
     }
 
     // Need HomeController edits to implement new method
     public void updateProject(String projectName, String description, int projectId) {
-
         projectMapper.update(projectName, description, projectId);
     }
 
     // Need HomeController edits to implement new method
     public void updateSubTask(String name, String description, String durationInManHours, int subtaskId) {
         int intDurationInManHours = Integer.parseInt(durationInManHours);
-    subTaskMapper.update(name, description, intDurationInManHours, subtaskId);
+        subTaskMapper.update(name, description, intDurationInManHours, subtaskId);
     }
 
     public SubTask getSubtask(int subtaskId) {
-
         return subTaskMapper.findById(subtaskId);
     }
+
+    public void deleteTask(int taskId) {
+        taskMapper.delete(taskId);
+    }
+
+    public void deleteSubtask(int subTaskId) {
+        subTaskMapper.delete(subTaskId);
+    }
+
+    public void deleteProject(int projectId) {
+        projectMapper.delete(projectId);
+    }
+
 }

@@ -7,7 +7,11 @@ import java.util.ArrayList;
 
 public class ClientServices {
 
-    ClientMapper clientMapper = new ClientMapper();
+    ClientMapper clientMapper;
+
+    public ClientServices(){
+        clientMapper = new ClientMapper();
+    }
 
     // TODO implement getClientFromId();
     public Client getClientFromId(int clientId) {

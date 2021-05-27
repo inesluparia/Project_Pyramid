@@ -5,7 +5,11 @@ import com.example.projectpyramid.domain.entities.User;
 
 public class UserServices {
 
-    UserMapper userMapper = new UserMapper();
+    UserMapper userMapper;
+
+    public UserServices(){
+        userMapper = new UserMapper();
+    }
 
     public int login(String userName, String password) throws Exception {
         return userMapper.login(userName, password);

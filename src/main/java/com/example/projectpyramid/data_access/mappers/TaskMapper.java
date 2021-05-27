@@ -71,15 +71,15 @@ public class TaskMapper implements Mapper<Task> {
      * Deletes a task and all its subtasks from the database.
      * TODO unit test to ensure subtasks gets deleted as well.
      *
-     * @param task The task to be deleted from the database.
+     * @param id The task to be deleted from the database.
      */
-    public void delete(@NotNull Task task) {
+    public void delete(int id) {
         String query = "DELETE FROM tasks WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement.setInt(1, task.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

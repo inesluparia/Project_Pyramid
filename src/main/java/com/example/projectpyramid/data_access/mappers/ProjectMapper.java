@@ -73,15 +73,15 @@ public class ProjectMapper implements Mapper<Project> {
      * Deletes a project and all its tasks and subtasks from the database.
      * TODO unit test to ensure tasks and subtasks gets deleted as well.
      *
-     * @param project The project to be deleted from the database.
+     * @param id The project to be deleted from the database.
      */
-    public void delete(@NotNull Project project) {
+    public void delete(int id) {
         String query = "DELETE FROM projects WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement.setInt(1, project.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

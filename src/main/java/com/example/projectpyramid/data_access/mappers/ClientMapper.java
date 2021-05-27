@@ -67,15 +67,15 @@ public class ClientMapper implements Mapper<Client> {
     /**
      * Deletes a client and all its projects from the database.
      *
-     * @param client The client to be deleted from the database.
+     * @param id The client to be deleted from the database.
      */
-    public void delete(@NotNull Client client) {
+    public void delete(int id) {
         String query = "DELETE FROM clients WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement.setInt(1, client.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

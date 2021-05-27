@@ -1,0 +1,4 @@
+<nav th:fragment="navbar">
+    <a href="/userpage">My Projects</a>
+    <p th:text="'Logged in as ' + ${session.name}"></p><a href="/logout">log out</a>
+</nav>
