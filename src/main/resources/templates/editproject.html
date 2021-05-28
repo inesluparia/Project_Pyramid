@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
     <head th:replace="fragments/head.html :: head"></head>
     <body>
+    <nav th:replace="fragments/navbar.html :: navbar"></nav>
         <a href="fill-project-form">
             <h2 th:text="${project.name}"></h2>
             <p th:text="${'Client: ' + project.client.name}"></p>
