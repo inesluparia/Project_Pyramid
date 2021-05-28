@@ -16,7 +16,6 @@ public class TaskMapper implements Mapper<Task> {
 
     /**
      * Inserts a task into the database.
-     *
      * @param task The task to be inserted into the database.
      * @return The id of the newly inserted task, 0 if unable to insert.
      * @throws SQLIntegrityConstraintViolationException (this is very unlikely as id
@@ -26,7 +25,6 @@ public class TaskMapper implements Mapper<Task> {
         String query = "INSERT INTO tasks (project_id, name, description) VALUES (?, ?, ?)";
         Connection connection = DBManager.getConnection();
         int taskId = 0;
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, task.getProjectId());
@@ -48,7 +46,6 @@ public class TaskMapper implements Mapper<Task> {
 
     /**
      * Updates a task's changes to the database.
-     *
      * @param task The task that has been changed.
      */
     public void update(@NotNull Task task) {
@@ -88,7 +85,6 @@ public class TaskMapper implements Mapper<Task> {
 
     /**
      * Finds a task from its task id.
-     *
      * @param taskId The id of the task to find.
      * @return The found task, null if not found.
      */
