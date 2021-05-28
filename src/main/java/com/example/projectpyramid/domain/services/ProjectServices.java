@@ -97,10 +97,8 @@ public class ProjectServices {
     }
 
     /**
-     * This method recieves a projects id and returns the total
+     * This method receives a projects id and returns the total
      * of manHours it has by looping through every subtask in every task.
-     * @param projectId
-     * @return
      */
     public int getTotalManHours(int projectId) {
         int totalAmountOfManHours = 0;
@@ -117,11 +115,9 @@ public class ProjectServices {
     }
 
     /**
-     * This method recieves a total of manHours and returns its equivalent
+     * This method receives a total of manHours and returns its equivalent
      * in the form of cost in a specific currency. In this version of the system it is a
      * default, final number, that simulates the average cost of a programmers working hour.
-     * @param manHours
-     * @return
      */
     public int getTotalCost(int manHours) {
         if (manHours < 0)
@@ -134,7 +130,7 @@ public class ProjectServices {
      * First it divides the projects total cost in manHours by the number
      * of programmers assigned to it (in this version of the system it is a
      * default, final number). Then it calculates an exact date by calculating
-     * how many calender days can have the resulted manHours.
+     * how many calendar days can have the resulted manHours.
      */
     public LocalDate getCompletionDate(int manHours) {
         LocalDate date = LocalDate.now();

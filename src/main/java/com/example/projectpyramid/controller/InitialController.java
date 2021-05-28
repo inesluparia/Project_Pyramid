@@ -26,6 +26,4 @@ public class InitialController {
         return "error.html";
     }
 
-
-
 }

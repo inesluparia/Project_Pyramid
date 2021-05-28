@@ -24,7 +24,7 @@ public class EditProjectController {
     private ProjectServices projectServices;
     private ClientServices clientServices;
 
-    EditProjectController() {
+    public EditProjectController() {
         userServices = new UserServices();
         projectServices = new ProjectServices();
         clientServices = new ClientServices();

@@ -29,7 +29,7 @@ public class ProjectController {
     private ProjectServices projectServices;
     private ClientServices clientServices;
 
-    ProjectController() {
+    public ProjectController() {
         userServices = new UserServices();
         projectServices = new ProjectServices();
         clientServices = new ClientServices();
