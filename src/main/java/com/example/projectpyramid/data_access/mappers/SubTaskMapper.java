@@ -14,7 +14,6 @@ public class SubTaskMapper implements Mapper<SubTask> {
 
     /**
      * Inserts a subtask into the database.
-     *
      * @param subTask The subtask to be inserted into the database.
      * @return The id of the newly inserted subtask, 0 if unable to insert.
      * @throws SQLIntegrityConstraintViolationException (this is very unlikely as id
@@ -24,7 +23,6 @@ public class SubTaskMapper implements Mapper<SubTask> {
         String query = "INSERT INTO subtasks (task_id, name, description, duration) VALUES (?, ?, ?, ?)";
         Connection connection = DBManager.getConnection();
         int subTaskId = 0;
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, subTask.getTaskId());
@@ -32,7 +30,6 @@ public class SubTaskMapper implements Mapper<SubTask> {
             preparedStatement.setString(3, subTask.getDescription());
             preparedStatement.setInt(4, subTask.getDurationInManHours());
             preparedStatement.executeUpdate();
-
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
             if (resultSet.next())

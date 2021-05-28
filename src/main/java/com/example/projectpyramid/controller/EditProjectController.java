@@ -9,12 +9,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+
+/**
+ * The EditProjectController class handles everything that has to do with editing
+ * projects. Just like ProjectController, to ensure that our projects data is always
+ * in sync with the DB we avoided saving the projects details in the session.
+ * Instead only a projects ID is saved in the session and used to call saveProjectToModel
+ * and saveProjectEstimationsToModel methods in every endpoint that displays this data.
+ */
 @Controller
 public class EditProjectController {
 
-    UserServices userServices;
-    ProjectServices projectServices;
-    ClientServices clientServices;
+    private UserServices userServices;
+    private ProjectServices projectServices;
+    private ClientServices clientServices;
 
     EditProjectController() {
         userServices = new UserServices();
@@ -88,15 +96,6 @@ public class EditProjectController {
     }
 
 
-    public int getProjectIdFromSession(WebRequest request) {
-        return (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
-    }
-
-    private void saveProjectToModel(Model model, int projectId) throws Exception {
-        Project project = projectServices.getProjectFromId(projectId);
-        model.addAttribute("project", project);
-    }
-
     @GetMapping("/delete")
     public String delete(@RequestParam("type") String type, @RequestParam("id") int id, Model model, WebRequest request) throws Exception {
         switch (type) {
@@ -122,4 +121,12 @@ public class EditProjectController {
                 return "editproject";
     }
 
+    public int getProjectIdFromSession(WebRequest request) {
+        return (int) request.getAttribute("projectId", WebRequest.SCOPE_SESSION);
+    }
+
+    private void saveProjectToModel(Model model, int projectId) throws Exception {
+        Project project = projectServices.getProjectFromId(projectId);
+        model.addAttribute("project", project);
+    }
 }
