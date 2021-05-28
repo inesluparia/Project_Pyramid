@@ -96,6 +96,12 @@ public class ProjectServices {
         return project;
     }
 
+    /**
+     * This method recieves a projects id and returns the total
+     * of manHours it has by looping through every subtask in every task.
+     * @param projectId
+     * @return
+     */
     public int getTotalManHours(int projectId) {
         int totalAmountOfManHours = 0;
         Project project = getProjectFromId(projectId);
@@ -110,19 +116,32 @@ public class ProjectServices {
         return totalAmountOfManHours;
     }
 
+    /**
+     * This method recieves a total of manHours and returns its equivalent
+     * in the form of cost in a specific currency. In this version of the system it is a
+     * default, final number, that simulates the average cost of a programmers working hour.
+     * @param manHours
+     * @return
+     */
     public int getTotalCost(int manHours) {
         if (manHours < 0)
             throw new IllegalArgumentException("man hours cannot be negative");
         return manHours * costPerHour;
     }
 
+    /**
+     * This method returns an estimated completion date for a project.
+     * First it divides the projects total cost in manHours by the number
+     * of programmers assigned to it (in this version of the system it is a
+     * default, final number). Then it calculates an exact date by calculating
+     * how many calender days can have the resulted manHours.
+     */
     public LocalDate getCompletionDate(int manHours) {
         LocalDate date = LocalDate.now();
-        //a week has 35 working hours
-        // a day has 7 working hours
-        LocalDate result = date.plusWeeks(manHours / 35);
-        LocalDate finalResult = result.plusDays((manHours % 35) / 7);
-        return finalResult;
+        int manHoursPerProgrammer = manHours / programmers;
+        //a week has 35 working hours and a day has 7 working hours
+        LocalDate partialResult = date.plusWeeks(manHoursPerProgrammer / 35);
+        return partialResult.plusDays((manHoursPerProgrammer % 35) / 7);
     }
 
     // Need HomeController edits to implement new method
