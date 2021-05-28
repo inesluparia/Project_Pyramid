@@ -3,25 +3,29 @@
     <head th:replace="fragments/head.html :: head"></head>
 
     <body>
-    <nav th:replace="fragments/navbar.html :: navbar"></nav>
-        <form name="create-project" action="createproject" method="POST">
-            Project name:<br>
-            <input type="text" name="project-name">
-            <br><br>
-            Description:<br>
-            <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
-            <!--<label for="select-client">Client</label>
-            name="client" id="select-client"-->
-            <br>
-            <br>
-            <select name="client" id="client" th:object="${clients}">
-                <option>Select client</option>
-                <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
-                </option>
-            </select>
-            <br><br>
-            <input type="submit" value="Create project">
-        </form>
-    </body>
 
+    <nav th:replace="fragments/navbar.html :: navbar"></nav>
+        <main>
+            <section>
+                <form name="create-project" action="createproject" method="POST">
+                    Project name:<br>
+                    <input type="text" name="project-name">
+                    <br><br>
+                    Description:<br>
+                    <textarea type="text" name="description" rows="4" cols="50"></textarea><br>
+                    <!--<label for="select-client">Client</label>
+                    name="client" id="select-client"-->
+                    <br>
+                    <br>
+                    <select name="client" id="client" th:object="${clients}">
+                        <option>Select client</option>
+                        <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
+                        </option>
+                    </select>
+                    <br><br>
+                    <input type="submit" value="Create project">
+                </form>
+            </section>
+        </main>
+    </body>
 </html>

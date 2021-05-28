@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.ArrayList;
+
 
 /**
  * The EditProjectController class handles everything that has to do with editing
@@ -108,6 +110,9 @@ public class EditProjectController {
             case "project": {
                 projectServices.deleteProject(id);
                 model.addAttribute("message", "Project was successfully deleted.");
+                int userId = (int) request.getAttribute("userId", WebRequest.SCOPE_SESSION);
+                ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
+                model.addAttribute("projects", projects);
                 return "userpage";
             }
             default:
