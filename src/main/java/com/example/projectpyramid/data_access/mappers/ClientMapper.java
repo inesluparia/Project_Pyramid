@@ -116,7 +116,7 @@ public class ClientMapper implements Mapper<Client> {
      *
      * @return List of found clients, empty if none found.
      */
-    public List<Client> findAll() {
+    public ArrayList<Client> findAll() {
         String query = "SELECT * FROM clients";
         Connection connection = DBManager.getConnection();
         ArrayList<Client> clients = new ArrayList<>();
@@ -135,58 +135,4 @@ public class ClientMapper implements Mapper<Client> {
 
         return clients;
     }
-
-    // <editor-fold desc="Deprecated methods">
-
-    /**
-     * @deprecated and replaced by {@link ClientMapper#findById(int)}
-     */
-    public Client getClientFromId(int clientId) {
-        Client client = new Client();
-        try {
-            Connection con = DBManager.getConnection();
-            String SQL = "SELECT name, cvr FROM clients WHERE id =?";
-            PreparedStatement preparedStatement = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, clientId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                String clientName = resultSet.getString("name");
-                client.setName(clientName);
-                int cvr = resultSet.getInt("cvr");
-                client.setCvr(cvr);
-                client.setId(clientId);
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return client;
-    }
-
-    /**
-     * @deprecated and replaced by {@link ClientMapper#findAll()}
-     */
-    public ArrayList<Client> getClients() {
-        try {
-            Connection con = DBManager.getConnection();
-            String SQL = "SELECT * FROM clients";
-            ResultSet resultSet = con.createStatement().executeQuery(SQL);
-            ArrayList<Client> clients = new ArrayList<>();
-            while (resultSet.next()) {
-                Client client = new Client();
-                String clientName = resultSet.getString("name");
-                client.setName(clientName);
-                int cvr = resultSet.getInt("cvr");
-                client.setCvr(cvr);
-                int id = resultSet.getInt("id");
-                client.setId(id);
-                clients.add(client);
-            }
-            return clients;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
-    }
-
-    // </editor-fold>
 }
