@@ -2,6 +2,7 @@ package com.example.projectpyramid.data_access.mappers;
 import com.example.projectpyramid.data_access.DBManager;
 import com.example.projectpyramid.data_access.Mapper;
 import com.example.projectpyramid.domain.entities.User;
+import com.mysql.cj.exceptions.WrongArgumentException;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
@@ -133,6 +134,9 @@ public class UserMapper implements Mapper<User> {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+        if (userId == 0){
+            throw new WrongArgumentException("Username or password could not be validated. Please try again.");
         }
 
         return userId;
