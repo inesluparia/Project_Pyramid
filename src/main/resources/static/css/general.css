@@ -72,6 +72,10 @@ input[type="text"], input[type="password"] {
     width: 100%;
 }
 
+input[type="text"]:focus, input[type="password"]:focus {
+    color: var(--link-color);
+}
+
 .sub-task.completed {
     text-decoration: line-through;
 }
@@ -201,6 +205,8 @@ nav {
 nav a {
     padding: 1rem 1.5rem;
     margin-left: 0.5rem;
+    border-bottom: 2px solid transparent;
+    transition: 0.2s ease border-color;
 }
 
 nav a:first-of-type {
@@ -208,7 +214,8 @@ nav a:first-of-type {
 }
 
 nav a:hover {
-    background-color: var(--primary-background-color);
+    text-decoration: none;
+    border-color: var(--link-color);
 }
 
 nav p {
