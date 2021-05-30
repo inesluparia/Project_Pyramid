@@ -13,12 +13,11 @@ public class ClientServices {
         clientMapper = new ClientMapper();
     }
 
-    // TODO implement getClientFromId();
     public Client getClientFromId(int clientId) {
-       return clientMapper.getClientFromId(clientId);
+       return clientMapper.findById(clientId);
     }
 
     public ArrayList<Client> getClients(){
-        return clientMapper.getClients();
+        return clientMapper.findAll();
     }
 }
