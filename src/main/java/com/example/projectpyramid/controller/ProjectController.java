@@ -134,7 +134,7 @@ public class ProjectController {
     }
 
     public void saveProjectEstimationsToModel(Model model, int projectId) throws Exception{
-        model.addAttribute("programmers", projectServices.getProgrammers());
+        model.addAttribute("programmers", projectServices.getAmountOfProgrammers());
         int manHours = projectServices.getTotalManHours(projectId);
         model.addAttribute("totalManHours", manHours);
         model.addAttribute("totalCost", projectServices.getTotalCost(manHours));

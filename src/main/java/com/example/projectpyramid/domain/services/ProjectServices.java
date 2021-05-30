@@ -4,7 +4,6 @@ import com.example.projectpyramid.data_access.mappers.TaskMapper;
 import com.example.projectpyramid.data_access.mappers.ProjectMapper;
 import com.example.projectpyramid.data_access.mappers.SubTaskMapper;
 import com.example.projectpyramid.domain.entities.*;
-import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 public class ProjectServices {
 
     private final int costPerHour = 250;
-    private int programmers = 4;
+    private final int amountOfProgrammers = 2;
     private ProjectMapper projectMapper;
     private TaskMapper taskMapper;
     private SubTaskMapper subTaskMapper;
@@ -23,8 +22,8 @@ public class ProjectServices {
         subTaskMapper = new SubTaskMapper();
     }
 
-    public int getProgrammers() {
-        return programmers;
+    public int getAmountOfProgrammers() {
+        return amountOfProgrammers;
     }
 
     public int createProject(User author, Client client, String name, String description) throws Exception {
@@ -134,8 +133,8 @@ public class ProjectServices {
      */
     public LocalDate getCompletionDate(int manHours) {
         LocalDate date = LocalDate.now();
-        int manHoursPerProgrammer = manHours / programmers;
-        //a week has 35 working hours and a day has 7 working hours
+        int manHoursPerProgrammer = manHours / amountOfProgrammers;
+        // A week has 35 working hours and a day has 7 working hours.
         LocalDate partialResult = date.plusWeeks(manHoursPerProgrammer / 35);
         return partialResult.plusDays((manHoursPerProgrammer % 35) / 7);
     }
