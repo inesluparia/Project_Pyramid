@@ -16,8 +16,11 @@
             <a href="/createproject">
                 <button>Start a new project</button>
             </a>
+            <br>
+            <br>
+            <br>
+    <b><div th:if="${message}" th:text="${message}"></div></b>
         </main>
-    <div th:if="${message}" th:text="${message}"></div>
     </body>
     <footer th:replace="fragments/footer.html :: footer"></footer>
 </html>

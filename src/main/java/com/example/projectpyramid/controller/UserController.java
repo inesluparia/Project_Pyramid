@@ -11,19 +11,20 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 
+/**
+ * The UserController class handles everything that has to do with users
+ * and displaying a specific users userpage.
+ */
 @Controller
 public class UserController {
 
-    UserServices userServices = new UserServices();
-    ProjectServices projectServices = new ProjectServices();
+    private UserServices userServices;
+    private ProjectServices projectServices;
 
-    @GetMapping("/logout")
-    public String logUd(WebRequest request) {
-        request.setAttribute("userId", null, WebRequest.SCOPE_SESSION);
-        return "index.html";
+    public UserController(){
+        userServices = new UserServices();
+        projectServices = new ProjectServices();
     }
-
-
 
     /**
      * User logs in to create a new project or see existing projects.
@@ -45,9 +46,8 @@ public class UserController {
     }
 
     /**
-     * This method runs after log-in validation,
-     * the getProjectsFromUserId method from projectServices is called
-     * and a list of the users projects is saved in the model
+     * This method runs after log-in validation. The getProjectsFromUserId method
+     * from projectServices is called and a list of the users projects is saved in the model
      * before returning userpage.html
      * @param request
      * @param model
@@ -77,4 +77,11 @@ public class UserController {
             model.addAttribute("success", "User was successfully created");
         return "index.html";
     }
+
+    @GetMapping("/logout")
+    public String logUd(WebRequest request) {
+        request.setAttribute("userId", null, WebRequest.SCOPE_SESSION);
+        return "index.html";
+    }
+
 }

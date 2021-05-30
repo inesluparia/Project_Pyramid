@@ -13,26 +13,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
-
 import java.util.ArrayList;
 
+/**
+ * The ProjectController class handles everything that has to do with creating
+ * or displaying projects. To ensure that our projects data is always synchronized
+ * with the DB we avoided saving the projects details in the session. Instead
+ * only a projects ID is saved in the session and used to call saveProjectToModel and
+ * saveProjectEstimationsToModel methods in every endpoint that displays this data.
+ */
 @Controller
 public class ProjectController {
 
-    ClientServices clientServices = new ClientServices();
-    UserServices userServices = new UserServices();
-    ProjectServices projectServices = new ProjectServices();
+    private UserServices userServices;
+    private ProjectServices projectServices;
+    private ClientServices clientServices;
 
-
+    public ProjectController() {
+        userServices = new UserServices();
+        projectServices = new ProjectServices();
+        clientServices = new ClientServices();
+    }
     /**
      * After user selects a specific project he is redirected to this endpoint.
      * the project ID from the session is used to call saveProjectToModel and
-     * saveProjectEstimationsToModel methods.
-     * and a project Object is saved
+     * saveProjectEstimationsToModel methods. A project Object is saved
      * @param projectId
      * @param model
      * @param request
-     * @return
      * @throws Exception
      */
     @GetMapping("/project")
@@ -55,11 +63,13 @@ public class ProjectController {
         return "project";
     }
 
-    @GetMapping("/projectlist")
-    public String allProjects() {
-        return "allprojects";
-    }
-
+    /**
+     * After user selects create new project in the userpage he is redirected to this endpoint.
+     * A list of all clients is saved in the model before continuing to createproject
+     * where a form will display them as selection options.
+     * @param model
+     * @return
+     */
     @GetMapping("/createproject")
     public String projectCreation(Model model) {
         ArrayList<Client> clients = clientServices.getClients();

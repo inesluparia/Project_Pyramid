@@ -5,7 +5,7 @@ import com.example.projectpyramid.domain.entities.User;
 
 public class UserServices {
 
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     public UserServices(){
         userMapper = new UserMapper();
