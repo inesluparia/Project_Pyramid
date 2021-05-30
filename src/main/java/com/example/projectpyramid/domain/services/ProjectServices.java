@@ -7,11 +7,12 @@ import com.example.projectpyramid.domain.entities.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class ProjectServices {
 
     private final int costPerHour = 250;
-    private final int amountOfProgrammers = 2;
+    private int amountOfProgrammers = 4;
     private ProjectMapper projectMapper;
     private TaskMapper taskMapper;
     private SubTaskMapper subTaskMapper;
@@ -24,6 +25,10 @@ public class ProjectServices {
 
     public int getAmountOfProgrammers() {
         return amountOfProgrammers;
+    }
+
+    public void setAmountOfProgrammers(int programmers) {
+        amountOfProgrammers = programmers;
     }
 
     public int createProject(User author, Client client, String name, String description) throws Exception {
@@ -120,7 +125,9 @@ public class ProjectServices {
      */
     public int getTotalCost(int manHours) {
         if (manHours < 0)
-            throw new IllegalArgumentException("man hours cannot be negative");
+            throw new IllegalArgumentException("Man hours cannot be negative.");
+        if (manHours > 1000000)
+            throw new InputMismatchException("Too many man-hours to process.");
         return manHours * costPerHour;
     }
 
@@ -132,6 +139,10 @@ public class ProjectServices {
      * how many calendar days can have the resulted manHours.
      */
     public LocalDate getCompletionDate(int manHours) {
+        if (manHours < 0)
+            throw new IllegalArgumentException("Man hours cannot be negative.");
+        if (manHours > 1000000)
+            throw new InputMismatchException("Too many man-hours to process.");
         LocalDate date = LocalDate.now();
         int manHoursPerProgrammer = manHours / amountOfProgrammers;
         // A week has 35 working hours and a day has 7 working hours.
