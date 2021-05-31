@@ -61,7 +61,6 @@ public class UserController {
         ArrayList<Project> projects = projectServices.getProjectsFromUserId(userId);
         model.addAttribute("projects", projects);
         return "userpage";
-
     }
 
     @PostMapping("/createuser")
