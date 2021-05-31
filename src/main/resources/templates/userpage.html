@@ -10,10 +10,10 @@
             <h3 th:unless="${projects}">You don't have any project at the moment</h3>
             <ul class="space-above medium-space-below">
                 <li th:each="project:${projects}">
-                    <a th:href="${'/project?id=' + project.id}" th:text="${project.name}"></a>
+                    <a th:href="${'project?id=' + project.id}" th:text="${project.name}"></a>
                 </li>
             </ul>
-            <a href="/createproject">
+            <a href="createproject">
                 <button>Start a new project</button>
             </a>
             <br>
