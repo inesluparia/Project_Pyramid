@@ -89,7 +89,7 @@ public class ClientMapper implements Mapper<Client> {
      * @return The found client, null if not found.
      */
     public Client findById(int clientId) {
-        String query = "SELECT * FROM clients WHERE id = ?";
+        String query = "SELECT name, cvr FROM clients WHERE id = ?";
         Connection connection = DBManager.getConnection();
 
         try {
@@ -102,7 +102,7 @@ public class ClientMapper implements Mapper<Client> {
                 String name = resultSet.getString("name");
                 int cvr = resultSet.getInt("cvr");
 
-                return new Client(name, cvr);
+                return new Client(clientId, name, cvr);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -127,7 +127,8 @@ public class ClientMapper implements Mapper<Client> {
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 int cvr = resultSet.getInt("cvr");
-                clients.add(new Client(name, cvr));
+                int id = resultSet.getInt("id");
+                clients.add(new Client(id, name, cvr));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

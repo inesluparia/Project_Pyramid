@@ -21,7 +21,7 @@ public class UserController {
     private UserServices userServices;
     private ProjectServices projectServices;
 
-    public UserController(){
+    public UserController() {
         userServices = new UserServices();
         projectServices = new ProjectServices();
     }

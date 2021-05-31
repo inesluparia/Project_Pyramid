@@ -19,7 +19,7 @@
                     <br>
                     <select name="client" id="client" th:object="${clients}">
                         <option>Select client</option>
-                        <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">
+                        <option th:each="client: ${clients}" th:value="${client.getId()}" th:text="${client.getName()}">
                         </option>
                     </select>
                     <br><br>
