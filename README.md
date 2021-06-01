@@ -1,4 +1,4 @@
-# Project_Pyramid
+# Project Pyramid
 Eksamensprojekt 1.år - KEA -datamatiker
 
 
@@ -11,16 +11,26 @@ Data skrives og læses fra en MySQL relationsdatabase, hvorfra backenden er kode
 Som krav skulle systemet være en Spring Boot webapplikation deployet på AWS. 
 
 
-Kørselsvejledning:
+Kørselsvejledning med Elastic Beanstalk:
 
-1. Åben den følgende link i dine favorit webbrowser:
+1. Åben det tildelte link i rapporten i dine favorit webbrowser.
 
-2. Oprette en bruger.
+2. Opret en bruger.
 
-3. Logge ind med din brugernavn og password.
+3. Log ind med dit brugernavn og password.
 
-4. Oprette et eller flere projekter med diverse opgaver og underopgaver.
+4. Opret et eller flere projekter med diverse opgaver og underopgaver.
 
 5. Se projektets kalkulationer.
 
 5. Rediger, extend eller slet dine projekter.
+
+Kørselsvejldening med testbruger og Elastic Beanstalk:
+
+1. Åben det følgende link i dine favorit webbrowser.
+
+2. Log ind med testbrugeren:
+    Brugernavn: Andersand
+    Adgangskode: 1234
+
+3. Et project er allerede oprettet og kan inspiceres.
